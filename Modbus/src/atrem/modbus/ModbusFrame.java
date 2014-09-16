@@ -3,7 +3,7 @@ package atrem.modbus;
 public class ModbusFrame {
 
 	private int slaveAdress, functionCode, idTCP;
-	FrameData content;
+	FrameData content = new FrameData();
 
 	public int getSlaveAdress() {
 		return slaveAdress;
