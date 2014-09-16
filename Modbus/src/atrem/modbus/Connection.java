@@ -9,14 +9,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Controller {
+public class Connection {
 	Socket socket;
 	InputStream inStream;
 	Scanner in;
 	OutputStream outStream;
 	PrintWriter out;
 
-	public Controller(String ipAddress, int port) {
+	public Connection(String ipAddress, int port) {
 
 		try {
 			this.socket = new Socket("ipAddress", port);
@@ -27,6 +27,7 @@ public class Controller {
 			e.printStackTrace();
 		}
 	}
+	
 
 	public void send(ArrayList<Byte> array) {
 
@@ -44,7 +45,6 @@ public class Controller {
 				array.add((byte) inStream.read());
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
