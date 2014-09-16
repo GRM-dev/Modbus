@@ -47,11 +47,4 @@ public class ConsoleOutputService {
 		System.out
 				.println("Niepoprawny numer portu! <0;9999>\nWprowadz ponownie: ");
 	}
-
-	public void showConnectionStatus(boolean status) {
-		if (status)
-			System.out.println("Connected");
-		else
-			System.out.println("Connection ERROR");
-	}
 }
