@@ -3,75 +3,66 @@ package atrem.modbus;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
-import java.util.ArrayList;
-import java.util.List;
 
 public class FrameDekoder {
-	private FrameData frameData;
-	private ByteBuffer byteBuffer;
-	private ModbusFrame modbusFrame;
 
+	private ByteBuffer byteBuffer;
+	private FrameIncoming frameIncoming;
+	private int dataLength;
 	private InputStream inputStream;
-	private byte[] header;
+
+	public FrameDekoder(InputStream inputStream) {
+		this.inputStream = inputStream;
+	}
 
 	public FrameDekoder() {
-		modbusFrame = new ModbusFrame();
 
 	}
 
-	public void downloadFrame() {
-		readBytes(7);
+	public FrameIncoming downloadFrame() {
+		byte[] readByte = readBytes(7);
+		analyzeHeader(readByte);
+
+		readByte = readBytes(dataLength + 1);
+		analyzeData(readByte);
+		return frameIncoming;
 
 	}
 
-	private void readBytes(int number) {
+	private void analyzeData(byte[] readByte) {
+		int function = analyzeByteToInt(readByte, 0, 1);
+		byteBuffer = ByteBuffer.wrap(readByte, 1, dataLength);
+	}
+
+	private void analyzeHeader(byte[] readByte) {
+		int TransactionIdentifier = analyzeByteToInt(readByte, 0, 2);// tcpIp
+		int ProtocolIdentifier = analyzeByteToInt(readByte, 2, 2);
+		dataLength = analyzeByteToInt(readByte, 4, 2);
+		int UnitIdentifier = analyzeByteToInt(readByte, 6, 1);
+		createFrame(TransactionIdentifier, ProtocolIdentifier, UnitIdentifier);
+
+	}
+
+	private void createFrame(int transactionIdentifier, int protocolIdentifier,
+			int unitIdentifier) {
+		frameIncoming = new FrameIncoming(transactionIdentifier,
+				protocolIdentifier, unitIdentifier);
+
+	}
+
+	private int analyzeByteToInt(byte[] readByte, int offset, int length) {
+		ByteBuffer byteBuffer = ByteBuffer.wrap(readByte, offset, length);
+		return byteBuffer.getInt();
+	}
+
+	private byte[] readBytes(int number) {
 		byte[] array = new byte[number];
 		try {
 			inputStream.read(array);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-
-	public void byteReader() {
-		List<Byte> header = content.subList(0, 2);
-		byte[] arrayByte = listBytetoArray(header.size());
-		ByteBuffer byteBuffer = ByteBuffer.wrap(arrayByte);
-		Integer idTcp = new Integer(byteBuffer.getInt());
-		System.out.println(idTcp.toString());
-		modbusFrame.setIdTCP(idTcp.toString());
-	}
-
-	private byte[] listBytetoArray(int size) {
-		byte arrayByte[] = new byte[4];
-		for (int i = 3; i >= size; i--) {
-			arrayByte[i] = content.get(i).byteValue();
-		}
-		return arrayByte;
-	}
-
-	public ArrayList<Byte> getContent() {
-		return content;
-	}
-
-	public void setContent(ArrayList<Byte> content) {
-		this.content = content;
-	}
-
-	public FrameData getFrameData() {
-		return frameData;
-	}
-
-	public void setFrameData(FrameData frameData) {
-		this.frameData = frameData;
-	}
-
-	public ModbusFrame getModbusFrame() {
-		return modbusFrame;
-	}
-
-	public void setModbusFrame(ModbusFrame modbusFrame) {
-		this.modbusFrame = modbusFrame;
+		return array;
 	}
 
 	public void setInputStream(InputStream inputStream) {
