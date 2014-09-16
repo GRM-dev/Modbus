@@ -18,6 +18,13 @@ public class ConsoleInputTest {
 	@Test
 	public void functionCodeTest() {
 		ConsoleInputService console = new ConsoleInputService();
-		assertEquals("03", console.insertFunctionCode());
+		assertEquals(3, console.insertFunctionCode());
 	}
+
+	@Test
+	public void slaveAdressTest() {
+		ConsoleInputService console = new ConsoleInputService();
+		assertEquals(123, console.insertSlaveAdress());
+	}
+
 }

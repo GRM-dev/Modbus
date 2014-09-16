@@ -30,4 +30,12 @@ public class ConsoleOutputService {
 		System.out
 				.println("Niepoprawny format kodu funkcji! \nWprowadz ponownie:");
 	}
+
+	public void askFirstRegister() {
+		System.out.println("Wprowadz pierwszy rejestr do odczytu: ");
+	}
+
+	public void askNumberOfRegisters() {
+		System.out.println("Wprowadz ilosc rejestrow do odczytu: ");
+	}
 }

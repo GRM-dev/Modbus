@@ -4,7 +4,8 @@ import java.util.Scanner;
 
 public class ConsoleInputService {
 	private Scanner inputScanner;
-	private String input;
+	private String inputString;
+	private int inputInt;
 	private ConsoleOutputService errorOutput;
 
 	public ConsoleInputService() {
@@ -12,42 +13,39 @@ public class ConsoleInputService {
 		errorOutput = new ConsoleOutputService();
 	}
 
-	public String insertSlaveAdress() {
-		input = inputScanner.nextLine();
-		while (Integer.parseInt(input) > 255) {
+	public int insertSlaveAdress() {
+		inputInt = inputScanner.nextInt();
+		while (inputInt > 255 || inputInt < 0) {
 			errorOutput.showSlaveAdressError();
-			input = inputScanner.nextLine();
+			inputInt = inputScanner.nextInt();
+			// TODO zabezpieczyc przed literalami PAWEL
 		}
-		return input;
+		return inputInt;
 	}
 
-	public String insertFunctionCode() {
-		input = inputScanner.nextLine();
-		// input.trim();
-		while (input.length() != 2) {// && !(containCharacters(input))) {
-			errorOutput.showSlaveFunctionCodeError();
-			input = inputScanner.nextLine();
-			// input.trim();
-		}
-		return input;
+	public int insertFunctionCode() {
+		inputInt = inputScanner.nextInt();
+		// TODO zabezpieczyc przed nieznanym kodem funkcji PAWEL
+		return inputInt;
 	}
 
 	public String insertTcpIpAdres() {
-		input = inputScanner.nextLine();
-		input.trim();
-		return input;
+		inputString = inputScanner.nextLine();
+		inputString.trim();
+		return inputString;
 
 	}
 
 	public int insertPort() {
 		return inputScanner.nextInt();
+		// TODO zabezpieczyc numer portu PAWEL
 
 	}
 
 	public String insertDataContent() {
-		input = inputScanner.nextLine();
-		input.trim();
-		return input;
+		inputString = inputScanner.nextLine();
+		inputString.trim();
+		return inputString;
 	}
 
 	public int insertFirstRegister() {
