@@ -52,6 +52,6 @@ public class ConsoleOutputService {
 		if (status)
 			System.out.println("Connected");
 		else
-			System.out.println("Connection ERROR");
+			System.out.println("connection ERROR");
 	}
 }
