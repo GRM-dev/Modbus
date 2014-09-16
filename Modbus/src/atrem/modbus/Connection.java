@@ -10,16 +10,16 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Connection {
-	Socket socket;
-	InputStream inStream;
-	Scanner in;
-	OutputStream outStream;
-	PrintWriter out;
+	private Socket socket;
+	private InputStream inStream;
+	private Scanner in;
+	private OutputStream outStream;
+	private PrintWriter out;
 
 	public Connection(String ipAddress, int port) {
 
 		try {
-			this.socket = new Socket("ipAddress", port);
+			this.socket = new Socket(ipAddress, port);
 			inStream = socket.getInputStream();
 			outStream = socket.getOutputStream();
 
@@ -27,7 +27,6 @@ public class Connection {
 			e.printStackTrace();
 		}
 	}
-	
 
 	public void send(ArrayList<Byte> array) {
 
@@ -49,6 +48,13 @@ public class Connection {
 		}
 
 		return (ArrayList<Byte>) array;
+	}
+
+	public boolean checkConnection() {
+		if (socket.isConnected())
+			return true;
+		else
+			return false;
 	}
 
 	public void closeConnection() {
