@@ -5,4 +5,4 @@
  * @author Patryk
  *
  */
-package test.modbus;
+package test.modbus.jUnit;
