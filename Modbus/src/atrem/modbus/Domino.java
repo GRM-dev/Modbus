@@ -5,12 +5,12 @@ import ConsoleService.ConsoleOutputService;
 
 public class Domino {
 
-	private ModbusFrame modbusFrame;
+	static private ModbusFrame modbusFrame;
 	private static Connection connection;
 	static private String ip;
 	static private int port;
 	static private ConsoleInputService consoleInput;
-	static private ConsoleOutputService consoleOutput;// ll
+	static private ConsoleOutputService consoleOutput;
 
 	public static void main(String[] args) {
 		consoleInput = new ConsoleInputService();
@@ -29,4 +29,10 @@ public class Domino {
 
 		return new Connection(ip, port);// lll
 	}
+
+	// public static createFrame() {
+	// modbusFrame = new ModbusFrame();
+	// modbusFrame.consoleOutput.askSlaveAdress();
+	//
+	// }
 }
