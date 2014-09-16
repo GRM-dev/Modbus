@@ -9,11 +9,12 @@ public class ConsoleInputService {
 
 	public ConsoleInputService() {
 		inputScanner = new Scanner(System.in);
+		errorOutput = new ConsoleOutputService();
 	}
 
 	public String insertSlaveAdress() {
 		input = inputScanner.nextLine();
-		while (input.length() != 2) {
+		while (Integer.parseInt(input) > 255) {
 			errorOutput.showSlaveAdressError();
 			input = inputScanner.nextLine();
 		}
@@ -22,11 +23,11 @@ public class ConsoleInputService {
 
 	public String insertFunctionCode() {
 		input = inputScanner.nextLine();
-		input.trim();
-		while (input.length() != 2 && !(containCharacters(input))) {
+		// input.trim();
+		while (input.length() != 2) {// && !(containCharacters(input))) {
 			errorOutput.showSlaveFunctionCodeError();
 			input = inputScanner.nextLine();
-			input.trim();
+			// input.trim();
 		}
 		return input;
 	}
@@ -43,10 +44,18 @@ public class ConsoleInputService {
 
 	}
 
-	public byte[] insertDataContent() {
+	public String insertDataContent() {
 		input = inputScanner.nextLine();
 		input.trim();
-		return input.getBytes();
+		return input;
+	}
+
+	public int insertFirstRegister() {
+		return inputScanner.nextInt();
+	}
+
+	public int insertNumberOfRegisters() {
+		return inputScanner.nextInt();
 	}
 
 	private boolean containCharacters(String s) {

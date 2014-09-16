@@ -14,4 +14,10 @@ public class ConsoleInputTest {
 		int port = consoleInputService.insertPort();
 		assertEquals(1234, port);
 	}
+
+	@Test
+	public void functionCodeTest() {
+		ConsoleInputService console = new ConsoleInputService();
+		assertEquals("03", console.insertFunctionCode());
+	}
 }
