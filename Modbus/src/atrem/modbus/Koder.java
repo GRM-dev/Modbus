@@ -41,7 +41,7 @@ public class Koder {
 
 	public void codeFirstRegister(int integer, int numberOfBytes) {
 		byte[] bytes = new byte[numberOfBytes];
-		for (int i = 0; i < numberOfBytes; i++) {
+		for (int i = numberOfBytes - 1; i >= 0; i--) {
 			bytes[i] = (byte) (integer >> (i * 8));
 
 			int w = bytes[i] & 0xff;
