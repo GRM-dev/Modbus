@@ -46,7 +46,7 @@ public class Koder {
 
 			int w = bytes[i] & 0xff;
 			System.out.println(";;" + w);
-			bytesList.add(bytes[i]);// ll
+			bytesList.add(bytes[i]);
 		}
 	}
 
