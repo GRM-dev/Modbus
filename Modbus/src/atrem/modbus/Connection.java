@@ -5,11 +5,10 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class Connection {
+
 	private Socket socket;
 	private InputStream inStream;
 	private Scanner in;
@@ -28,26 +27,12 @@ public class Connection {
 		}
 	}
 
-	public void send(ArrayList<Byte> array) {
-
-		for (int i = 0; i < array.size(); i++) {
-			out.write(array.get(i));
-		}
-		out.flush();
+	public InputStream getInStream() {
+		return inStream;
 	}
 
-	public ArrayList<Byte> receive() {
-
-		List<Byte> array = new ArrayList<Byte>();
-		try {
-			while (inStream.read() != -1) {
-				array.add((byte) inStream.read());
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		return (ArrayList<Byte>) array;
+	public OutputStream getOutStream() {
+		return outStream;
 	}
 
 	public boolean checkConnection() {
