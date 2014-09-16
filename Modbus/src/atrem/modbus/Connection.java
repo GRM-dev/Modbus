@@ -18,7 +18,7 @@ public class Connection {
 	public Connection(String ipAddress, int port) {
 
 		try {
-			this.socket = new Socket("ipAddress", port);
+			this.socket = new Socket(ipAddress, port);
 			inStream = socket.getInputStream();
 			outStream = socket.getOutputStream();
 
