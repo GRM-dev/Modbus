@@ -27,6 +27,6 @@ public class Domino {
 		consoleOutput.askPort();
 		port = consoleInput.insertPort();
 
-		return new Connection(ip, port);
+		return new Connection(ip, port);// lll
 	}
 }
