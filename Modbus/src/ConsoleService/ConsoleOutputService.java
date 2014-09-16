@@ -23,12 +23,12 @@ public class ConsoleOutputService {
 	}
 
 	public void showSlaveAdressError() {
-		System.out.println("Niepoprawny format adresu! \nWprowadz ponownie:");
+		System.out
+				.println("Niepoprawny numer adresu! <0;255>\nWprowadz ponownie:");
 	}
 
-	public void showSlaveFunctionCodeError() {
-		System.out
-				.println("Niepoprawny format kodu funkcji! \nWprowadz ponownie:");
+	public void showFunctionCodeError() {
+		System.out.println("Niepoprawny kod funkcji! \nWprowadz ponownie:");
 	}
 
 	public void askFirstRegister() {
@@ -37,5 +37,14 @@ public class ConsoleOutputService {
 
 	public void askNumberOfRegisters() {
 		System.out.println("Wprowadz ilosc rejestrow do odczytu: ");
+	}
+
+	public void showFormatError() {
+		System.out.println("Bledny format danych!");
+	}
+
+	public void shoowPortError() {
+		System.out
+				.println("Niepoprawny numer portu! <0;9999>\nWprowadz ponownie: ");
 	}
 }

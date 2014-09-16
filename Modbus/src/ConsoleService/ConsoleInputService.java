@@ -14,19 +14,37 @@ public class ConsoleInputService {
 	}
 
 	public int insertSlaveAdress() {
-		inputInt = inputScanner.nextInt();
-		while (inputInt > 255 || inputInt < 0) {
-			errorOutput.showSlaveAdressError();
-			inputInt = inputScanner.nextInt();
-			// TODO zabezpieczyc przed literalami PAWEL
+
+		while (true) {
+			if (inputScanner.hasNextInt()) {
+				inputInt = inputScanner.nextInt();
+				if (inputInt <= 255 && inputInt > 0) {
+					return inputInt;
+				} else {
+					errorOutput.showSlaveAdressError();
+				}
+			} else {
+				errorOutput.showFormatError();
+				inputScanner.next();
+			}
 		}
-		return inputInt;
 	}
 
 	public int insertFunctionCode() {
-		inputInt = inputScanner.nextInt();
-		// TODO zabezpieczyc przed nieznanym kodem funkcji PAWEL
-		return inputInt;
+
+		while (true) {
+			if (inputScanner.hasNextInt()) {
+				inputInt = inputScanner.nextInt();
+				if (correctFunctionCode(inputInt)) {
+					return inputInt;
+				} else {
+					errorOutput.showFunctionCodeError();
+				}
+			} else {
+				errorOutput.showFormatError();
+				inputScanner.next();
+			}
+		}
 	}
 
 	public String insertTcpIpAdres() {
@@ -37,8 +55,19 @@ public class ConsoleInputService {
 	}
 
 	public int insertPort() {
-		return inputScanner.nextInt();
-		// TODO zabezpieczyc numer portu PAWEL
+		while (true) {
+			if (inputScanner.hasNextInt()) {
+				inputInt = inputScanner.nextInt();
+				if (inputInt <= 9999 || inputInt > 0) {
+					return inputInt;
+				} else {
+					errorOutput.showSlaveAdressError();
+				}
+			} else {
+				errorOutput.showFormatError();
+				inputScanner.next();
+			}
+		}
 
 	}
 
@@ -58,6 +87,14 @@ public class ConsoleInputService {
 
 	private boolean containCharacters(String s) {
 		if (s.charAt(0) < 48 || s.charAt(1) > 57)
+			return true;
+		else
+			return false;
+	}
+
+	private boolean correctFunctionCode(int arg) {
+		if (arg == 1 || arg == 2 || arg == 3 || arg == 4 || arg == 5
+				|| arg == 6 || arg == 15 || arg == 16)
 			return true;
 		else
 			return false;
