@@ -2,30 +2,30 @@ package atrem.modbus;
 
 public class ModbusFrame {
 
-	private String slaveAdress, functionCode, idTCP;
+	private int slaveAdress, functionCode, idTCP;
 	FrameData content;
 
-	public String getSlaveAdress() {
+	public int getSlaveAdress() {
 		return slaveAdress;
 	}
 
-	public void setSlaveAdress(String slaveAdress) {
+	public void setSlaveAdress(int slaveAdress) {
 		this.slaveAdress = slaveAdress;
 	}
 
-	public String getFunctionCode() {
+	public int getFunctionCode() {
 		return functionCode;
 	}
 
-	public void setFunctionCode(String functionCode) {
+	public void setFunctionCode(int functionCode) {
 		this.functionCode = functionCode;
 	}
 
-	public String getIdTCP() {
+	public int getIdTCP() {
 		return idTCP;
 	}
 
-	public void setIdTCP(String idTCP) {
+	public void setIdTCP(int idTCP) {
 		this.idTCP = idTCP;
 	}
 
