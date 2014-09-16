@@ -2,7 +2,9 @@ package atrem.modbus;
 
 public class ModbusFrame {
 
-	private String slaveAdress, functionCode, idTCP;
+	private String slaveAdress;
+	private String functionCode;
+	private String idTCP;
 	FrameData content;
 
 	public String getSlaveAdress() {
