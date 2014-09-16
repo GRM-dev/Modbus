@@ -23,11 +23,35 @@ public class ConsoleOutputService {
 	}
 
 	public void showSlaveAdressError() {
-		System.out.println("Niepoprawny format adresu! \nWprowadz ponownie:");
+		System.out
+				.println("Niepoprawny numer adresu! <0;255>\nWprowadz ponownie:");
 	}
 
-	public void showSlaveFunctionCodeError() {
+	public void showFunctionCodeError() {
+		System.out.println("Niepoprawny kod funkcji! \nWprowadz ponownie:");
+	}
+
+	public void askFirstRegister() {
+		System.out.println("Wprowadz pierwszy rejestr do odczytu: ");
+	}
+
+	public void askNumberOfRegisters() {
+		System.out.println("Wprowadz ilosc rejestrow do odczytu: ");
+	}
+
+	public void showFormatError() {
+		System.out.println("Bledny format danych!");
+	}
+
+	public void shoowPortError() {
 		System.out
-				.println("Niepoprawny format kodu funkcji! \nWprowadz ponownie:");
+				.println("Niepoprawny numer portu! <0;9999>\nWprowadz ponownie: ");
+	}
+
+	public void showConnectionStatus(boolean status) {
+		if (status)
+			System.out.println("Connected");
+		else
+			System.out.println("Connection ERROR");
 	}
 }
