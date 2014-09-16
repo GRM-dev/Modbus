@@ -2,6 +2,7 @@ package atrem.modbus;
 
 
 public class FrameData {
+	ArrayList<Byte> content = new ArrayList<Byte>();
 	private int firstRegister;
 	private int numberOfRegisters;
 
