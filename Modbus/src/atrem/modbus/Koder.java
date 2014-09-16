@@ -42,7 +42,10 @@ public class Koder {
 	public void codeFirstRegister(int integer, int numberOfBytes) {
 		byte[] bytes = new byte[numberOfBytes];
 		for (int i = 0; i < numberOfBytes; i++) {
-			bytes[i] = (byte) (integer >>> (i * 8));
+			bytes[i] = (byte) (integer >> (i * 8));
+
+			int w = bytes[i] & 0xff;
+			System.out.println(";;" + w);
 			bytesList.add(bytes[i]);
 		}
 	}
@@ -53,5 +56,9 @@ public class Koder {
 			bytes[i] = (byte) (integer >>> (i * 8));
 			bytesList.add(bytes[i]);
 		}
+	}
+
+	public ArrayList<Byte> getBytesList() {
+		return bytesList;
 	}
 }

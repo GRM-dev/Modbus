@@ -8,20 +8,12 @@ import java.net.Socket;
 import java.util.Scanner;
 
 public class Connection {
-<<<<<<< master
 
 	private Socket socket;
 	private InputStream inStream;
 	private Scanner in;
 	private OutputStream outStream;
 	private PrintWriter out;
-=======
-	Socket socket;
-	InputStream inStream;
-	Scanner in;
-	OutputStream outStream;
-	PrintWriter out;
->>>>>>> 870816f main rozbudowany
 
 	public Connection(String ipAddress, int port) {
 
@@ -34,13 +26,11 @@ public class Connection {
 			e.printStackTrace();
 		}
 	}
-	
 
 	public InputStream getInStream() {
 		return inStream;
 	}
 
-<<<<<<< master
 	public OutputStream getOutStream() {
 		return outStream;
 	}
@@ -50,20 +40,7 @@ public class Connection {
 			return true;
 		else
 			return false;
-=======
-	public ArrayList<Byte> receive() {
 
-		List<Byte> array = new ArrayList<Byte>();
-		try {
-			while (inStream.read() != -1) {
-				array.add((byte) inStream.read());
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		return (ArrayList<Byte>) array;
->>>>>>> 870816f main rozbudowany
 	}
 
 	public void closeConnection() {
