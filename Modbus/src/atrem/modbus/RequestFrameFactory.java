@@ -7,7 +7,7 @@ import consoleService.ConsoleOutputService;
 import frames.RequestFrame;
 
 public class RequestFrameFactory {
-
+	private int id;
 	private int transactionIdentifier;
 	private int unitIdentifier;
 	private int startingAdress;
@@ -40,11 +40,10 @@ public class RequestFrameFactory {
 	}
 
 	public RequestFrame createRequestFrame() {
-		int id = generateTransactionId();
-		RequestFrame x = new RequestFrame(id, unitIdentifier, functionCode,
+		id = generateTransactionId();
+
+		return new RequestFrame(id, unitIdentifier, functionCode,
 				startingAdress, quantityOfRegisters);
-		System.out.println(x);
-		return x;
 	}
 
 	public void loadDefinedInformation() {
@@ -60,7 +59,7 @@ public class RequestFrameFactory {
 	}
 
 	private int generateTransactionId() {
-		return rand.nextInt((65535));
+		return rand.nextInt(65535);
 	}
 
 	public int getTransactionIdentifier() {
