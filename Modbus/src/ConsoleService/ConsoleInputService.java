@@ -71,7 +71,8 @@ public class ConsoleInputService {
 
 	}
 
-	public String insertDataContent() {
+	public String insertDataContent(int functionCode) {
+		// TODO zastanowic sie na tym PAWEL
 		inputString = inputScanner.nextLine();
 		inputString.trim();
 		return inputString;
@@ -83,13 +84,6 @@ public class ConsoleInputService {
 
 	public int insertNumberOfRegisters() {
 		return inputScanner.nextInt();
-	}
-
-	private boolean containCharacters(String s) {
-		if (s.charAt(0) < 48 || s.charAt(1) > 57)
-			return true;
-		else
-			return false;
 	}
 
 	private boolean correctFunctionCode(int arg) {
