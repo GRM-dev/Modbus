@@ -26,11 +26,11 @@ public class FrameDecoder {
 		return 0;
 	}
 
-	public int readNextInt() {
+	int readNextInt() {
 		byte[] array = { 0, 0, readNextByte(), readNextByte() };
-		ByteBuffer bb = ByteBuffer.wrap(array);
-		bb.order(ByteOrder.BIG_ENDIAN);
-		return bb.getInt();
+		ByteBuffer byteBuffer = ByteBuffer.wrap(array);
+		byteBuffer.order(ByteOrder.BIG_ENDIAN);
+		return byteBuffer.getInt();
 	}
 
 	public ResponseFrame getNextModbusFrame() {
