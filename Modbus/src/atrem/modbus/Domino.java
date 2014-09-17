@@ -17,6 +17,11 @@ public class Domino {
 		consoleOutput = new ConsoleOutputService();
 		connection = createConnection();
 		consoleOutput.showConnectionStatus(connection.checkConnection());
+		modbusFrame = new ModbusFrame();
+		createFrame();
+		Koder koder = new Koder();
+		koder.code(modbusFrame);
+		connection.send(koder.changeListToArray());
 
 	}
 
@@ -30,9 +35,17 @@ public class Domino {
 		return new Connection(ip, port);// lll
 	}
 
-	// public static createFrame() {
-	// modbusFrame = new ModbusFrame();
-	// modbusFrame.consoleOutput.askSlaveAdress();
-	//
-	// }
+	public static void createFrame() {
+
+		consoleOutput.askUnitIdentifier();
+		modbusFrame.setUnitIdentifier((consoleInput.insertUnitIdentifier()));
+		consoleOutput.askFunctionCode();
+		modbusFrame.setFunctionCode(consoleInput.insertFunctionCode());
+		consoleOutput.askStartingAdress();
+		modbusFrame.setStartingAdress(consoleInput.insertFirstRegister());
+		consoleOutput.askQuantityOfRegisters();
+		modbusFrame.setQuantityOfRegisters(consoleInput
+				.insertNumberOfRegisters());
+
+	}
 }

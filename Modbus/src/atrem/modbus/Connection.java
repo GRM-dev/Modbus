@@ -43,6 +43,18 @@ public class Connection {
 
 	}
 
+	public void send(byte[] frame) {
+		{
+			try {
+				outStream.write(frame);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+	}
+
 	public void closeConnection() {
 		try {
 			socket.close();
