@@ -2,7 +2,7 @@ package ConsoleService;
 
 public class ConsoleOutputService {
 
-	public void askSlaveAdress() {
+	public void askUnitIdentifier() {
 		System.out.println("Wprowadz adress Slave'a: ");
 	}
 
@@ -22,7 +22,7 @@ public class ConsoleOutputService {
 		System.out.println("Wprowadz port: ");
 	}
 
-	public void showSlaveAdressError() {
+	public void showUnitIdentifierError() {
 		System.out
 				.println("Niepoprawny numer adresu! <0;255>\nWprowadz ponownie:");
 	}
@@ -31,11 +31,11 @@ public class ConsoleOutputService {
 		System.out.println("Niepoprawny kod funkcji! \nWprowadz ponownie:");
 	}
 
-	public void askFirstRegister() {
+	public void askStartingAdress() {
 		System.out.println("Wprowadz pierwszy rejestr do odczytu: ");
 	}
 
-	public void askNumberOfRegisters() {
+	public void askQuantityOfRegisters() {
 		System.out.println("Wprowadz ilosc rejestrow do odczytu: ");
 	}
 

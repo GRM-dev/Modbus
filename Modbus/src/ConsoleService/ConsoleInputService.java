@@ -13,7 +13,7 @@ public class ConsoleInputService {
 		errorOutput = new ConsoleOutputService();
 	}
 
-	public int insertSlaveAdress() {
+	public int insertUnitIdentifier() {
 
 		while (true) {
 			if (inputScanner.hasNextInt()) {
@@ -21,7 +21,7 @@ public class ConsoleInputService {
 				if (inputInt <= 255 && inputInt > 0) {
 					return inputInt;
 				} else {
-					errorOutput.showSlaveAdressError();
+					errorOutput.showUnitIdentifierError();
 				}
 			} else {
 				errorOutput.showFormatError();
@@ -61,7 +61,7 @@ public class ConsoleInputService {
 				if (inputInt <= 9999 || inputInt > 0) {
 					return inputInt;
 				} else {
-					errorOutput.showSlaveAdressError();
+					errorOutput.showUnitIdentifierError();
 				}
 			} else {
 				errorOutput.showFormatError();
