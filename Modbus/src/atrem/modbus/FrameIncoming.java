@@ -1,11 +1,11 @@
 package atrem.modbus;
 
-
 public class FrameIncoming {
 	private int transactionIdentifier;
 	private int protocolIdentifier;
 	private int unitIdentifier;
 	private int dataLength;
+	private int numberOfDataBytes;
 	private byte[] dataBytes;
 	private int functionCode;
 
@@ -67,5 +67,13 @@ public class FrameIncoming {
 
 	public void setFunctionCode(int functionCode) {
 		this.functionCode = functionCode;
+	}
+
+	public int getNumberOfDataBytes() {
+		return numberOfDataBytes;
+	}
+
+	public void setNumberOfDataBytes(int numberOfDataBytes) {
+		this.numberOfDataBytes = numberOfDataBytes;
 	}
 }

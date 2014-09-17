@@ -32,7 +32,7 @@ public class FrameDecoder {
 		return 0;
 	}
 
-	private int readNextInt() {
+	public int readNextInt() {
 		byte[] array = { 0, 0, readNextByte(), readNextByte() };
 
 		ByteBuffer bb = ByteBuffer.wrap(array);
@@ -46,8 +46,14 @@ public class FrameDecoder {
 		readLengthField();
 		readUnitIdentifier();
 		readFunctionCode();
+		readNumberOfBytes();
 		readDataBytes(frameIncoming.getDataLength() - 2);
 		return frameIncoming;
+	}
+
+	private void readNumberOfBytes() {
+		frameIncoming.setNumberOfBytes(readNextByte());
+
 	}
 
 	private void readTransactionIdentifier() {
