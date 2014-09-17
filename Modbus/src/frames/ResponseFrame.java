@@ -1,6 +1,7 @@
 package frames;
 
 import java.nio.ByteBuffer;
+import java.util.Date;
 
 public class ResponseFrame {
 	private int transactionIdentifier;
@@ -9,6 +10,7 @@ public class ResponseFrame {
 	private int dataLength;
 	private byte[] dataBytes;
 	private int functionCode;
+	private Date date;
 
 	public ResponseFrame() {
 
@@ -20,6 +22,7 @@ public class ResponseFrame {
 		this.transactionIdentifier = transactionIdentifier;
 		this.protocolIdentifier = protocolIdentifier;
 		this.unitIdentifier = unitIdentifier;
+		date = new Date();
 	}
 
 	public int getTransactionIdentifier() {
@@ -67,9 +70,9 @@ public class ResponseFrame {
 				+ ", functionCode=" + functionCode + "]";
 	}
 
-	private float zmiana() {
+	private double zmiana() {
 		ByteBuffer byteBuffer = ByteBuffer.wrap(dataBytes, 1, 4);
-		return byteBuffer.getFloat();
+		return byteBuffer.getInt();
 	}
 
 	public void setDataBytes(byte[] dataBytes) {
@@ -82,5 +85,9 @@ public class ResponseFrame {
 
 	public void setFunctionCode(int functionCode) {
 		this.functionCode = functionCode;
+	}
+
+	public Date getDate() {
+		return date;
 	}
 }

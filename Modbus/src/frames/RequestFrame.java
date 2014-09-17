@@ -8,8 +8,28 @@ public class RequestFrame {
 	private int unitIdentifier;
 	private int functionCode;
 
+	@Override
+	public String toString() {
+		return "RequestFrame [transactionIdentifier=" + transactionIdentifier
+				+ ", protocolIdentifier=" + protocolIdentifier
+				+ ", lengthField=" + lengthField + ", unitIdentifier="
+				+ unitIdentifier + ", functionCode=" + functionCode
+				+ ", startingAdress=" + startingAdress
+				+ ", quantityOfRegisters=" + quantityOfRegisters + "]";
+	}
+
 	private int startingAdress;
 	private int quantityOfRegisters;
+
+	public RequestFrame(int transactionIdentifier, int unitIdentifier,
+			int functionCode, int startingAdress, int quantityOfRegisters) {
+		this.transactionIdentifier = transactionIdentifier;
+		this.unitIdentifier = unitIdentifier;
+		this.functionCode = functionCode;
+		this.quantityOfRegisters = quantityOfRegisters;
+		this.startingAdress = startingAdress;
+
+	}
 
 	public int getStartingAdress() {
 		return startingAdress;
