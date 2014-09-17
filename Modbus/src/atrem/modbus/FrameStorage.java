@@ -7,21 +7,21 @@ import java.util.List;
 
 public class FrameStorage {
 
-	private List<ModbusFrame> sentFrames = new ArrayList<ModbusFrame>();
-	private List<FrameIncoming> receivedFrames = new ArrayList<FrameIncoming>();
+	private List<RequestFrame> sentFrames = new ArrayList<RequestFrame>();
+	private List<ResponseFrame> receivedFrames = new ArrayList<ResponseFrame>();
 
-	public void addSentFrame(ModbusFrame modbusFrame) {
+	public void addSentFrame(RequestFrame modbusFrame) {
 		sentFrames.add(modbusFrame);
 	}
 
-	public void addReceivedFrame(FrameIncoming frameIncoming) {
+	public void addReceivedFrame(ResponseFrame frameIncoming) {
 		receivedFrames.add(frameIncoming);
 	}
 
 	public void sortReceivedFrames() {
-		Collections.sort(receivedFrames, new Comparator<FrameIncoming>() {
+		Collections.sort(receivedFrames, new Comparator<ResponseFrame>() {
 			@Override
-			public int compare(FrameIncoming f1, FrameIncoming f2) {
+			public int compare(ResponseFrame f1, ResponseFrame f2) {
 				return f1.getTransactionIdentifier()
 						- f2.getTransactionIdentifier();
 			}

@@ -1,4 +1,4 @@
-package ConsoleService;
+package consoleService;
 
 import java.util.Scanner;
 

@@ -1,6 +1,6 @@
 package atrem.modbus;
 
-public class ModbusFrame {
+public class RequestFrame {
 
 	private int transactionIdentifier;
 	private int protocolIdentifier;
@@ -8,8 +8,7 @@ public class ModbusFrame {
 	private int unitIdentifier;
 	private int functionCode;
 
-	private int startingAdress; // narazie takie rozwiazanie tylko dla ramki
-								// zapytania o temp
+	private int startingAdress;
 	private int quantityOfRegisters;
 
 	public int getStartingAdress() {

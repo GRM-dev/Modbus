@@ -1,4 +1,4 @@
-package ConsoleService;
+package consoleService;
 
 public class ConsoleOutputService {
 
