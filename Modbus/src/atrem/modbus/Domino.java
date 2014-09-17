@@ -1,9 +1,12 @@
 package atrem.modbus;
 
+import java.util.Random;
+
 import atrem.modbus.parsers.FrameDecoder;
 import atrem.modbus.parsers.Koder;
 import consoleService.ConsoleInputService;
 import consoleService.ConsoleOutputService;
+import frames.RequestFrame;
 import frames.ResponseFrame;
 
 public class Domino {
@@ -15,16 +18,29 @@ public class Domino {
 	static private ConsoleOutputService consoleOutput;
 
 	public static void main(String[] args) {
+		FrameStorage frameStorage = new FrameStorage();
 		connection = createConnectionConstant();
 		RequestFrameFactory requestFrameFactory = new RequestFrameFactory();
 		requestFrameFactory.loadDefinedInformation();
 		Koder koder = new Koder();
-		koder.code(requestFrameFactory.createRequestFrame());
-		connection.send(koder.changeListToArray());
 		FrameDecoder decoder = new FrameDecoder(connection.getInStream());
-		ResponseFrame frameIncoming;
-		frameIncoming = decoder.getNextModbusFrame();
-		System.out.println(frameIncoming);
+		Random r = new Random();
+		while (true) {
+			RequestFrame frame = requestFrameFactory.createRequestFrame();
+			koder.code(frame);
+			frameStorage.addSentFrame(frame);
+			connection.send(koder.changeListToArray());
+			ResponseFrame frameIncoming;
+			frameIncoming = decoder.getNextModbusFrame();
+			frameStorage.addReceivedFrame(frameIncoming);
+			System.out.println(frameIncoming);
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 
 	}
 
