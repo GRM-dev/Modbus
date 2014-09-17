@@ -21,6 +21,7 @@ public class Domino {
 		createFrame();
 		Koder koder = new Koder();
 		koder.code(modbusFrame);
+		connection.send(koder.changeListToArray());
 
 	}
 
