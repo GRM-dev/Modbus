@@ -9,8 +9,6 @@ import java.io.InputStream;
 
 import org.junit.Test;
 
-import atrem.modbus.parsers.FrameDecoder;
-
 public class FrameDecoderTest {
 	@Test
 	public void readNextIntTest() throws IOException {

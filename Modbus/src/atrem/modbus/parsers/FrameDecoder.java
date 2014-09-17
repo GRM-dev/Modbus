@@ -64,7 +64,7 @@ public class FrameDecoder {
 
 	}
 
-	private void readDataBytes(int length) {
+	void readDataBytes(int length) {
 		byte[] array = new byte[length];
 		try {
 			inputStream.read(array);

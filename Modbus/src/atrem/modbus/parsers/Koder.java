@@ -5,9 +5,10 @@ import java.util.ArrayList;
 import frames.RequestFrame;
 
 public class Koder {
+
 	private ArrayList<Byte> bytesList = new ArrayList<Byte>();
 
-	public void code(RequestFrame frame) {
+	public void codeFrame(RequestFrame frame) {
 
 		codeTCPip(frame.getTransactionIdentifier(), 2); // zapytac sie ile
 		codeProtocolIdentifier();
@@ -26,61 +27,39 @@ public class Koder {
 
 	}
 
-	public void codeTCPip(int integer, int numberOfBytes) {
+	private void codeTCPip(int integer, int numberOfBytes) {
+		codeToBit(integer, numberOfBytes);
+
+	}
+
+	private void codeLengthField(int integer, int numberOfBytes) {
+		codeToBit(integer, numberOfBytes);
+
+	}
+
+	private void codeAdress(int integer, int numberOfBytes) {
+		codeToBit(integer, numberOfBytes);
+	}
+
+	private void codeFunction(int integer, int numberOfBytes) {
+		codeToBit(integer, numberOfBytes);
+	}
+
+	private void codeNumberOfRegisters(int integer, int numberOfBytes) {
+		codeToBit(integer, numberOfBytes);
+	}
+
+	private void codeFirstRegister(int integer, int numberOfBytes) {
+		codeToBit(integer, numberOfBytes);
+	}
+
+	void codeToBit(int integer, int numberOfBytes) {
 		byte[] bytes = new byte[numberOfBytes];
 		for (int i = numberOfBytes - 1; i >= 0; i--) {
 			bytes[i] = (byte) (integer >>> (i * 8));
 			bytesList.add(bytes[i]);
 		}
 
-	}
-
-	public void codeLengthField(int integer, int numberOfBytes) {
-		byte[] bytes = new byte[numberOfBytes];
-		for (int i = numberOfBytes - 1; i >= 0; i--) {
-			bytes[i] = (byte) (integer >>> (i * 8));
-			bytesList.add(bytes[i]);
-		}
-
-	}
-
-	public void codeAdress(int integer, int numberOfBytes) {
-		byte[] bytes = new byte[numberOfBytes];
-		for (int i = numberOfBytes - 1; i >= 0; i--) {
-			bytes[i] = (byte) (integer >>> (i * 8));
-			bytesList.add(bytes[i]);
-		}
-	}
-
-	public void codeFunction(int integer, int numberOfBytes) {
-		byte[] bytes = new byte[numberOfBytes];
-		for (int i = numberOfBytes - 1; i >= 0; i--) {
-			bytes[i] = (byte) (integer >>> (i * 8));
-			bytesList.add(bytes[i]);
-		}
-	}
-
-	public void codeFirstRegister(int integer, int numberOfBytes) {
-		byte[] bytes = new byte[numberOfBytes];
-		for (int i = numberOfBytes - 1; i >= 0; i--) {
-			bytes[i] = (byte) (integer >> (i * 8));
-
-			int w = bytes[i] & 0xff;
-			System.out.println(";;" + w);
-			bytesList.add(bytes[i]);
-		}
-	}
-
-	public void codeNumberOfRegisters(int integer, int numberOfBytes) {
-		byte[] bytes = new byte[numberOfBytes];
-		for (int i = numberOfBytes - 1; i >= 0; i--) {
-			bytes[i] = (byte) (integer >>> (i * 8));
-			bytesList.add(bytes[i]);
-		}
-	}
-
-	public ArrayList<Byte> getBytesList() {
-		return bytesList;
 	}
 
 	public byte[] changeListToArray() {
@@ -90,5 +69,9 @@ public class Koder {
 		}
 		return bytetab;
 
+	}
+
+	public ArrayList<Byte> getBytesList() {
+		return bytesList;
 	}
 }
