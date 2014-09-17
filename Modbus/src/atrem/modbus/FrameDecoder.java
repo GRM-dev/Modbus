@@ -25,7 +25,7 @@ public class FrameDecoder {
 	}
 
 	private int readNextInt() {
-		byte[] array = { 0, 0, readNextByte(), readNextByte() };
+		byte[] array = {0, 0, readNextByte(), readNextByte()};
 		ByteBuffer bb = ByteBuffer.wrap(array);
 		bb.order(ByteOrder.BIG_ENDIAN);
 		return bb.getInt();
@@ -37,7 +37,7 @@ public class FrameDecoder {
 		readLengthField();
 		readUnitIdentifier();
 		readFunctionCode();
-		readDataBytes(frameIncoming.getDataLength());
+		readDataBytes(frameIncoming.getDataLength() - 2);
 		return frameIncoming;
 	}
 
