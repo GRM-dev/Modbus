@@ -2,6 +2,8 @@ package atrem.modbus;
 
 import java.util.ArrayList;
 
+import frames.RequestFrame;
+
 public class Koder {
 	private ArrayList<Byte> bytesList = new ArrayList<Byte>();
 

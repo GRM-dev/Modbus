@@ -2,6 +2,8 @@ package atrem.modbus;
 
 import java.util.Comparator;
 
+import frames.ResponseFrame;
+
 public class FrameComparator implements Comparator<ResponseFrame> {
 
 	@Override

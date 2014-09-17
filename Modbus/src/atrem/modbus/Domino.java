@@ -2,6 +2,8 @@ package atrem.modbus;
 
 import consoleService.ConsoleInputService;
 import consoleService.ConsoleOutputService;
+import frames.RequestFrame;
+import frames.ResponseFrame;
 
 public class Domino {
 

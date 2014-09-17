@@ -5,6 +5,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import frames.RequestFrame;
+import frames.ResponseFrame;
+
 public class FrameStorage {
 
 	private List<RequestFrame> sentFrames = new ArrayList<RequestFrame>();
