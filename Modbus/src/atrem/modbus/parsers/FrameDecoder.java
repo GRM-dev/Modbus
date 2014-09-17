@@ -26,7 +26,7 @@ public class FrameDecoder {
 		return 0;
 	}
 
-	public int readNextInt() {
+	int readNextInt() {
 		byte[] array = { 0, 0, readNextByte(), readNextByte() };
 		ByteBuffer byteBuffer = ByteBuffer.wrap(array);
 		byteBuffer.order(ByteOrder.BIG_ENDIAN);
