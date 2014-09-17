@@ -6,8 +6,8 @@ public class Koder {
 	private ArrayList<Byte> bytesList = new ArrayList<Byte>();
 
 	public void code(ModbusFrame frame) {
-		codeTCPip(frame.getIdTCP(), 1); // zapytac sie ile bajtów
-		codeAdress(frame.getSlaveAdress(), 1);
+		codeTCPip(frame.getTransactionIdentifier()(), 1); // zapytac sie ile bajtów
+		codeAdress(frame.getUnitIdentifier()(), 1);
 		codeFunction(frame.getFunctionCode(), 1);
 		codeFirstRegister(frame.getContent().getFirstRegister(), 2);
 		codeNumberOfRegisters(frame.getContent().getNumberOfRegisters(), 2);
