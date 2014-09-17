@@ -6,6 +6,7 @@ public class Koder {
 	private ArrayList<Byte> bytesList = new ArrayList<Byte>();
 
 	public void code(ModbusFrame frame) {
+
 		codeTCPip(frame.getTransactionIdentifier(), 2); // zapytac sie ile
 		codeProtocolIdentifier();
 		codeLengthField(6, 2);
@@ -25,7 +26,7 @@ public class Koder {
 
 	public void codeTCPip(int integer, int numberOfBytes) {
 		byte[] bytes = new byte[numberOfBytes];
-		for (int i = 0; i < numberOfBytes; i++) {
+		for (int i = numberOfBytes - 1; i >= 0; i--) {
 			bytes[i] = (byte) (integer >>> (i * 8));
 			bytesList.add(bytes[i]);
 		}
@@ -34,7 +35,7 @@ public class Koder {
 
 	public void codeLengthField(int integer, int numberOfBytes) {
 		byte[] bytes = new byte[numberOfBytes];
-		for (int i = 0; i < numberOfBytes; i++) {
+		for (int i = numberOfBytes - 1; i >= 0; i--) {
 			bytes[i] = (byte) (integer >>> (i * 8));
 			bytesList.add(bytes[i]);
 		}
@@ -43,7 +44,7 @@ public class Koder {
 
 	public void codeAdress(int integer, int numberOfBytes) {
 		byte[] bytes = new byte[numberOfBytes];
-		for (int i = 0; i < numberOfBytes; i++) {
+		for (int i = numberOfBytes - 1; i >= 0; i--) {
 			bytes[i] = (byte) (integer >>> (i * 8));
 			bytesList.add(bytes[i]);
 		}
@@ -51,7 +52,7 @@ public class Koder {
 
 	public void codeFunction(int integer, int numberOfBytes) {
 		byte[] bytes = new byte[numberOfBytes];
-		for (int i = 0; i < numberOfBytes; i++) {
+		for (int i = numberOfBytes - 1; i >= 0; i--) {
 			bytes[i] = (byte) (integer >>> (i * 8));
 			bytesList.add(bytes[i]);
 		}
@@ -70,7 +71,7 @@ public class Koder {
 
 	public void codeNumberOfRegisters(int integer, int numberOfBytes) {
 		byte[] bytes = new byte[numberOfBytes];
-		for (int i = 0; i < numberOfBytes; i++) {
+		for (int i = numberOfBytes - 1; i >= 0; i--) {
 			bytes[i] = (byte) (integer >>> (i * 8));
 			bytesList.add(bytes[i]);
 		}
