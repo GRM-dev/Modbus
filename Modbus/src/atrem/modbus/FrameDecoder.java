@@ -7,11 +7,11 @@ import java.nio.ByteOrder;
 
 public class FrameDecoder {
 	private ByteBuffer byteBuffer;
-	private FrameIncoming modbusFrame;
+	private FrameIncoming frameIncoming;
 	private InputStream inputStream;
 
 	public FrameDecoder(InputStream inputStream) {
-		modbusFrame = new FrameIncoming();
+		frameIncoming = new FrameIncoming();
 		this.inputStream = inputStream;
 	}
 
@@ -37,28 +37,28 @@ public class FrameDecoder {
 		readLengthField();
 		readUnitIdentifier();
 		readFunctionCode();
-		readDataBytes(modbusFrame.getDataLength());
-		return modbusFrame;
+		readDataBytes(frameIncoming.getDataLength());
+		return frameIncoming;
 	}
 
 	private void readTransactionIdentifier() {
-		modbusFrame.setTransactionIdentifier(readNextInt());
+		frameIncoming.setTransactionIdentifier(readNextInt());
 	}
 
 	private void readProtocolIdentifier() {
-		modbusFrame.setProtocolIdentifier(readNextInt());
+		frameIncoming.setProtocolIdentifier(readNextInt());
 	}
 
 	private void readLengthField() {
-		modbusFrame.setDataLength(readNextInt());
+		frameIncoming.setDataLength(readNextInt());
 	}
 
 	private void readUnitIdentifier() {
-		modbusFrame.setUnitIdentifier(readNextByte());
+		frameIncoming.setUnitIdentifier(readNextByte());
 	}
 
 	private void readFunctionCode() {
-		modbusFrame.setFunctionCode(readNextByte());
+		frameIncoming.setFunctionCode(readNextByte());
 
 	}
 
@@ -69,7 +69,7 @@ public class FrameDecoder {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		modbusFrame.setDataBytes(array);
+		frameIncoming.setDataBytes(array);
 	}
 
 }
