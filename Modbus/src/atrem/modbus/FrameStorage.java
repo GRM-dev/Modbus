@@ -14,7 +14,7 @@ public class FrameStorage {
 	private List<ResponseFrame> receivedFrames = new ArrayList<ResponseFrame>();
 	private List<FramePairs> framePairs = new ArrayList<FramePairs>();
 	private FramePairs pair = new FramePairs();
-
+	private boolean isWorking = false;
 	private ExecutorService executor = Executors
 			.newSingleThreadScheduledExecutor();
 
@@ -26,19 +26,27 @@ public class FrameStorage {
 		receivedFrames.add(frameIncoming);
 	}
 
+	public boolean isWorking() {
+		return isWorking;
+	}
+
+	public void setWorking(boolean isWorking) {
+		this.isWorking = isWorking;
+	}
+
 	public void makeOrder() {
 
-		while (sentFrames.size() != 0) {
-			executor.execute(new Runnable() {
-
-				@Override
-				public void run() {
+		executor.execute(new Runnable() {
+			@Override
+			public void run() {
+				isWorking = true;
+				while (sentFrames.size() != 0)
 					compare();
 
-				}
-			});
+			}
+		});
 
-		}
+		isWorking = false;
 
 	}
 
