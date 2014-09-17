@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Connection {
@@ -41,6 +42,13 @@ public class Connection {
 		else
 			return false;
 
+	}
+
+	public void send(ArrayList<Byte> frame) {
+		{
+			
+		}
+		outStream.;
 	}
 
 	public void closeConnection() {

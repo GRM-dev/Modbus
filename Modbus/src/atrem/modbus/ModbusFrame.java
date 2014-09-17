@@ -8,6 +8,26 @@ public class ModbusFrame {
 	private int unitIdentifier;
 	private int functionCode;
 
+	private int startingAdress; // narazie takie rozwiazanie tylko dla ramki
+								// zapytania o temp
+	private int quantityOfRegisters;
+
+	public int getStartingAdress() {
+		return startingAdress;
+	}
+
+	public void setStartingAdress(int startingAdress) {
+		this.startingAdress = startingAdress;
+	}
+
+	public int getQuantityOfRegisters() {
+		return quantityOfRegisters;
+	}
+
+	public void setQuantityOfRegisters(int quantityOfRegisters) {
+		this.quantityOfRegisters = quantityOfRegisters;
+	}
+
 	public int getTransactionIdentifier() {
 		return transactionIdentifier;
 	}
