@@ -1,10 +1,10 @@
-package ConsoleServiceJUnitTests;
+package consoleServiceJUnitTests;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import ConsoleService.ConsoleInputService;
+import consoleService.ConsoleInputService;
 
 public class ConsoleInputTest {
 

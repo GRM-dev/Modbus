@@ -1,7 +1,8 @@
 package atrem.modbus;
 
+import java.nio.ByteBuffer;
 
-public class FrameIncoming {
+public class ResponseFrame {
 	private int transactionIdentifier;
 	private int protocolIdentifier;
 	private int unitIdentifier;
@@ -9,11 +10,11 @@ public class FrameIncoming {
 	private byte[] dataBytes;
 	private int functionCode;
 
-	public FrameIncoming() {
+	public ResponseFrame() {
 
 	}
 
-	public FrameIncoming(int transactionIdentifier, int protocolIdentifier,
+	public ResponseFrame(int transactionIdentifier, int protocolIdentifier,
 			int unitIdentifier) {
 		super();
 		this.transactionIdentifier = transactionIdentifier;
@@ -55,6 +56,20 @@ public class FrameIncoming {
 
 	public byte[] getDataBytes() {
 		return dataBytes;
+	}
+
+	@Override
+	public String toString() {
+		return "FrameIncoming [transactionIdentifier=" + transactionIdentifier
+				+ ", protocolIdentifier=" + protocolIdentifier
+				+ ", unitIdentifier=" + unitIdentifier + ", dataLength="
+				+ dataLength + ", dataBytes=" + zmiana() + " " + dataBytes[0]
+				+ ", functionCode=" + functionCode + "]";
+	}
+
+	private float zmiana() {
+		ByteBuffer byteBuffer = ByteBuffer.wrap(dataBytes, 1, 4);
+		return byteBuffer.getFloat();
 	}
 
 	public void setDataBytes(byte[] dataBytes) {

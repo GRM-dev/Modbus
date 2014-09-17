@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Koder {
 	private ArrayList<Byte> bytesList = new ArrayList<Byte>();
 
-	public void code(ModbusFrame frame) {
+	public void code(RequestFrame frame) {
 
 		codeTCPip(frame.getTransactionIdentifier(), 2); // zapytac sie ile
 		codeProtocolIdentifier();

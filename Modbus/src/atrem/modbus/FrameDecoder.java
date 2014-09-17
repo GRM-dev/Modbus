@@ -7,11 +7,11 @@ import java.nio.ByteOrder;
 
 public class FrameDecoder {
 	private ByteBuffer byteBuffer;
-	private FrameIncoming frameIncoming;
+	private ResponseFrame frameIncoming;
 	private InputStream inputStream;
 
 	public FrameDecoder(InputStream inputStream) {
-		frameIncoming = new FrameIncoming();
+		frameIncoming = new ResponseFrame();
 		this.inputStream = inputStream;
 	}
 
@@ -31,7 +31,7 @@ public class FrameDecoder {
 		return bb.getInt();
 	}
 
-	public FrameIncoming getNextModbusFrame() {
+	public ResponseFrame getNextModbusFrame() {
 		readTransactionIdentifier();
 		readProtocolIdentifier();
 		readLengthField();
