@@ -10,12 +10,20 @@ public class FrameDecoder {
 	private FrameIncoming frameIncoming;
 	private InputStream inputStream;
 
-	public FrameDecoder(InputStream inputStream) {
+	public InputStream getInputStream() {
+		return inputStream;
+	}
+
+	public FrameDecoder() {
 		frameIncoming = new FrameIncoming();
+	}
+
+	public FrameDecoder(InputStream inputStream) {
+		this();
 		this.inputStream = inputStream;
 	}
 
-	private byte readNextByte() {
+	public byte readNextByte() {
 		try {
 			return (byte) inputStream.read();
 		} catch (IOException e) {
@@ -24,7 +32,7 @@ public class FrameDecoder {
 		return 0;
 	}
 
-	private int readNextInt() {
+	public int readNextInt() {
 		byte[] array = { 0, 0, readNextByte(), readNextByte() };
 		ByteBuffer bb = ByteBuffer.wrap(array);
 		bb.order(ByteOrder.BIG_ENDIAN);
