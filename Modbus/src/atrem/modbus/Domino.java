@@ -1,5 +1,7 @@
 package atrem.modbus;
 
+import atrem.modbus.parsers.FrameDecoder;
+import atrem.modbus.parsers.Koder;
 import consoleService.ConsoleInputService;
 import consoleService.ConsoleOutputService;
 import frames.RequestFrame;

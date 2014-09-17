@@ -9,7 +9,7 @@ import java.io.InputStream;
 
 import org.junit.Test;
 
-import atrem.modbus.FrameDecoder;
+import atrem.modbus.parsers.FrameDecoder;
 
 public class FrameDecoderTest {
 	@Test
