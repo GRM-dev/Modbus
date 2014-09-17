@@ -7,11 +7,11 @@ import java.nio.ByteOrder;
 
 public class FrameDecoder {
 	private ByteBuffer byteBuffer;
-	private ModbusFrame modbusFrame;
+	private FrameIncoming modbusFrame;
 	private InputStream inputStream;
 
 	public FrameDecoder(InputStream inputStream) {
-		modbusFrame = new ModbusFrame();
+		modbusFrame = new FrameIncoming();
 		this.inputStream = inputStream;
 	}
 
@@ -25,19 +25,19 @@ public class FrameDecoder {
 	}
 
 	private int readNextInt() {
-		byte[] array = {0, 0, readNextByte(), readNextByte()};
+		byte[] array = { 0, 0, readNextByte(), readNextByte() };
 		ByteBuffer bb = ByteBuffer.wrap(array);
 		bb.order(ByteOrder.BIG_ENDIAN);
 		return bb.getInt();
 	}
 
-	public ModbusFrame getNextModbusFrame() {
+	public FrameIncoming getNextModbusFrame() {
 		readTransactionIdentifier();
 		readProtocolIdentifier();
 		readLengthField();
 		readUnitIdentifier();
 		readFunctionCode();
-		readDataBytes(modbusFrame.getLengthField());
+		readDataBytes(modbusFrame.getDataLength());
 		return modbusFrame;
 	}
 
@@ -50,7 +50,7 @@ public class FrameDecoder {
 	}
 
 	private void readLengthField() {
-		modbusFrame.setLengthField(readNextInt());
+		modbusFrame.setDataLength(readNextInt());
 	}
 
 	private void readUnitIdentifier() {
