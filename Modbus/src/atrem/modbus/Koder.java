@@ -6,8 +6,10 @@ public class Koder {
 	private ArrayList<Byte> bytesList = new ArrayList<Byte>();
 
 	public void code(ModbusFrame frame) {
+
 		codeTCPip(frame.getTransactionIdentifier(), 2); // zapytac sie ile
-														// bajtów
+		codeProtocolIdentifier();
+		codeLengthField(6, 2);
 		codeAdress(frame.getUnitIdentifier(), 1);
 		codeFunction(frame.getFunctionCode(), 1);
 		codeFirstRegister(frame.getStartingAdress(), 2);
@@ -15,7 +17,23 @@ public class Koder {
 
 	}
 
+	public void codeProtocolIdentifier() {
+		byte[] bytes = { 0, 0 };
+		bytesList.add(bytes[0]);
+		bytesList.add(bytes[1]);
+
+	}
+
 	public void codeTCPip(int integer, int numberOfBytes) {
+		byte[] bytes = new byte[numberOfBytes];
+		for (int i = 0; i < numberOfBytes; i++) {
+			bytes[i] = (byte) (integer >>> (i * 8));
+			bytesList.add(bytes[i]);
+		}
+
+	}
+
+	public void codeLengthField(int integer, int numberOfBytes) {
 		byte[] bytes = new byte[numberOfBytes];
 		for (int i = 0; i < numberOfBytes; i++) {
 			bytes[i] = (byte) (integer >>> (i * 8));
