@@ -24,7 +24,7 @@ public class ConsoleInputTest {
 	@Test
 	public void slaveAdressTest() {
 		ConsoleInputService console = new ConsoleInputService();
-		assertEquals(123, console.insertSlaveAdress());
+		assertEquals(123, console.insertUnitIdentifier());
 	}
 
 }

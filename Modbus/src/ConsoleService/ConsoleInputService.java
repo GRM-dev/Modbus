@@ -13,7 +13,7 @@ public class ConsoleInputService {
 		errorOutput = new ConsoleOutputService();
 	}
 
-	public int insertSlaveAdress() {
+	public int insertUnitIdentifier() {
 
 		while (true) {
 			if (inputScanner.hasNextInt()) {

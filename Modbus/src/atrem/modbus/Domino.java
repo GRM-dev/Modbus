@@ -17,6 +17,7 @@ public class Domino {
 		consoleOutput = new ConsoleOutputService();
 		connection = createConnection();
 		consoleOutput.showConnectionStatus(connection.checkConnection());
+		modbusFrame = new ModbusFrame();
 
 	}
 
@@ -30,9 +31,13 @@ public class Domino {
 		return new Connection(ip, port);// lll
 	}
 
-	// public static createFrame() {
-	// modbusFrame = new ModbusFrame();
-	// modbusFrame.consoleOutput.askSlaveAdress();
-	//
-	// }
+	public static void createFrame() {
+
+		// consoleOutput.askSlaveAdress();
+		// modbusFrame.setSlaveAdress(consoleInput.insertSlaveAdress());
+		consoleOutput.askFunctionCode();
+		modbusFrame.setFunctionCode(consoleInput.insertFunctionCode());
+		consoleOutput.askFirstRegister();
+		// modbusFrame.se
+	}
 }
