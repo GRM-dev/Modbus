@@ -1,4 +1,4 @@
-package swing;
+package Swing;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -36,6 +36,7 @@ public class ConnectionSetup extends JDialog {
 	public ConnectionSetup() {
 
 		setTitle("Connection Setup");
+
 		setBounds(300, 300, 350, 220);
 		setResizable(false);
 
