@@ -33,15 +33,6 @@ public class FrameDecoder {
 		return byteBuffer.getInt();
 	}
 
-	// public ResponseFrame getNextModbusFrame() {
-	// readTransactionIdentifier();
-	// readProtocolIdentifier();
-	// readLengthField();
-	// readUnitIdentifier();
-	// readFunctionCode();
-	// readDataBytes(frameIncoming.getDataLength() - 2);
-	// return frameIncoming;
-	// }
 	public ResponseFrame getNextModbusFrame() {
 
 		frameIncoming.setTransactionIdentifier(readNextInt());
