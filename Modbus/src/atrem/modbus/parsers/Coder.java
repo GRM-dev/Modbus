@@ -24,7 +24,7 @@ public class Coder {
 		byte[] bytes = { 0, 0 };
 		bytesList.add(bytes[0]);
 		bytesList.add(bytes[1]);
-			}
+	}
 
 	private void codeTCPip(int integer, int numberOfBytes) {
 		byte[] bytes = codeToBytes(integer, numberOfBytes);
