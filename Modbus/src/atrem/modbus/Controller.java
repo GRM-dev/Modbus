@@ -28,7 +28,8 @@ public class Controller {
 		bytesFromStream = new byte[length];
 		bytesFromStream = bytes;
 		frameDecoder.receiveBytesFromController(bytesFromStream);
-		frameStorage.addReceivedFrame(frameDecoder.getNextModbusFrame());
+		System.out.println(frameDecoder.getNextModbusFrame());
+		// frameStorage.addReceivedFrame(frameDecoder.getNextModbusFrame());
 
 	}
 
