@@ -23,6 +23,7 @@ public class Domino {
 		FrameDecoder decoder = new FrameDecoder(connection.getInStream());
 		while (true) {
 			RequestFrame frame = requestFrameFactory.createRequestFrame();
+
 			koder.codeFrame(frame);
 			frameStorage.addSentFrame(frame);
 			connection.send(koder.changeListToArray());
@@ -30,9 +31,9 @@ public class Domino {
 			ResponseFrame frameIncoming;
 
 			frameIncoming = decoder.getNextModbusFrame();
-
-			frameStorage.addReceivedFrame(frameIncoming);
 			System.out.println(frameIncoming);
+			frameStorage.addReceivedFrame(frameIncoming);
+
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {

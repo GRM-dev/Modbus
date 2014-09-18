@@ -24,7 +24,6 @@ public class RequestFrame {
 	public RequestFrame(int transactionIdentifier, int unitIdentifier,
 			int functionCode, int startingAdress, int quantityOfRegisters) {
 		this.transactionIdentifier = transactionIdentifier;
-		System.out.println("transactionID:" + transactionIdentifier);
 		this.unitIdentifier = unitIdentifier;
 		this.functionCode = functionCode;
 		this.quantityOfRegisters = quantityOfRegisters;
