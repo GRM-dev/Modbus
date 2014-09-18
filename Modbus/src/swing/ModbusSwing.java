@@ -34,6 +34,7 @@ public class ModbusSwing extends JFrame {
 	 */
 	public ModbusSwing() {
 
+		setTitle("Modbus");
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setLayout(new FlowLayout());
@@ -86,6 +87,14 @@ public class ModbusSwing extends JFrame {
 		menuBar.add(fileMenu);
 		menuBar.add(connectionMenu);
 		menuBar.add(setupMenu);
+
+	}
+
+}
+
+class DataTablePanel extends JPanel {
+
+	public DataTablePanel() {
 
 	}
 

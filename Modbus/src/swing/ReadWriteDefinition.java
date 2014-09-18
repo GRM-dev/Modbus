@@ -35,7 +35,7 @@ public class ReadWriteDefinition extends JDialog {
 	}
 
 	public ReadWriteDefinition() {
-
+		setTitle("Read/Write Definition");
 		setBounds(300, 300, 350, 220);
 		setResizable(false);
 
