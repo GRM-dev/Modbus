@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.nio.ByteBuffer;
+import java.util.Random;
 
 public class Connection implements Runnable {
 
@@ -12,6 +13,8 @@ public class Connection implements Runnable {
 	private InputStream inStream;
 	private Controller controller;
 	private OutputStream outStream;
+	private int transactionId;
+	private Random rand;
 
 	public Connection(String ipAddress, int port) {
 		try {
@@ -22,6 +25,7 @@ public class Connection implements Runnable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		rand = new Random();
 	}
 
 	public InputStream getInStream() {
@@ -41,12 +45,17 @@ public class Connection implements Runnable {
 	}
 
 	public void send(byte[] frame) {
-		{
-			try {
-				outStream.write(frame);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+		transactionId = rand.nextInt(100);
+		byte[] bytes = new byte[2];
+		for (int i = 1; i >= 0; i--) {
+			bytes[i] = (byte) (transactionId >>> (i * 8));
+			frame[i] = bytes[i];
+		}
+
+		try {
+			outStream.write(frame);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 
 	}
