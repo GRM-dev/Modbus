@@ -1,18 +1,14 @@
 package atrem.modbus;
 
-import java.util.Random;
-
 import consoleService.ConsoleInputService;
 import consoleService.ConsoleOutputService;
 import frames.RequestFrame;
 
 public class RequestFrameFactory {
-	private int id;
 	private int transactionIdentifier;
 	private int unitIdentifier;
 	private int startingAdress;
 	private int quantityOfRegisters;
-	private Random rand;
 	private int functionCode;
 	private ConsoleOutputService consoleOutput;
 	private ConsoleInputService consoleInput;
@@ -23,7 +19,6 @@ public class RequestFrameFactory {
 	public RequestFrameFactory() {
 		consoleInput = new ConsoleInputService();
 		consoleOutput = new ConsoleOutputService();
-		rand = new Random();
 	}
 
 	public void loadInformationFromConsole() {
@@ -40,9 +35,8 @@ public class RequestFrameFactory {
 	}
 
 	public RequestFrame createRequestFrame() {
-		id = generateTransactionId();
 
-		return new RequestFrame(id, unitIdentifier, functionCode,
+		return new RequestFrame(0, unitIdentifier, functionCode,
 				startingAdress, quantityOfRegisters);
 	}
 
@@ -56,10 +50,6 @@ public class RequestFrameFactory {
 
 		setQuantityOfRegisters(QUANTITY_OF_REGISTERS);
 
-	}
-
-	private int generateTransactionId() {
-		return rand.nextInt(100);
 	}
 
 	public int getTransactionIdentifier() {
