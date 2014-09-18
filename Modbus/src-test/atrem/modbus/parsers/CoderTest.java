@@ -6,11 +6,11 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
-public class KoderTest {
+public class CoderTest {
 	@Test
-	public void codeToBitTest() {
+	public void codeToBytesTest() {
 		byte bytes = 0;
-		Koder koder = new Koder();
+		Coder koder = new Coder();
 		koder.codeToBytes(1, 2);
 		ArrayList<Byte> bytesList = koder.getBytesList();
 		assertEquals(bytesList.size(), 2);

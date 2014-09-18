@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import frames.RequestFrame;
 
-public class Koder {
+public class Coder {
 
 	private ArrayList<Byte> bytesList = new ArrayList<Byte>();
 
@@ -22,9 +22,7 @@ public class Koder {
 
 	public void codeProtocolIdentifier() {
 		byte[] bytes = { 0, 0 };
-		bytesList.add(bytes[0]);
-		bytesList.add(bytes[1]);
-
+		bytesList.add(bytes[0], bytes[1]);
 	}
 
 	private void codeTCPip(int integer, int numberOfBytes) {

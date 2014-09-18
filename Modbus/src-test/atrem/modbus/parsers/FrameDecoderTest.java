@@ -20,7 +20,6 @@ public class FrameDecoderTest {
 		int readInt = decoder.readNextInt();
 		System.out.println(readInt);
 		assertEquals(readInt, 2);
-
 	}
 
 }

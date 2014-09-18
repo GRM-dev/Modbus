@@ -33,13 +33,23 @@ public class FrameDecoder {
 		return byteBuffer.getInt();
 	}
 
+	// public ResponseFrame getNextModbusFrame() {
+	// readTransactionIdentifier();
+	// readProtocolIdentifier();
+	// readLengthField();
+	// readUnitIdentifier();
+	// readFunctionCode();
+	// readDataBytes(frameIncoming.getDataLength() - 2);
+	// return frameIncoming;
+	// }
 	public ResponseFrame getNextModbusFrame() {
-		readTransactionIdentifier();
-		readProtocolIdentifier();
-		readLengthField();
-		readUnitIdentifier();
-		readFunctionCode();
-		readDataBytes(frameIncoming.getDataLength() - 2);
+		frameIncoming.setTransactionIdentifier(readNextInt());
+		frameIncoming.setProtocolIdentifier(readNextInt());
+		frameIncoming.setDataLength(readNextInt());
+		frameIncoming.setUnitIdentifier(readNextByte());
+		frameIncoming.setFunctionCode(readNextByte());
+		byte[] dataBytes = readDataBytes(frameIncoming.getDataLength() - 2);
+		frameIncoming.setDataBytes(dataBytes);
 		return frameIncoming;
 	}
 
@@ -64,14 +74,14 @@ public class FrameDecoder {
 
 	}
 
-	void readDataBytes(int length) {
+	byte[] readDataBytes(int length) {
 		byte[] array = new byte[length];
 		try {
 			inputStream.read(array);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		frameIncoming.setDataBytes(array);
+		return array;
 	}
 
 }

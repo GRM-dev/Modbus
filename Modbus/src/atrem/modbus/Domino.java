@@ -3,7 +3,7 @@ package atrem.modbus;
 import java.util.Random;
 
 import atrem.modbus.parsers.FrameDecoder;
-import atrem.modbus.parsers.Koder;
+import atrem.modbus.parsers.Coder;
 import consoleService.ConsoleInputService;
 import consoleService.ConsoleOutputService;
 import frames.RequestFrame;
@@ -21,7 +21,7 @@ public class Domino {
 		connection = createConnectionConstant();
 		RequestFrameFactory requestFrameFactory = new RequestFrameFactory();
 		requestFrameFactory.loadDefinedInformation();
-		Koder koder = new Koder();
+		Coder koder = new Coder();
 		FrameDecoder decoder = new FrameDecoder(connection.getInStream());
 		Random r = new Random();
 		while (true) {
@@ -36,7 +36,6 @@ public class Domino {
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
