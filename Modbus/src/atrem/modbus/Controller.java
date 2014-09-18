@@ -35,6 +35,7 @@ public class Controller {
 	public void addAndMakeRequest(int id) {
 		requestFrameFactory.loadDefinedInformation();
 		requestFrame = requestFrameFactory.createRequestFrame();
+		System.out.println("id: " + requestFrame.getTransactionIdentifier());
 		frameStorage.addSentFrame(requestFrame);
 		coder.codeFrame(requestFrame);
 		timer = new Timer();
