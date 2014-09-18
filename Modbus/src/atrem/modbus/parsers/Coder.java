@@ -6,10 +6,10 @@ import frames.RequestFrame;
 
 public class Coder {
 
-	private ArrayList<Byte> bytesList = new ArrayList<Byte>();
+	private ArrayList<Byte> bytesList;
 
 	public void codeFrame(RequestFrame frame) {
-
+		bytesList = new ArrayList<Byte>();
 		codeTCPip(frame.getTransactionIdentifier(), 2); // zapytac sie ile
 		codeProtocolIdentifier();
 		codeLengthField(6, 2);
@@ -67,6 +67,7 @@ public class Coder {
 		for (int i = 0; i < bytesList.size(); i++) {
 			bytetab[i] = bytesList.get(i);
 		}
+
 		return bytetab;
 
 	}
