@@ -10,7 +10,11 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableModel;
 
 public class ModbusSwing extends JFrame {
 
@@ -86,6 +90,66 @@ public class ModbusSwing extends JFrame {
 		menuBar.add(fileMenu);
 		menuBar.add(connectionMenu);
 		menuBar.add(setupMenu);
+
+		String[] columnNames = {"No.", "IP Address", "Port", "Registry Number",
+				"Registry Value"};
+		int rows = 100;
+		int columns = 5;
+		DataTablePanel dataTablePanel = new DataTablePanel(columnNames, rows,
+				columns);
+		add(dataTablePanel);
+
+		pack();
+	}
+
+}
+
+class DataTablePanel extends JPanel {
+
+	public DataTablePanel(String[] columnNames, int rows, int columns) {
+
+		TableModel tableModel = new DataTableModel(columnNames, rows, columns);
+		JTable table = new JTable(tableModel);
+		add(new JScrollPane(table));
+
+	}
+}
+
+class DataTableModel extends AbstractTableModel {
+
+	String[] columnNames;
+	String[] columnValues = {"10.7.7.121", "502", "5027", "23.3"};
+	int rows;
+	int columns;
+
+	public DataTableModel(String[] columnNames, int rows, int columns) {
+		this.columnNames = columnNames;
+		this.rows = rows;
+		this.columns = columns;
+
+	}
+
+	@Override
+	public int getRowCount() {
+		return rows;
+	}
+
+	@Override
+	public int getColumnCount() {
+		return columns;
+	}
+
+	@Override
+	public Object getValueAt(int rowIndex, int columnIndex) {
+		if (columnIndex == 0)
+			return rowIndex;
+		else
+			return columnValues[columnIndex - 1];
+	}
+
+	@Override
+	public String getColumnName(int columnNumber) {
+		return columnNames[columnNumber];
 
 	}
 
