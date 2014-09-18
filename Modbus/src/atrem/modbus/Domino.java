@@ -1,14 +1,13 @@
 package atrem.modbus;
 
 import atrem.modbus.parsers.FrameDecoder;
-import atrem.modbus.parsers.Koder;
+import atrem.modbus.parsers.Coder;
 import consoleService.ConsoleInputService;
 import consoleService.ConsoleOutputService;
 import frames.RequestFrame;
 import frames.ResponseFrame;
 
 public class Domino {
-
 	private static Connection connection;
 	static private String ip;
 	static private int port;
@@ -20,11 +19,11 @@ public class Domino {
 		connection = createConnectionConstant();
 		RequestFrameFactory requestFrameFactory = new RequestFrameFactory();
 		requestFrameFactory.loadDefinedInformation();
-		Koder koder = new Koder();
+		Coder koder = new Coder();
 		FrameDecoder decoder = new FrameDecoder(connection.getInStream());
 		while (true) {
 			RequestFrame frame = requestFrameFactory.createRequestFrame();
-			koder.code(frame);
+			koder.codeFrame(frame);
 			frameStorage.addSentFrame(frame);
 			connection.send(koder.changeListToArray());
 
@@ -36,7 +35,6 @@ public class Domino {
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

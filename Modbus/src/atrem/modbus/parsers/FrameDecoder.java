@@ -33,14 +33,33 @@ public class FrameDecoder {
 		return byteBuffer.getInt();
 	}
 
+	// public ResponseFrame getNextModbusFrame() {
+	// readTransactionIdentifier();
+	// readProtocolIdentifier();
+	// readLengthField();
+	// readUnitIdentifier();
+	// readFunctionCode();
+	// readDataBytes(frameIncoming.getDataLength() - 2);
+	// return frameIncoming;
+	// }
 	public ResponseFrame getNextModbusFrame() {
-		readTransactionIdentifier(); // TODO ciala metod zamiast metod
-		readProtocolIdentifier();
-		readLengthField();
-		readUnitIdentifier();
-		readFunctionCode();
-		readDataBytes(frameIncoming.getDataLength() - 2); // TODO po co frame
-															// incoming
+		// <<<<<<< HEAD
+		// readTransactionIdentifier(); // TODO ciala metod zamiast metod
+		// readProtocolIdentifier();
+		// readLengthField();
+		// readUnitIdentifier();
+		// readFunctionCode();
+		// readDataBytes(frameIncoming.getDataLength() - 2); // TODO po co frame
+		// // incoming
+		// =======
+		frameIncoming.setTransactionIdentifier(readNextInt());
+		frameIncoming.setProtocolIdentifier(readNextInt());
+		frameIncoming.setDataLength(readNextInt());
+		frameIncoming.setUnitIdentifier(readNextByte());
+		frameIncoming.setFunctionCode(readNextByte());
+		byte[] dataBytes = readDataBytes(frameIncoming.getDataLength() - 2);
+		frameIncoming.setDataBytes(dataBytes);
+		// >>>>>>> branch 'master' of https://github.com/PatrykGala/Modbus
 		return frameIncoming;
 	}
 
@@ -65,14 +84,14 @@ public class FrameDecoder {
 
 	}
 
-	private void readDataBytes(int length) {
+	byte[] readDataBytes(int length) {
 		byte[] array = new byte[length];
 		try {
 			inputStream.read(array);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		frameIncoming.setDataBytes(array);
+		return array;
 	}
 
 }

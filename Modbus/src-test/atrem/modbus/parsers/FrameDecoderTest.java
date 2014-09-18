@@ -9,8 +9,6 @@ import java.io.InputStream;
 
 import org.junit.Test;
 
-import atrem.modbus.parsers.FrameDecoder;
-
 public class FrameDecoderTest {
 	@Test
 	public void readNextIntTest() throws IOException {
@@ -22,7 +20,6 @@ public class FrameDecoderTest {
 		int readInt = decoder.readNextInt();
 		System.out.println(readInt);
 		assertEquals(readInt, 2);
-
 	}
 
 }

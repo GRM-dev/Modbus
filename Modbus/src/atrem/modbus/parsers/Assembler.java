@@ -1,4 +1,4 @@
-package atrem.modbus;
+package atrem.modbus.parsers;
 
 import java.nio.ByteBuffer;
 
