@@ -16,6 +16,12 @@ public class Controller {
 			connection.getInStream());
 	private RequestFrameFactory requestFrameFactory = new RequestFrameFactory();
 	private Timer timer;
+	private byte[] bytesFromStream;
+
+	public void createBytesFromStream(int length, byte[] bytes) {
+		bytesFromStream = new byte[length];
+		bytesFromStream = bytes;
+	}
 
 	public void addAndMakeRequest(int id) {
 		requestFrameFactory.loadDefinedInformation();
