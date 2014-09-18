@@ -5,12 +5,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.nio.ByteBuffer;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class Connection implements Runnable {
 
-	private ExecutorService executor = Executors.newSingleThreadExecutor();
 	private Socket socket;
 	private InputStream inStream;
 	private Controller controller;
@@ -62,8 +59,7 @@ public class Connection implements Runnable {
 		}
 	}
 
-	public void receive(Controller controller) { // o co chodzi z tym
-													// final?
+	public void receive(Controller controller) {
 		this.controller = controller;
 		new Thread(this, "watek odbierajacy ramki od domino").start();
 
