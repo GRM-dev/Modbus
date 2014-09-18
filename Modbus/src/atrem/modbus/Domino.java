@@ -1,7 +1,7 @@
 package atrem.modbus;
 
-import atrem.modbus.parsers.FrameDecoder;
 import atrem.modbus.parsers.Coder;
+import atrem.modbus.parsers.FrameDecoder;
 import consoleService.ConsoleInputService;
 import consoleService.ConsoleOutputService;
 import frames.RequestFrame;
@@ -30,6 +30,7 @@ public class Domino {
 			ResponseFrame frameIncoming;
 
 			frameIncoming = decoder.getNextModbusFrame();
+
 			frameStorage.addReceivedFrame(frameIncoming);
 			System.out.println(frameIncoming);
 			try {

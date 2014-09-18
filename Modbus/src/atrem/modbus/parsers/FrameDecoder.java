@@ -8,7 +8,7 @@ import java.nio.ByteOrder;
 import frames.ResponseFrame;
 
 public class FrameDecoder {
-	private ByteBuffer byteBuffer;
+
 	private ResponseFrame frameIncoming;
 	private InputStream inputStream;
 
@@ -43,15 +43,7 @@ public class FrameDecoder {
 	// return frameIncoming;
 	// }
 	public ResponseFrame getNextModbusFrame() {
-		// <<<<<<< HEAD
-		// readTransactionIdentifier(); // TODO ciala metod zamiast metod
-		// readProtocolIdentifier();
-		// readLengthField();
-		// readUnitIdentifier();
-		// readFunctionCode();
-		// readDataBytes(frameIncoming.getDataLength() - 2); // TODO po co frame
-		// // incoming
-		// =======
+
 		frameIncoming.setTransactionIdentifier(readNextInt());
 		frameIncoming.setProtocolIdentifier(readNextInt());
 		frameIncoming.setDataLength(readNextInt());
@@ -59,29 +51,7 @@ public class FrameDecoder {
 		frameIncoming.setFunctionCode(readNextByte());
 		byte[] dataBytes = readDataBytes(frameIncoming.getDataLength() - 2);
 		frameIncoming.setDataBytes(dataBytes);
-		// >>>>>>> branch 'master' of https://github.com/PatrykGala/Modbus
 		return frameIncoming;
-	}
-
-	private void readTransactionIdentifier() {
-		frameIncoming.setTransactionIdentifier(readNextInt());
-	}
-
-	private void readProtocolIdentifier() {
-		frameIncoming.setProtocolIdentifier(readNextInt());
-	}
-
-	private void readLengthField() {
-		frameIncoming.setDataLength(readNextInt());
-	}
-
-	private void readUnitIdentifier() {
-		frameIncoming.setUnitIdentifier(readNextByte());
-	}
-
-	private void readFunctionCode() {
-		frameIncoming.setFunctionCode(readNextByte());
-
 	}
 
 	byte[] readDataBytes(int length) {

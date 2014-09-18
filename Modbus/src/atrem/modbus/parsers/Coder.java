@@ -22,7 +22,9 @@ public class Coder {
 
 	public void codeProtocolIdentifier() {
 		byte[] bytes = { 0, 0 };
-		bytesList.add(bytes[0], bytes[1]);
+		bytesList.add(bytes[0]);
+		bytesList.add(bytes[1]);
+
 	}
 
 	private void codeTCPip(int integer, int numberOfBytes) {
