@@ -33,25 +33,26 @@ public class FrameDecoder {
 		return byteBuffer.getInt();
 	}
 
-	// public ResponseFrame getNextModbusFrame() {
-	// readTransactionIdentifier();
-	// readProtocolIdentifier();
-	// readLengthField();
-	// readUnitIdentifier();
-	// readFunctionCode();
-	// readDataBytes(frameIncoming.getDataLength() - 2);
-	// return frameIncoming;
-	// }
 	public ResponseFrame getNextModbusFrame() {
-		frameIncoming.setTransactionIdentifier(readNextInt());
-		frameIncoming.setProtocolIdentifier(readNextInt());
-		frameIncoming.setDataLength(readNextInt());
-		frameIncoming.setUnitIdentifier(readNextByte());
-		frameIncoming.setFunctionCode(readNextByte());
-		byte[] dataBytes = readDataBytes(frameIncoming.getDataLength() - 2);
-		frameIncoming.setDataBytes(dataBytes);
+		readTransactionIdentifier();
+		readProtocolIdentifier();
+		readLengthField();
+		readUnitIdentifier();
+		readFunctionCode();
+		readDataBytes(frameIncoming.getDataLength() - 2);
 		return frameIncoming;
 	}
+
+	// public ResponseFrame getNextModbusFrame() {
+	// frameIncoming.setTransactionIdentifier(readNextInt());
+	// frameIncoming.setProtocolIdentifier(readNextInt());
+	// frameIncoming.setDataLength(readNextInt());
+	// frameIncoming.setUnitIdentifier(readNextByte());
+	// frameIncoming.setFunctionCode(readNextByte());
+	// byte[] dataBytes = readDataBytes(frameIncoming.getDataLength() - 2);
+	// frameIncoming.setDataBytes(dataBytes);
+	// return frameIncoming;
+	// }
 
 	private void readTransactionIdentifier() {
 		frameIncoming.setTransactionIdentifier(readNextInt());
