@@ -1,7 +1,5 @@
 package atrem.modbus.parsers;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
@@ -9,21 +7,18 @@ import frames.ResponseFrame;
 
 public class FrameDecoder {
 
-	private ResponseFrame frameIncoming;
-	private InputStream inputStream;
+	private ResponseFrame responseFrame;
 
-	public FrameDecoder(InputStream inputStream) {
-		frameIncoming = new ResponseFrame();
-		this.inputStream = inputStream;
+	private byte[] byteFromStream;
+	private int numberBytes = 0;
+
+	public FrameDecoder() {
+		responseFrame = new ResponseFrame();
 	}
 
 	private byte readNextByte() {
-		try {
-			return (byte) inputStream.read();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return 0;
+		numberBytes++;
+		return byteFromStream[numberBytes - 1];
 	}
 
 	int readNextInt() {
@@ -33,24 +28,29 @@ public class FrameDecoder {
 		return byteBuffer.getInt();
 	}
 
-	public ResponseFrame getNextModbusFrame() {
+	public void receiveBytesFromController(byte[] byteFromStream) {
+		this.byteFromStream = byteFromStream;
 
-		frameIncoming.setTransactionIdentifier(readNextInt());
-		frameIncoming.setProtocolIdentifier(readNextInt());
-		frameIncoming.setDataLength(readNextInt());
-		frameIncoming.setUnitIdentifier(readNextByte());
-		frameIncoming.setFunctionCode(readNextByte());
-		byte[] dataBytes = readDataBytes(frameIncoming.getDataLength() - 2);
-		frameIncoming.setDataBytes(dataBytes);
-		return frameIncoming;
+	}
+
+	public ResponseFrame getNextModbusFrame() {
+		numberBytes = 0;
+		ResponseFrame responseFrame = new ResponseFrame();
+		responseFrame.setTransactionIdentifier(readNextInt());
+		responseFrame.setProtocolIdentifier(readNextInt());
+		responseFrame.setDataLength(readNextInt());
+		responseFrame.setUnitIdentifier(readNextByte());
+		responseFrame.setFunctionCode(readNextByte());
+		byte[] dataBytes = readDataBytes(responseFrame.getDataLength() - 2);
+		responseFrame.setDataBytes(dataBytes);
+		return responseFrame;
 	}
 
 	byte[] readDataBytes(int length) {
 		byte[] array = new byte[length];
-		try {
-			inputStream.read(array);
-		} catch (IOException e) {
-			e.printStackTrace();
+		for (int i = 0; i < array.length; i++) {
+			array[i] = readNextByte();
+
 		}
 		return array;
 	}

@@ -1,4 +1,4 @@
-package swing;
+package Swing;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -36,6 +36,7 @@ public class ConnectionSetup extends JDialog {
 	public ConnectionSetup() {
 
 		setTitle("Connection Setup");
+
 		setBounds(300, 300, 350, 220);
 		setResizable(false);
 
@@ -75,7 +76,7 @@ public class ConnectionSetup extends JDialog {
 		textArea.setBorder(BorderFactory
 				.createEtchedBorder(EtchedBorder.LOWERED));
 		JPanel panel = new JPanel();
-		panel.setLayout(new GridLayout(1, 2));
+		panel.setLayout(new GridLayout(0, 2));
 		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		panel.add(label);
 		panel.add(textArea);

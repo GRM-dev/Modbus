@@ -4,6 +4,12 @@ import frames.RequestFrame;
 import frames.ResponseFrame;
 
 public class FramePairs {
+	@Override
+	public String toString() {
+		return "FramePairs [requestFrame=" + requestFrame
+				+ "\n\n responseFrame=" + responseFrame + "]";
+	}
+
 	private RequestFrame requestFrame;
 	private ResponseFrame responseFrame;
 

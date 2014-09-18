@@ -1,4 +1,4 @@
-package swing;
+package Swing;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -36,8 +36,8 @@ public class ReadWriteDefinition extends JDialog {
 
 	public ReadWriteDefinition() {
 		setTitle("Read/Write Definition");
-		setBounds(300, 300, 400, 400);
 
+		setBounds(300, 300, 350, 220);
 		setResizable(false);
 
 		getContentPane().setLayout(new BorderLayout());
@@ -82,7 +82,7 @@ public class ReadWriteDefinition extends JDialog {
 		comboBox.addItem("03 Read Holding Registers");
 		comboBox.addItem("06 Write Single Register");
 		JPanel panel = new JPanel();
-		panel.setLayout(new GridLayout(1, 2));
+		panel.setLayout(new GridLayout(0, 2));
 		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		panel.add(label);
 		panel.add(comboBox);
@@ -95,7 +95,7 @@ public class ReadWriteDefinition extends JDialog {
 		textArea.setBorder(BorderFactory
 				.createEtchedBorder(EtchedBorder.LOWERED));
 		JPanel panel = new JPanel();
-		panel.setLayout(new GridLayout(1, 2));
+		panel.setLayout(new GridLayout(0, 2));
 		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		panel.add(label);
 		panel.add(textArea);
@@ -109,12 +109,12 @@ public class ReadWriteDefinition extends JDialog {
 				.createEtchedBorder(EtchedBorder.LOWERED));
 		JLabel label2 = new JLabel(labelName2);
 		JPanel smallPanel = new JPanel();
-		smallPanel.setLayout(new GridLayout(1, 2));
+		smallPanel.setLayout(new GridLayout(0, 2));
 		smallPanel.add(textArea);
 		smallPanel.add(label2);
 
 		JPanel bigPanel = new JPanel();
-		bigPanel.setLayout(new GridLayout(1, 2));
+		bigPanel.setLayout(new GridLayout(0, 2));
 		bigPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		bigPanel.add(label);
 		bigPanel.add(smallPanel);
