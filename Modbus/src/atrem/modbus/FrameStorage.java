@@ -34,7 +34,7 @@ public class FrameStorage {
 		this.isWorking = isWorking;
 	}
 
-	public void makeOrder() {
+	public void makePairsOfFrames() {
 
 		executor.execute(new Runnable() {
 			@Override
@@ -61,6 +61,7 @@ public class FrameStorage {
 					pair.setResponseFrame(receivedFrames
 							.get(indexOFReceivedFrames));
 					framePairs.add(pair);
+					Domino.showRequestAndResponse(pair);
 					sentFrames.remove(indexOfSentFrames);
 					receivedFrames.remove(indexOFReceivedFrames);
 

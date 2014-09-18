@@ -6,18 +6,19 @@ import java.util.Timer;
 
 import atrem.modbus.parsers.Coder;
 import atrem.modbus.parsers.FrameDecoder;
+import frames.RequestFrame;
 
 public class Controller {
 
 	private List<Timer> tasks = new ArrayList<Timer>();
 	private Connection connection = Domino.createConnectionConstant();
 	private Coder coder = new Coder();
-	// dsasdasdsdasa
-	private FrameDecoder frameDecoder = new FrameDecoder(
-			connection.getInStream());
+	private FrameDecoder frameDecoder = new FrameDecoder();
 	private RequestFrameFactory requestFrameFactory = new RequestFrameFactory();
 	private Timer timer;
 	private byte[] bytesFromStream;
+	private FrameStorage frameStorage = new FrameStorage();
+	private RequestFrame requestFrame;
 
 	public Controller() {
 		connection.receive(this);
@@ -26,11 +27,16 @@ public class Controller {
 	public void createBytesFromStream(int length, byte[] bytes) {
 		bytesFromStream = new byte[length];
 		bytesFromStream = bytes;
+		frameDecoder.receiveBytesFromController(bytesFromStream);
+		frameStorage.addReceivedFrame(frameDecoder.getNextModbusFrame());
+
 	}
 
 	public void addAndMakeRequest(int id) {
 		requestFrameFactory.loadDefinedInformation();
-		coder.codeFrame(requestFrameFactory.createRequestFrame());
+		requestFrame = requestFrameFactory.createRequestFrame();
+		frameStorage.addSentFrame(requestFrame);
+		coder.codeFrame(requestFrame);
 		timer = new Timer();
 		timer.schedule(new Task(connection, coder.changeListToArray(), id), 0,
 				2000); // wysy³anie

@@ -73,11 +73,12 @@ public class Connection implements Runnable {
 			readBytes(header, HEADER_SIZE);
 
 			ByteBuffer byteBuffer = ByteBuffer.wrap(header);
-			byteBuffer.position(HEADER_SIZE - 2);
+			int dasd = byteBuffer.getShort();
+			int ledsdsd = byteBuffer.getShort();
 			int length = byteBuffer.getShort();
 
 			byte[] data = new byte[length];
-			readBytes(header, length);
+			readBytes(data, length);
 
 			byte[] buff = new byte[HEADER_SIZE + length];
 			System.arraycopy(header, 0, buff, 0, HEADER_SIZE);
