@@ -1,7 +1,7 @@
 package atrem.modbus;
 
 import atrem.modbus.parsers.FrameDecoder;
-import atrem.modbus.parsers.Koder;
+import atrem.modbus.parsers.Coder;
 import consoleService.ConsoleInputService;
 import consoleService.ConsoleOutputService;
 import frames.ResponseFrame;
@@ -18,7 +18,7 @@ public class Domino {
 		connection = createConnectionConstant();
 		RequestFrameFactory requestFrameFactory = new RequestFrameFactory();
 		requestFrameFactory.loadDefinedInformation();
-		Koder koder = new Koder();
+		Coder koder = new Coder();
 		koder.code(requestFrameFactory.createRequestFrame());
 		connection.send(koder.changeListToArray());
 		FrameDecoder decoder = new FrameDecoder(connection.getInStream());

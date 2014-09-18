@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import frames.RequestFrame;
 
-public class Koder {
+public class Coder {
 	private ArrayList<Byte> bytesList = new ArrayList<Byte>();
 
 	public void code(RequestFrame frame) {
