@@ -1,9 +1,9 @@
 package atrem.modbus;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import frames.RequestFrame;
 import frames.ResponseFrame;
@@ -12,6 +12,11 @@ public class FrameStorage {
 
 	private List<RequestFrame> sentFrames = new ArrayList<RequestFrame>();
 	private List<ResponseFrame> receivedFrames = new ArrayList<ResponseFrame>();
+	private List<FramePairs> framePairs = new ArrayList<FramePairs>();
+	private FramePairs pair = new FramePairs();
+	private boolean isWorking = false;
+	private ExecutorService executor = Executors
+			.newSingleThreadScheduledExecutor();
 
 	public void addSentFrame(RequestFrame modbusFrame) {
 		sentFrames.add(modbusFrame);
@@ -21,13 +26,46 @@ public class FrameStorage {
 		receivedFrames.add(frameIncoming);
 	}
 
-	public void sortReceivedFrames() {
-		Collections.sort(receivedFrames, new Comparator<ResponseFrame>() {
+	public boolean isWorking() {
+		return isWorking;
+	}
+
+	public void setWorking(boolean isWorking) {
+		this.isWorking = isWorking;
+	}
+
+	public void makeOrder() {
+
+		executor.execute(new Runnable() {
 			@Override
-			public int compare(ResponseFrame f1, ResponseFrame f2) {
-				return f1.getTransactionIdentifier()
-						- f2.getTransactionIdentifier();
+			public void run() {
+				isWorking = true;
+				while (sentFrames.size() != 0)
+					compare();
+
 			}
 		});
+
+		isWorking = false;
+
+	}
+
+	public void compare() {
+		for (int indexOfSentFrames = 0; indexOfSentFrames < sentFrames.size(); indexOfSentFrames++) {
+			for (int indexOFReceivedFrames = 0; indexOFReceivedFrames < receivedFrames
+					.size(); indexOFReceivedFrames++) {
+				if (sentFrames.get(indexOfSentFrames)
+						.getTransactionIdentifier() == receivedFrames.get(
+						indexOFReceivedFrames).getTransactionIdentifier()) {
+					pair.setRequestFrame(sentFrames.get(indexOfSentFrames));
+					pair.setResponseFrame(receivedFrames
+							.get(indexOFReceivedFrames));
+					framePairs.add(pair);
+					sentFrames.remove(indexOfSentFrames);
+					receivedFrames.remove(indexOFReceivedFrames);
+
+				}
+			}
+		}
 	}
 }
