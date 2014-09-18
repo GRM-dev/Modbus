@@ -14,7 +14,6 @@ public class Connection implements Runnable {
 	private Socket socket;
 	private InputStream inStream;
 	private Controller controller;
-
 	private OutputStream outStream;
 
 	public Connection(String ipAddress, int port) {
@@ -75,33 +74,30 @@ public class Connection implements Runnable {
 		while (true) {
 			final int HEADER_SIZE = 6;
 			byte[] header = new byte[HEADER_SIZE];
-			for (int i = 0; i < HEADER_SIZE; i++) {
-				try {
-					header[i] = (byte) inStream.read();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
+			readBytes(header, HEADER_SIZE);
+
 			ByteBuffer byteBuffer = ByteBuffer.wrap(header);
-			// int tid = byteBuffer.getShort();
-			// int pid = byteBuffer.getShort();
 			byteBuffer.position(HEADER_SIZE - 2);
 			int length = byteBuffer.getShort();
 
 			byte[] data = new byte[length];
-			for (int i = 0; i < length; i++) {
-				try {
-					header[i] = (byte) inStream.read();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
+			readBytes(header, length);
+
 			byte[] buff = new byte[HEADER_SIZE + length];
 			System.arraycopy(header, 0, buff, 0, HEADER_SIZE);
 			System.arraycopy(data, 0, buff, HEADER_SIZE - 1, length);
 			controller.createBytesFromStream(length + HEADER_SIZE, buff);
+		}
+	}
+
+	private void readBytes(byte[] targetArray, int count) {
+		for (int i = 0; i < count; i++) {
+			try {
+				targetArray[i] = (byte) inStream.read();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 }
