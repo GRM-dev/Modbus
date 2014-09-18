@@ -18,6 +18,10 @@ public class Controller {
 	private Timer timer;
 	private byte[] bytesFromStream;
 
+	public Controller() {
+		connection.receive(this);
+	}
+
 	public void createBytesFromStream(int length, byte[] bytes) {
 		bytesFromStream = new byte[length];
 		bytesFromStream = bytes;
