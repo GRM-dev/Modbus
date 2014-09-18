@@ -34,12 +34,13 @@ public class FrameDecoder {
 	}
 
 	public ResponseFrame getNextModbusFrame() {
-		readTransactionIdentifier();
+		readTransactionIdentifier(); // TODO ciala metod zamiast metod
 		readProtocolIdentifier();
 		readLengthField();
 		readUnitIdentifier();
 		readFunctionCode();
-		readDataBytes(frameIncoming.getDataLength() - 2);
+		readDataBytes(frameIncoming.getDataLength() - 2); // TODO po co frame
+															// incoming
 		return frameIncoming;
 	}
 
