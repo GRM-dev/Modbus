@@ -12,6 +12,7 @@ public class Controller {
 	private List<Timer> tasks = new ArrayList<Timer>();
 	private Connection connection = Domino.createConnectionConstant();
 	private Coder coder = new Coder();
+	// dsasdasdsdasa
 	private FrameDecoder frameDecoder = new FrameDecoder(
 			connection.getInStream());
 	private RequestFrameFactory requestFrameFactory = new RequestFrameFactory();
