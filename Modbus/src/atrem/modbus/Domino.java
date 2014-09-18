@@ -10,7 +10,6 @@ import frames.RequestFrame;
 import frames.ResponseFrame;
 
 public class Domino {
-
 	private static Connection connection;
 	static private String ip;
 	static private int port;
@@ -23,14 +22,11 @@ public class Domino {
 		RequestFrameFactory requestFrameFactory = new RequestFrameFactory();
 		requestFrameFactory.loadDefinedInformation();
 		Koder koder = new Koder();
-		// while (true) {
-		koder.codeFrame(modbusFrame);
-		connection.send(koder.changeListToArray());
 		FrameDecoder decoder = new FrameDecoder(connection.getInStream());
 		Random r = new Random();
 		while (true) {
 			RequestFrame frame = requestFrameFactory.createRequestFrame();
-			koder.code(frame);
+			koder.codeFrame(frame);
 			frameStorage.addSentFrame(frame);
 			connection.send(koder.changeListToArray());
 			ResponseFrame frameIncoming;
