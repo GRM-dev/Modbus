@@ -1,4 +1,4 @@
-package Swing;
+package swing;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -9,7 +9,6 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -17,7 +16,7 @@ import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 
-public class ReadWriteDefinition extends JDialog {
+public class ConnectionSetup extends JDialog {
 
 	private final Box contentBox = Box.createHorizontalBox();
 
@@ -26,7 +25,7 @@ public class ReadWriteDefinition extends JDialog {
 	 */
 	public static void main(String[] args) {
 		try {
-			ReadWriteDefinition dialog = new ReadWriteDefinition();
+			ConnectionSetup dialog = new ConnectionSetup();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -34,7 +33,7 @@ public class ReadWriteDefinition extends JDialog {
 		}
 	}
 
-	public ReadWriteDefinition() {
+	public ConnectionSetup() {
 
 		setBounds(300, 300, 350, 220);
 		setResizable(false);
@@ -62,30 +61,11 @@ public class ReadWriteDefinition extends JDialog {
 	private Box createQuestionBox() {
 
 		Box box = Box.createVerticalBox();
-		box.add(createDialogContainer("Slave ID"));
-		box.add(createFunctionContainer());
-		box.add(createDialogContainer("Address:"));
-		box.add(createDialogContainer("Quantity:"));
-		box.add(createDialogContainer("Scan Rate", "[ms]"));
-
+		box.add(createDialogContainer("IP Address "));
+		box.add(createDialogContainer("Server Port "));
 		box.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
 
 		return box;
-	}
-
-	private JPanel createFunctionContainer() {
-
-		JLabel label = new JLabel("Function:");
-		JComboBox comboBox = new JComboBox();
-		comboBox.setEditable(false);
-		comboBox.addItem("03 Read Holding Registers");
-		comboBox.addItem("06 Write Single Register");
-		JPanel panel = new JPanel();
-		panel.setLayout(new GridLayout(0, 2));
-		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		panel.add(label);
-		panel.add(comboBox);
-		return panel;
 	}
 
 	private JPanel createDialogContainer(String labelName) {
@@ -99,25 +79,6 @@ public class ReadWriteDefinition extends JDialog {
 		panel.add(label);
 		panel.add(textArea);
 		return panel;
-	}
-
-	private JPanel createDialogContainer(String labelName, String labelName2) {
-		JLabel label = new JLabel(labelName);
-		JTextArea textArea = new JTextArea();
-		textArea.setBorder(BorderFactory
-				.createEtchedBorder(EtchedBorder.LOWERED));
-		JLabel label2 = new JLabel(labelName2);
-		JPanel smallPanel = new JPanel();
-		smallPanel.setLayout(new GridLayout(0, 2));
-		smallPanel.add(textArea);
-		smallPanel.add(label2);
-
-		JPanel bigPanel = new JPanel();
-		bigPanel.setLayout(new GridLayout(0, 2));
-		bigPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		bigPanel.add(label);
-		bigPanel.add(smallPanel);
-		return bigPanel;
 	}
 
 	private JButton createOkButton() {
