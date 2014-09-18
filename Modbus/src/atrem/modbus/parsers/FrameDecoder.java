@@ -8,7 +8,7 @@ import java.nio.ByteOrder;
 import frames.ResponseFrame;
 
 public class FrameDecoder {
-	private ByteBuffer byteBuffer;
+
 	private ResponseFrame frameIncoming;
 	private InputStream inputStream;
 
@@ -33,45 +33,35 @@ public class FrameDecoder {
 		return byteBuffer.getInt();
 	}
 
+	// public ResponseFrame getNextModbusFrame() {
+	// readTransactionIdentifier();
+	// readProtocolIdentifier();
+	// readLengthField();
+	// readUnitIdentifier();
+	// readFunctionCode();
+	// readDataBytes(frameIncoming.getDataLength() - 2);
+	// return frameIncoming;
+	// }
 	public ResponseFrame getNextModbusFrame() {
-		readTransactionIdentifier();
-		readProtocolIdentifier();
-		readLengthField();
-		readUnitIdentifier();
-		readFunctionCode();
-		readDataBytes(frameIncoming.getDataLength() - 2);
+
+		frameIncoming.setTransactionIdentifier(readNextInt());
+		frameIncoming.setProtocolIdentifier(readNextInt());
+		frameIncoming.setDataLength(readNextInt());
+		frameIncoming.setUnitIdentifier(readNextByte());
+		frameIncoming.setFunctionCode(readNextByte());
+		byte[] dataBytes = readDataBytes(frameIncoming.getDataLength() - 2);
+		frameIncoming.setDataBytes(dataBytes);
 		return frameIncoming;
 	}
 
-	private void readTransactionIdentifier() {
-		frameIncoming.setTransactionIdentifier(readNextInt());
-	}
-
-	private void readProtocolIdentifier() {
-		frameIncoming.setProtocolIdentifier(readNextInt());
-	}
-
-	private void readLengthField() {
-		frameIncoming.setDataLength(readNextInt());
-	}
-
-	private void readUnitIdentifier() {
-		frameIncoming.setUnitIdentifier(readNextByte());
-	}
-
-	private void readFunctionCode() {
-		frameIncoming.setFunctionCode(readNextByte());
-
-	}
-
-	private void readDataBytes(int length) {
+	byte[] readDataBytes(int length) {
 		byte[] array = new byte[length];
 		try {
 			inputStream.read(array);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		frameIncoming.setDataBytes(array);
+		return array;
 	}
 
 }

@@ -1,13 +1,13 @@
 package atrem.modbus;
 
-import atrem.modbus.parsers.FrameDecoder;
 import atrem.modbus.parsers.Coder;
+import atrem.modbus.parsers.FrameDecoder;
 import consoleService.ConsoleInputService;
 import consoleService.ConsoleOutputService;
+import frames.RequestFrame;
 import frames.ResponseFrame;
 
 public class Domino {
-
 	private static Connection connection;
 	static private String ip;
 	static private int port;
@@ -15,16 +15,30 @@ public class Domino {
 	static private ConsoleOutputService consoleOutput;
 
 	public static void main(String[] args) {
+		FrameStorage frameStorage = new FrameStorage();
 		connection = createConnectionConstant();
 		RequestFrameFactory requestFrameFactory = new RequestFrameFactory();
 		requestFrameFactory.loadDefinedInformation();
 		Coder koder = new Coder();
-		koder.code(requestFrameFactory.createRequestFrame());
-		connection.send(koder.changeListToArray());
 		FrameDecoder decoder = new FrameDecoder(connection.getInStream());
-		ResponseFrame frameIncoming;
-		frameIncoming = decoder.getNextModbusFrame();
-		System.out.println(frameIncoming);
+		while (true) {
+			RequestFrame frame = requestFrameFactory.createRequestFrame();
+			koder.codeFrame(frame);
+			frameStorage.addSentFrame(frame);
+			connection.send(koder.changeListToArray());
+
+			ResponseFrame frameIncoming;
+
+			frameIncoming = decoder.getNextModbusFrame();
+
+			frameStorage.addReceivedFrame(frameIncoming);
+			System.out.println(frameIncoming);
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 
 	}
 
