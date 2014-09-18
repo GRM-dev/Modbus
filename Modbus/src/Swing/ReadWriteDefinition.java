@@ -21,6 +21,9 @@ public class ReadWriteDefinition extends JDialog {
 
 	private final Box contentBox = Box.createHorizontalBox();
 
+	/**
+	 * Launch the application.
+	 */
 	public static void main(String[] args) {
 		try {
 			ReadWriteDefinition dialog = new ReadWriteDefinition();
@@ -32,6 +35,7 @@ public class ReadWriteDefinition extends JDialog {
 	}
 
 	public ReadWriteDefinition() {
+		setTitle("Read/Write Definition");
 
 		setBounds(300, 300, 350, 220);
 		setResizable(false);

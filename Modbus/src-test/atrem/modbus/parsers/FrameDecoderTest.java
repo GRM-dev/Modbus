@@ -15,7 +15,12 @@ public class FrameDecoderTest {
 
 		InputStream inputStream = mock(InputStream.class);
 		when(inputStream.read()).thenReturn(0).thenReturn(2);
-		FrameDecoder decoder = new FrameDecoder(inputStream);
+
+		byte[] bytes = new byte[4];
+		when(bytes[1]).thenReturn((byte) 2);
+
+		FrameDecoder decoder = new FrameDecoder();
+		byte[] bytes = new byte[4];
 
 		int readInt = decoder.readNextInt();
 		System.out.println(readInt);

@@ -6,7 +6,7 @@ import frames.RequestFrame;
 
 public class Coder {
 
-	private ArrayList<Byte> bytesList;
+	private ArrayList<Byte> bytesList = new ArrayList<Byte>();
 
 	public void codeFrame(RequestFrame frame) {
 		bytesList = new ArrayList<Byte>();
@@ -20,46 +20,48 @@ public class Coder {
 
 	}
 
-	public void codeProtocolIdentifier() {
+	private void codeProtocolIdentifier() {
 		byte[] bytes = { 0, 0 };
 		bytesList.add(bytes[0]);
 		bytesList.add(bytes[1]);
-
 	}
 
 	private void codeTCPip(int integer, int numberOfBytes) {
-		codeToBytes(integer, numberOfBytes);
-
+		byte[] bytes = codeToBytes(integer, numberOfBytes);
+		addToListBytes(bytes);
 	}
 
 	private void codeLengthField(int integer, int numberOfBytes) {
-		codeToBytes(integer, numberOfBytes);
-
+		byte[] bytes = codeToBytes(integer, numberOfBytes);
+		addToListBytes(bytes);
 	}
 
 	private void codeAdress(int integer, int numberOfBytes) {
-		codeToBytes(integer, numberOfBytes);
+		byte[] bytes = codeToBytes(integer, numberOfBytes);
+		addToListBytes(bytes);
 	}
 
 	private void codeFunction(int integer, int numberOfBytes) {
-		codeToBytes(integer, numberOfBytes);
+		byte[] bytes = codeToBytes(integer, numberOfBytes);
+		addToListBytes(bytes);
 	}
 
 	private void codeNumberOfRegisters(int integer, int numberOfBytes) {
-		codeToBytes(integer, numberOfBytes);
+		byte[] bytes = codeToBytes(integer, numberOfBytes);
+		addToListBytes(bytes);
 	}
 
 	private void codeFirstRegister(int integer, int numberOfBytes) {
-		codeToBytes(integer, numberOfBytes);
+		byte[] bytes = codeToBytes(integer, numberOfBytes);
+		addToListBytes(bytes);
 	}
 
-	void codeToBytes(int integer, int numberOfBytes) {
+	byte[] codeToBytes(int integer, int numberOfBytes) {
 		byte[] bytes = new byte[numberOfBytes];
 		for (int i = numberOfBytes - 1; i >= 0; i--) {
 			bytes[i] = (byte) (integer >>> (i * 8));
-			bytesList.add(bytes[i]);
 		}
-
+		return bytes;
 	}
 
 	public byte[] changeListToArray() {
@@ -67,9 +69,14 @@ public class Coder {
 		for (int i = 0; i < bytesList.size(); i++) {
 			bytetab[i] = bytesList.get(i);
 		}
-
 		return bytetab;
 
+	}
+
+	private void addToListBytes(byte[] bytes) {
+		for (int i = bytes.length - 1; i > -1; i--) {
+			bytesList.add(bytes[i]);
+		}
 	}
 
 	public ArrayList<Byte> getBytesList() {
