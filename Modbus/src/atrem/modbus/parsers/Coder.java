@@ -9,7 +9,7 @@ public class Coder {
 	private ArrayList<Byte> bytesList = new ArrayList<Byte>();
 
 	public void codeFrame(RequestFrame frame) {
-
+		bytesList = new ArrayList<Byte>();
 		codeTCPip(frame.getTransactionIdentifier(), 2); // zapytac sie ile
 		codeProtocolIdentifier();
 		codeLengthField(6, 2);
@@ -24,7 +24,7 @@ public class Coder {
 		byte[] bytes = { 0, 0 };
 		bytesList.add(bytes[0]);
 		bytesList.add(bytes[1]);
-	}
+			}
 
 	private void codeTCPip(int integer, int numberOfBytes) {
 		byte[] bytes = codeToBytes(integer, numberOfBytes);

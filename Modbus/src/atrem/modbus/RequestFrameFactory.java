@@ -59,7 +59,7 @@ public class RequestFrameFactory {
 	}
 
 	private int generateTransactionId() {
-		return rand.nextInt(65535);
+		return rand.nextInt(100);
 	}
 
 	public int getTransactionIdentifier() {
