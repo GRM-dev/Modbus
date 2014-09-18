@@ -28,32 +28,32 @@ public class Koder {
 	}
 
 	private void codeTCPip(int integer, int numberOfBytes) {
-		codeToBit(integer, numberOfBytes);
+		codeToBytes(integer, numberOfBytes);
 
 	}
 
 	private void codeLengthField(int integer, int numberOfBytes) {
-		codeToBit(integer, numberOfBytes);
+		codeToBytes(integer, numberOfBytes);
 
 	}
 
 	private void codeAdress(int integer, int numberOfBytes) {
-		codeToBit(integer, numberOfBytes);
+		codeToBytes(integer, numberOfBytes);
 	}
 
 	private void codeFunction(int integer, int numberOfBytes) {
-		codeToBit(integer, numberOfBytes);
+		codeToBytes(integer, numberOfBytes);
 	}
 
 	private void codeNumberOfRegisters(int integer, int numberOfBytes) {
-		codeToBit(integer, numberOfBytes);
+		codeToBytes(integer, numberOfBytes);
 	}
 
 	private void codeFirstRegister(int integer, int numberOfBytes) {
-		codeToBit(integer, numberOfBytes);
+		codeToBytes(integer, numberOfBytes);
 	}
 
-	void codeToBit(int integer, int numberOfBytes) {
+	void codeToBytes(int integer, int numberOfBytes) {
 		byte[] bytes = new byte[numberOfBytes];
 		for (int i = numberOfBytes - 1; i >= 0; i--) {
 			bytes[i] = (byte) (integer >>> (i * 8));
