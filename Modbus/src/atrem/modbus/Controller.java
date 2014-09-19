@@ -11,13 +11,17 @@ import frames.RequestFrame;
 public class Controller {
 
 	private List<Timer> tasks = new ArrayList<Timer>();
-	private Connection connection = Domino.createConnectionConstant();
+	private Connection connection;
 	private RequestFrameFactory requestFrameFactory = new RequestFrameFactory();
 	private Timer timer;
 	private FrameStorage frameStorage = new FrameStorage();
 
 	public Controller() {
-		connection.receive(this);
+
+	}
+
+	public void startConnection(String ipAddress, int port) {
+		connection = new Connection(ipAddress, port);
 	}
 
 	public void pickUpBytes(byte[] bytes) {
@@ -26,9 +30,6 @@ public class Controller {
 														// rozbicie na 2 metody,
 														// wywolac raz, inna
 														// nazwa
-		// System.out.println(frameDecoder.getNextModbusFrame());
-		frameStorage.addReceivedFrame(frameDecoder.getNextModbusFrame());
-
 	}
 
 	public void addAndMakeRequest(int id) { // TODO zmiana nazwy, rozbicie na 2
@@ -49,6 +50,10 @@ public class Controller {
 		// sekundy
 		tasks.add(timer);
 
+	}
+
+	public void setConnection(Connection connection) {
+		this.connection = connection;
 	}
 
 	// public void scheduleRequest(Coder coder) {

@@ -27,6 +27,12 @@ public class Connection implements Runnable {
 
 	}
 
+	Connection(InputStream inStream, OutputStream outStream) {
+		this.inStream = inStream;
+		this.outStream = outStream;
+
+	}
+
 	public InputStream getInStream() {
 		return inStream;
 	}

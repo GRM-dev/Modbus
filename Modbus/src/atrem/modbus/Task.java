@@ -32,7 +32,7 @@ public class Task extends TimerTask {
 		for (int i = 1; i >= 0; i--) {
 			bytes[i] = (byte) (transactionId >>> (i * 8));
 		}
-		System.out.println("bytes id" +);
+		System.out.println("bytes id");
 		requestFrame.setTransactionIdentifier(transactionId);
 		frameStorage.addSentFrame(requestFrame);
 		if (!frameStorage.isWorking()) {
