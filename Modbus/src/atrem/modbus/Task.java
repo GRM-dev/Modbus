@@ -1,6 +1,5 @@
 package atrem.modbus;
 
-import java.util.Random;
 import java.util.TimerTask;
 
 import atrem.modbus.parsers.Coder;
@@ -9,10 +8,6 @@ import frames.RequestFrame;
 public class Task extends TimerTask {
 
 	private Connection connection;
-	private byte[] bytes;
-	private int id;
-	private int transactionId;
-	private Random rand;
 	private FrameStorage frameStorage;
 	private RequestFrameFactory requestFrameFactory;
 	private Coder coder = new Coder();
@@ -38,6 +33,7 @@ public class Task extends TimerTask {
 
 		if (!frameStorage.isWorking()) {
 			frameStorage.makePairsOfFrames();
+			System.out.println("parujemy");
 
 		}
 
