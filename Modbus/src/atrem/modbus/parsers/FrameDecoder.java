@@ -30,8 +30,11 @@ public class FrameDecoder {
 		return byteBuffer.getInt();
 	}
 
-	public void receiveBytesFromController(byte[] byteFromStream) {
+	public ResponseFrame receiveBytesFromController(byte[] byteFromStream) {
+
 		this.byteFromStream = byteFromStream;
+		ResponseFrame responseFrame = getNextModbusFrame();
+		return responseFrame;
 
 	}
 

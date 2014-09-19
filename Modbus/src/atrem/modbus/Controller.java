@@ -5,11 +5,13 @@ import java.util.List;
 import java.util.Timer;
 
 import atrem.modbus.parsers.FrameDecoder;
+import frames.ResponseFrame;
 
 public class Controller {
 
 	private List<Timer> tasks = new ArrayList<Timer>();
-	private Connection connection = Domino.createConnectionSwing();
+
+	private Connection connection;
 	private RequestFrameFactory requestFrameFactory = new RequestFrameFactory();
 
 	public RequestFrameFactory getRequestFrameFactory() {
@@ -19,6 +21,11 @@ public class Controller {
 	private Timer timer;
 	private FrameStorage frameStorage = new FrameStorage();
 
+	public void startConnection(String ipAddress, int port) {
+		connection = new Connection(ipAddress, port);
+		connection.startReceiveFrames(this);
+	}
+
 	public Controller() {
 		this.requestFrameFactory = requestFrameFactory;
 		connection.startReceiveFrames(this);
@@ -26,19 +33,18 @@ public class Controller {
 
 	public void loadBytesToDecoder(byte[] bytes) {
 		FrameDecoder frameDecoder = new FrameDecoder();
-		frameDecoder.receiveBytesFromController(bytes); // TODO zlikwidowac
-														// rozbicie na 2 metody,
-														// wywolac raz, inna
-														// nazwa
-		System.out.println(frameDecoder.getNextModbusFrame());
-		frameStorage.addReceivedFrame(frameDecoder.getNextModbusFrame());
+		ResponseFrame responseFrame = frameDecoder
+				.receiveBytesFromController(bytes);
+		frameStorage.addReceivedFrame(responseFrame);
+		frameStorage.compare();
+		System.out.println(responseFrame);//
 
 	}
 
 	public void addAndMakeRequest() { // TODO zmiana nazwy, rozbicie na 2
 										// metody,
 
-		// requestFrameFactory.loadDefinedInformation();
+		requestFrameFactory.loadDefinedInformation();
 		timer = new Timer();
 		timer.schedule(new Task(connection, requestFrameFactory, frameStorage),
 				0, 2000); // wysy³anie
@@ -49,4 +55,11 @@ public class Controller {
 
 	}
 
+	public void setConnection(Connection connection) {
+		this.connection = connection;
+	}
+
+	FrameStorage getFrameStorage() {
+		return frameStorage;
+	}
 }

@@ -5,15 +5,6 @@ import java.util.Arrays;
 import java.util.Date;
 
 public class ResponseFrame {
-	@Override
-	public String toString() {
-		return "ResponseFrame [transactionIdentifier=" + transactionIdentifier
-				+ ", protocolIdentifier=" + protocolIdentifier
-				+ ", unitIdentifier=" + unitIdentifier + ", dataLength="
-				+ dataLength + ", dataBytes=" + Arrays.toString(dataBytes)
-				+ ", functionCode=" + functionCode + "]";
-	}
-
 	private int transactionIdentifier;
 	private int protocolIdentifier;
 	private int unitIdentifier;
@@ -90,5 +81,38 @@ public class ResponseFrame {
 
 	public Date getDate() {
 		return date;
+	}
+
+	@Override
+	public String toString() {
+		return "ResponseFrame [transactionIdentifier=" + transactionIdentifier
+				+ ", protocolIdentifier=" + protocolIdentifier
+				+ ", unitIdentifier=" + unitIdentifier + ", dataLength="
+				+ dataLength + ", dataBytes=" + Arrays.toString(dataBytes)
+				+ ", functionCode=" + functionCode + "]";
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ResponseFrame other = (ResponseFrame) obj;
+		if (!Arrays.equals(dataBytes, other.dataBytes))
+			return false;
+		if (dataLength != other.dataLength)
+			return false;
+		if (functionCode != other.functionCode)
+			return false;
+		if (protocolIdentifier != other.protocolIdentifier)
+			return false;
+		if (transactionIdentifier != other.transactionIdentifier)
+			return false;
+		if (unitIdentifier != other.unitIdentifier)
+			return false;
+		return true;
 	}
 }

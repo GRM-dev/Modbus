@@ -2,19 +2,25 @@ package atrem.modbus.parsers;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import frames.RequestFrame;
 
 public class CoderTest {
+	private Coder koder;
+
+	@Before
+	public void createCoder() {
+		koder = new Coder();
+	}
+
 	@Test
 	public void codeToBytesTest() {
 		byte exampleByte = 0;
-		Coder koder = new Coder();
 		byte[] bytes = koder.codeToBytes(1, 2);
 		assertEquals(bytes.length, 2);
 		assertEquals(bytes[1], exampleByte);
@@ -26,30 +32,17 @@ public class CoderTest {
 	@Test
 	public void codeFrameTest() {
 		Random generator = new Random();
-
-		RequestFrame frame = new RequestFrame(258, 25, 26, 258, 258);
-		Coder koder = new Coder();
+		RequestFrame frame = new RequestFrame(48, 25, 26, 258, 258);
 		koder.codeFrame(frame);
-		ArrayList<Byte> bytesList = koder.getBytesList();
-		System.out.println(bytesList);
-		check258(bytesList.subList(0, 2));
-		checkBytes(bytesList, 2, 0);
-		checkBytes(bytesList, 3, 0);
-		checkBytes(bytesList, 4, 0);
-		checkBytes(bytesList, 5, 6);
-		checkBytes(bytesList, 6, 25);
-		checkBytes(bytesList, 7, 26);
-		check258(bytesList.subList(8, 10));
-		check258(bytesList.subList(10, 12));
+		byte[] byteArray = koder.getFrameAsBytes();
+		byte[] exampleByteArray = createBytesList();
+		Assert.assertArrayEquals(exampleByteArray, byteArray);
+
 	}
 
-	private void checkBytes(ArrayList<Byte> bytesList, int cell, int value) {
-		assertEquals(new Byte((byte) value), bytesList.get(cell));
-	}
+	private byte[] createBytesList() {
+		byte[] bytes = { 0, 48, 0, 0, 0, 6, 25, 26, 1, 2, 1, 2 };
+		return bytes;
 
-	private void check258(List<Byte> list) {
-		assertEquals(new Byte((byte) 1), list.get(0));
-		assertEquals(new Byte((byte) 2), list.get(1));
 	}
-
 }

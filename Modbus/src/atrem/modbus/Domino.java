@@ -18,6 +18,7 @@ public class Domino {
 	private static RequestFrameFactory requestFrameFactory = new RequestFrameFactory();
 
 	public static void main(String[] args) {
+
 		Domino domino = new Domino();
 
 	}
@@ -31,6 +32,10 @@ public class Domino {
 
 			}
 		});
+
+		// Controller controller = new Controller();
+		// controller.startConnection("10.7.7.121", 502);
+		// controller.addAndMakeRequest();
 
 	}
 
