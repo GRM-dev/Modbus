@@ -5,7 +5,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.nio.ByteBuffer;
-import java.util.Random;
+
+import frames.RequestFrame;
 
 public class Connection implements Runnable {
 
@@ -13,9 +14,6 @@ public class Connection implements Runnable {
 	private InputStream inStream;
 	private Controller controller;
 	private OutputStream outStream;
-	private int transactionId;
-	private Random rand;
-	private static final int HEADER_SIZE = 6; // TODO pole statyczne klasy ramki
 
 	public Connection(String ipAddress, int port) {
 		try {
@@ -26,7 +24,7 @@ public class Connection implements Runnable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		rand = new Random();
+
 	}
 
 	public InputStream getInStream() {
@@ -46,12 +44,6 @@ public class Connection implements Runnable {
 	}
 
 	public void send(byte[] frame) {
-		transactionId = rand.nextInt(100);
-		byte[] bytes = new byte[2];
-		for (int i = 1; i >= 0; i--) {
-			bytes[i] = (byte) (transactionId >>> (i * 8));
-			frame[i] = bytes[i];
-		}
 
 		try {
 			outStream.write(frame);
@@ -69,7 +61,7 @@ public class Connection implements Runnable {
 		}
 	}
 
-	public void receive(Controller controller) { // TODO zmiana nazwy
+	public void startReceiveFrames(Controller controller) {
 		this.controller = controller;
 		new Thread(this, "watek odbierajacy ramki").start();
 
@@ -79,8 +71,8 @@ public class Connection implements Runnable {
 	public void run() {
 		while (true) {
 
-			byte[] header = new byte[HEADER_SIZE];
-			readBytes(header, HEADER_SIZE);
+			byte[] header = new byte[RequestFrame.HEADER_SIZE];
+			readBytes(header, RequestFrame.HEADER_SIZE);
 
 			ByteBuffer byteBuffer = ByteBuffer.wrap(header);
 			int tid = byteBuffer.getShort();
@@ -90,10 +82,10 @@ public class Connection implements Runnable {
 			byte[] data = new byte[length];
 			readBytes(data, length);
 
-			byte[] buff = new byte[HEADER_SIZE + length];
-			System.arraycopy(header, 0, buff, 0, HEADER_SIZE);
-			System.arraycopy(data, 0, buff, HEADER_SIZE, length);
-			controller.createBytesFromStream(buff);
+			byte[] buff = new byte[RequestFrame.HEADER_SIZE + length];
+			System.arraycopy(header, 0, buff, 0, RequestFrame.HEADER_SIZE);
+			System.arraycopy(data, 0, buff, RequestFrame.HEADER_SIZE, length);
+			controller.loadBytesToDecoder(buff);
 		}
 	}
 
