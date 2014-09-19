@@ -5,18 +5,15 @@ import java.util.List;
 import java.util.Timer;
 
 import atrem.modbus.parsers.FrameDecoder;
+import frames.ResponseFrame;
 
 public class Controller {
 
 	private List<Timer> tasks = new ArrayList<Timer>();
-	private Connection connection = Domino.createConnectionConstant();
+	private Connection connection;
 	private RequestFrameFactory requestFrameFactory = new RequestFrameFactory();
 	private Timer timer;
 	private FrameStorage frameStorage = new FrameStorage();
-
-	public Controller() {
-		connection.startReceiveFrames(this);
-	}
 
 	public void startConnection(String ipAddress, int port) {
 		connection = new Connection(ipAddress, port);
@@ -25,10 +22,10 @@ public class Controller {
 
 	public void loadBytesToDecoder(byte[] bytes) {
 		FrameDecoder frameDecoder = new FrameDecoder();
-		frameDecoder.receiveBytesFromController(bytes); // TODO zlikwidowac
-														// rozbicie na 2 metody,
-														// wywolac raz, inna
-														// nazwa
+		ResponseFrame responseFrame = frameDecoder
+				.receiveBytesFromController(bytes);
+		frameStorage.addReceivedFrame(responseFrame);
+		System.out.println(responseFrame);
 	}
 
 	public void addAndMakeRequest(int id) { // TODO zmiana nazwy, rozbicie na 2
