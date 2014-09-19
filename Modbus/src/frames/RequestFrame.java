@@ -97,4 +97,18 @@ public class RequestFrame {
 		return sendDate;
 	}
 
+	public boolean equals(ResponseFrame responseFrame) {
+		if (responseFrame == null)
+			return false;
+		if (functionCode != responseFrame.getFunctionCode())
+			return false;
+		if (protocolIdentifier != responseFrame.getProtocolIdentifier())
+			return false;
+		if (transactionIdentifier != responseFrame.getTransactionIdentifier())
+			return false;
+		if (unitIdentifier != responseFrame.getUnitIdentifier())
+			return false;
+		return true;
+	}
+
 }

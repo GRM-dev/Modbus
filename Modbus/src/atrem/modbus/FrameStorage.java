@@ -80,7 +80,7 @@ public class FrameStorage {
 			for (int indexOFReceivedFrames = 0; indexOFReceivedFrames < receivedFrames
 					.size(); indexOFReceivedFrames++) {
 				SysOutPairFrame(indexOfSentFrames, indexOFReceivedFrames);
-				if (isTheSameFrame(indexOfSentFrames, indexOFReceivedFrames)) {
+				if (isPairFrame(indexOfSentFrames, indexOFReceivedFrames)) {
 
 					pairFrame(indexOfSentFrames, indexOFReceivedFrames);
 					removePairedFrame(indexOfSentFrames, indexOFReceivedFrames);
@@ -103,10 +103,11 @@ public class FrameStorage {
 						.getTransactionIdentifier());
 	}
 
-	private boolean isTheSameFrame(int indexOfSentFrames,
+	private boolean isPairFrame(int indexOfSentFrames,
 			int indexOFReceivedFrames) {
-		return sentFrames.get(indexOfSentFrames).getTransactionIdentifier() == receivedFrames
-				.get(indexOFReceivedFrames).getTransactionIdentifier();
+		RequestFrame requestFrame = sentFrames.get(indexOfSentFrames);
+		ResponseFrame responseFrame = receivedFrames.get(indexOFReceivedFrames);
+		return requestFrame.equals(responseFrame);
 	}
 
 	private void pairFrame(int indexOfSentFrames, int indexOFReceivedFrames) {
