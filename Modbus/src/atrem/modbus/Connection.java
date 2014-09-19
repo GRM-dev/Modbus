@@ -93,7 +93,7 @@ public class Connection implements Runnable {
 			byte[] buff = new byte[HEADER_SIZE + length];
 			System.arraycopy(header, 0, buff, 0, HEADER_SIZE);
 			System.arraycopy(data, 0, buff, HEADER_SIZE, length);
-			controller.createBytesFromStream(buff);
+			controller.pickUpBytes(buff);
 		}
 	}
 
