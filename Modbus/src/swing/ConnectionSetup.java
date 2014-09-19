@@ -20,6 +20,14 @@ public class ConnectionSetup extends JDialog {
 
 	private final Box contentBox = Box.createHorizontalBox();
 
+	private JButton cancelButton;
+	private JButton okButton;
+	private JTextArea ipAddressTextArea;
+	private JTextArea portTextArea;
+
+	private String ipAddress;
+	private int port;
+
 	/**
 	 * Launch the application.
 	 */
@@ -49,30 +57,46 @@ public class ConnectionSetup extends JDialog {
 		getContentPane().add(createButtonPanel(), BorderLayout.SOUTH);
 
 		pack();
+
 	}
 
 	private JPanel createButtonPanel() {
+
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
-		buttonPanel.add(createOkButton());
-		buttonPanel.add(createCancelButton());
-		return buttonPanel;
 
+		okButton = new JButton("OK");
+		cancelButton = new JButton("Cancel");
+
+		okButton.addActionListener(new OkButtonListener());
+		cancelButton.addActionListener(new CancelButtonListener());
+
+		buttonPanel.add(okButton);
+		buttonPanel.add(cancelButton);
+
+		return buttonPanel;
 	}
 
 	private Box createQuestionBox() {
 
 		Box box = Box.createVerticalBox();
-		box.add(createDialogContainer("IP Address "));
-		box.add(createDialogContainer("Server Port "));
+
+		ipAddressTextArea = new JTextArea();
+		portTextArea = new JTextArea();
+
+		JPanel ipAddressPanel = createDialogPanel("IP Address: ",
+				ipAddressTextArea);
+		JPanel serverPort = createDialogPanel("Server Port: ", portTextArea);
+		box.add(ipAddressPanel);
+		box.add(serverPort);
 		box.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
 
 		return box;
 	}
 
-	private JPanel createDialogContainer(String labelName) {
+	private JPanel createDialogPanel(String labelName, JTextArea textArea) {
+
 		JLabel label = new JLabel(labelName);
-		JTextArea textArea = new JTextArea();
 		textArea.setBorder(BorderFactory
 				.createEtchedBorder(EtchedBorder.LOWERED));
 		JPanel panel = new JPanel();
@@ -81,32 +105,23 @@ public class ConnectionSetup extends JDialog {
 		panel.add(label);
 		panel.add(textArea);
 		return panel;
+
 	}
 
-	private JButton createOkButton() {
-		JButton okButton = new JButton("OK");
-		okButton.addActionListener(new ActionListener() {
+	private class OkButtonListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			dispose();
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-			}
-		});
-
-		getRootPane().setDefaultButton(okButton);
-		return okButton;
+		}
 	}
 
-	private JButton createCancelButton() {
-		JButton cancelButton = new JButton("Cancel");
-		cancelButton.addActionListener(new ActionListener() {
+	private class CancelButtonListener implements ActionListener {
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-			}
-		});
-		return cancelButton;
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			dispose();
+		}
 	}
 
 }

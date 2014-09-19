@@ -20,6 +20,19 @@ import javax.swing.border.EtchedBorder;
 public class ReadWriteDefinition extends JDialog {
 
 	private final Box contentBox = Box.createHorizontalBox();
+	private JButton cancelButton;
+	private JButton okButton;
+	private JTextArea slaveIdTextArea;
+	private JComboBox functionCodeComboBox;
+	private JTextArea startingAddressTextArea;
+	private JTextArea quantityTextArea;
+	private JTextArea scanRateTextArea;
+
+	private int slaveId;
+	private int functionCode;
+	private int startingAddress;
+	private int quantity;
+	private int scanRate;
 
 	/**
 	 * Launch the application.
@@ -29,6 +42,7 @@ public class ReadWriteDefinition extends JDialog {
 			ReadWriteDefinition dialog = new ReadWriteDefinition();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -37,7 +51,7 @@ public class ReadWriteDefinition extends JDialog {
 	public ReadWriteDefinition() {
 		setTitle("Read/Write Definition");
 
-		setBounds(300, 300, 350, 220);
+		setBounds(300, 300, 300, 300);
 		setResizable(false);
 
 		getContentPane().setLayout(new BorderLayout());
@@ -52,32 +66,45 @@ public class ReadWriteDefinition extends JDialog {
 	}
 
 	private JPanel createButtonPanel() {
+
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
-		buttonPanel.add(createOkButton());
-		buttonPanel.add(createCancelButton());
-		return buttonPanel;
 
+		okButton = new JButton("OK");
+		cancelButton = new JButton("Cancel");
+
+		okButton.addActionListener(new OkButtonListener());
+		cancelButton.addActionListener(new CancelButtonListener());
+
+		buttonPanel.add(okButton);
+		buttonPanel.add(cancelButton);
+
+		return buttonPanel;
 	}
 
 	private Box createQuestionBox() {
 
 		Box box = Box.createVerticalBox();
-		box.add(createDialogContainer("Slave ID"));
-		box.add(createFunctionContainer());
-		box.add(createDialogContainer("Address:"));
-		box.add(createDialogContainer("Quantity:"));
-		box.add(createDialogContainer("Scan Rate", "[ms]"));
+		slaveIdTextArea = new JTextArea();
+		functionCodeComboBox = new JComboBox();
+		startingAddressTextArea = new JTextArea();
+		quantityTextArea = new JTextArea();
+		scanRateTextArea = new JTextArea();
+		box.add(createDialogPanel("Slave ID", slaveIdTextArea));
+		box.add(createFunctionPanel(functionCodeComboBox));
+		box.add(createDialogPanel("Address:", startingAddressTextArea));
+		box.add(createDialogPanel("Quantity:", quantityTextArea));
+		box.add(createDialogPanel("Scan Rate", "[ms]", scanRateTextArea));
 
 		box.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
 
 		return box;
 	}
 
-	private JPanel createFunctionContainer() {
+	private JPanel createFunctionPanel(JComboBox comboBox) {
 
 		JLabel label = new JLabel("Function:");
-		JComboBox comboBox = new JComboBox();
+		comboBox = new JComboBox();
 		comboBox.setEditable(false);
 		comboBox.addItem("03 Read Holding Registers");
 		comboBox.addItem("06 Write Single Register");
@@ -89,9 +116,9 @@ public class ReadWriteDefinition extends JDialog {
 		return panel;
 	}
 
-	private JPanel createDialogContainer(String labelName) {
+	private JPanel createDialogPanel(String labelName, JTextArea textArea) {
 		JLabel label = new JLabel(labelName);
-		JTextArea textArea = new JTextArea();
+		textArea = new JTextArea();
 		textArea.setBorder(BorderFactory
 				.createEtchedBorder(EtchedBorder.LOWERED));
 		JPanel panel = new JPanel();
@@ -102,9 +129,10 @@ public class ReadWriteDefinition extends JDialog {
 		return panel;
 	}
 
-	private JPanel createDialogContainer(String labelName, String labelName2) {
+	private JPanel createDialogPanel(String labelName, String labelName2,
+			JTextArea textArea) {
 		JLabel label = new JLabel(labelName);
-		JTextArea textArea = new JTextArea();
+		textArea = new JTextArea();
 		textArea.setBorder(BorderFactory
 				.createEtchedBorder(EtchedBorder.LOWERED));
 		JLabel label2 = new JLabel(labelName2);
@@ -121,30 +149,20 @@ public class ReadWriteDefinition extends JDialog {
 		return bigPanel;
 	}
 
-	private JButton createOkButton() {
-		JButton okButton = new JButton("OK");
-		okButton.addActionListener(new ActionListener() {
+	private class OkButtonListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			dispose();
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-			}
-		});
-
-		getRootPane().setDefaultButton(okButton);
-		return okButton;
+		}
 	}
 
-	private JButton createCancelButton() {
-		JButton cancelButton = new JButton("Cancel");
-		cancelButton.addActionListener(new ActionListener() {
+	private class CancelButtonListener implements ActionListener {
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-			}
-		});
-		return cancelButton;
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			dispose();
+		}
 	}
 
 }

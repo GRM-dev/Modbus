@@ -20,9 +20,6 @@ public class ModbusSwing extends JFrame {
 
 	private final JPanel contentPanel = new JPanel();
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		try {
 			ModbusSwing dialog = new ModbusSwing();
@@ -33,9 +30,6 @@ public class ModbusSwing extends JFrame {
 		}
 	}
 
-	/**
-	 * Create the dialog.
-	 */
 	public ModbusSwing() {
 
 		setBounds(100, 100, 450, 300);
