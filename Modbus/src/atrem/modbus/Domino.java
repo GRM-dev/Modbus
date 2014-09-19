@@ -57,14 +57,11 @@ public class Domino {
 
 	}
 
-	public static void receiveConnectionParameters(String ip2, int port2) {
-		ip = ip2;
-		port = port2;
-		Connection connection = new Connection(ip, port);
+	public static void receiveConnectionParameters(String ip, int port) {
+
 		controller = new Controller();
+		controller.startConnection(ip, port);
 		requestFrameFactory = controller.getRequestFrameFactory();
-		if (connection.checkConnection())
-			System.out.println("dzia³a");
 
 	}
 

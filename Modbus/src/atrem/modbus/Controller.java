@@ -26,11 +26,6 @@ public class Controller {
 		connection.startReceiveFrames(this);
 	}
 
-	public Controller() {
-		this.requestFrameFactory = requestFrameFactory;
-		connection.startReceiveFrames(this);
-	}
-
 	public void loadBytesToDecoder(byte[] bytes) {
 		FrameDecoder frameDecoder = new FrameDecoder();
 		ResponseFrame responseFrame = frameDecoder
