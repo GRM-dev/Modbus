@@ -4,15 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 
-import atrem.modbus.parsers.Coder;
 import atrem.modbus.parsers.FrameDecoder;
-import frames.RequestFrame;
 
 public class Controller {
 
 	private List<Timer> tasks = new ArrayList<Timer>();
 	private Connection connection = Domino.createConnectionConstant();
-	private RequestFrameFactory requestFrameFactory = new RequestFrameFactory();
 	private Timer timer;
 	private FrameStorage frameStorage = new FrameStorage();
 
@@ -21,7 +18,7 @@ public class Controller {
 	}
 
 	public void pickUpBytes(byte[] bytes) { // TODO zmiana
-														// nazwy
+											// nazwy
 		FrameDecoder frameDecoder = new FrameDecoder();
 		frameDecoder.receiveBytesFromController(bytes); // TODO zlikwidowac
 														// rozbicie na 2 metody,
@@ -33,19 +30,12 @@ public class Controller {
 	}
 
 	public void addAndMakeRequest(int id) { // TODO zmiana nazwy, rozbicie na 2
-											// metody,
-		Coder coder = new Coder();
-		requestFrameFactory.loadDefinedInformation();
-		RequestFrame requestFrame = requestFrameFactory.createRequestFrame();
-		System.out.println("id: " + requestFrame.getTransactionIdentifier());
 
-		coder.codeFrame(requestFrame);
+		RequestFrameFactory requestFrameFactory = new RequestFrameFactory();
 		timer = new Timer();
-		timer.schedule(new Task(connection, coder.getFrameAsBytes(), id,
-				requestFrame, frameStorage), 0, 2000); // wysy³anie
-		// co
-		// 2
-		// sekundy
+		timer.schedule(new Task(connection, requestFrameFactory, frameStorage),
+				0, 2000); // wysy³anie_co_2_sec
+
 		tasks.add(timer);
 
 	}

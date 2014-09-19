@@ -3,6 +3,7 @@ package atrem.modbus;
 import java.util.Random;
 import java.util.TimerTask;
 
+import atrem.modbus.parsers.Coder;
 import frames.RequestFrame;
 
 public class Task extends TimerTask {
@@ -13,34 +14,32 @@ public class Task extends TimerTask {
 	private int transactionId;
 	private Random rand;
 	private FrameStorage frameStorage;
-	private RequestFrame requestFrame;
+	private RequestFrameFactory requestFrameFactory;
+	private Coder coder = new Coder();
 
-	public Task(Connection connection, byte[] bytes, int id,
-			RequestFrame requestFrame, FrameStorage frameStorage) {
+	public Task(Connection connection, RequestFrameFactory requestFrameFactory,
+			FrameStorage frameStorage) {
 		this.connection = connection;
-		this.bytes = bytes;
-		this.id = id;
-		this.requestFrame = requestFrame;
-		rand = new Random();
 		this.frameStorage = frameStorage;
+		this.requestFrameFactory = requestFrameFactory;
 
 	}
 
 	@Override
 	public void run() {
-		transactionId = rand.nextInt(100);
-		for (int i = 1; i >= 0; i--) {
-			bytes[i] = (byte) (transactionId >>> (i * 8));
-		}
-		requestFrame.setTransactionIdentifier(transactionId);
+		byte[] bytes;
+		RequestFrame requestFrame = requestFrameFactory.createRequestFrame();
+		coder.codeFrame(requestFrame);
+		bytes = coder.getFrameAsBytes();
+		connection.send(bytes);
 		frameStorage.addSentFrame(requestFrame);
+
 		if (!frameStorage.isWorking()) {
 			frameStorage.makePairsOfFrames();
-			System.out.println("lll");
+
 		}
-		connection.send(bytes);
+
 		System.out.println("wyslalem " + id);
 
 	}
-
 }
