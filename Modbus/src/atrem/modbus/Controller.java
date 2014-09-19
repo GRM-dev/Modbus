@@ -12,9 +12,6 @@ public class Controller {
 
 	private List<Timer> tasks = new ArrayList<Timer>();
 	private Connection connection = Domino.createConnectionConstant();
-	private Coder coder = new Coder(); // TODO metoda ma tworzyc koder
-	private FrameDecoder frameDecoder = new FrameDecoder(); // TODO metoda ma
-															// tworzyc dekoder
 	private RequestFrameFactory requestFrameFactory = new RequestFrameFactory();
 	private Timer timer;
 	private FrameStorage frameStorage = new FrameStorage();
@@ -25,7 +22,7 @@ public class Controller {
 
 	public void createBytesFromStream(byte[] bytes) { // TODO zmiana
 														// nazwy
-
+		FrameDecoder frameDecoder = new FrameDecoder();
 		frameDecoder.receiveBytesFromController(bytes); // TODO zlikwidowac
 														// rozbicie na 2 metody,
 														// wywolac raz, inna
@@ -37,6 +34,7 @@ public class Controller {
 
 	public void addAndMakeRequest(int id) { // TODO zmiana nazwy, rozbicie na 2
 											// metody,
+		Coder coder = new Coder();
 		requestFrameFactory.loadDefinedInformation();
 		RequestFrame requestFrame = requestFrameFactory.createRequestFrame();
 		System.out.println("id: " + requestFrame.getTransactionIdentifier());
