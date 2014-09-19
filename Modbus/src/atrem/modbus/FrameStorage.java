@@ -1,6 +1,7 @@
 package atrem.modbus;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -51,6 +52,19 @@ public class FrameStorage {
 		});
 
 		// isWorking = false;
+	}
+
+	public boolean hasNoResponse(int index) {
+		Date sendDate = sentFrames.get(index).getSendDate();
+		long sendTimeSeconds = sendDate.getTime();
+		Date currentDate = new Date();
+		long currentTimeSeconds = currentDate.getTime();
+
+		if (currentTimeSeconds - sendTimeSeconds > 5)
+			return true;
+		else
+			return false;
+
 	}
 
 	public void compare() {
