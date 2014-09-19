@@ -35,10 +35,7 @@ public class Controller {
 		requestFrameFactory.loadDefinedInformation();
 		timer = new Timer();
 		timer.schedule(new Task(connection, requestFrameFactory, frameStorage),
-				0, 2000); // wysy³anie
-		// co
-		// 2
-		// sekundy
+				0, 2000);
 		tasks.add(timer);
 
 	}
