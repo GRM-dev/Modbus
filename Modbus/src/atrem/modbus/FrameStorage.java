@@ -43,7 +43,6 @@ public class FrameStorage {
 			public void run() {
 				isWorking = true;
 				while (sentFrames.size() != 0) {
-
 					compare();
 				}
 				isWorking = false;
@@ -52,7 +51,6 @@ public class FrameStorage {
 		});
 
 		// isWorking = false;
-
 	}
 
 	public void compare() {
