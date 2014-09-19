@@ -1,9 +1,19 @@
 package frames;
 
 import java.nio.ByteBuffer;
+import java.util.Arrays;
 import java.util.Date;
 
 public class ResponseFrame {
+	@Override
+	public String toString() {
+		return "ResponseFrame [transactionIdentifier=" + transactionIdentifier
+				+ ", protocolIdentifier=" + protocolIdentifier
+				+ ", unitIdentifier=" + unitIdentifier + ", dataLength="
+				+ dataLength + ", dataBytes=" + Arrays.toString(dataBytes)
+				+ ", functionCode=" + functionCode + "]";
+	}
+
 	private int transactionIdentifier;
 	private int protocolIdentifier;
 	private int unitIdentifier;
@@ -59,15 +69,6 @@ public class ResponseFrame {
 
 	public byte[] getDataBytes() {
 		return dataBytes;
-	}
-
-	@Override
-	public String toString() {
-		return "FrameIncoming [transactionIdentifier=" + transactionIdentifier
-				+ ", protocolIdentifier=" + protocolIdentifier
-				+ ", unitIdentifier=" + unitIdentifier + ", dataLength="
-				+ dataLength + ", dataBytes=" + zmiana() + " " + dataBytes[0]
-				+ ", functionCode=" + functionCode + "]";
 	}
 
 	private double zmiana() {

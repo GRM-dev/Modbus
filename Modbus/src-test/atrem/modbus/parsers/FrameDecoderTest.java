@@ -4,27 +4,74 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import java.io.IOException;
-import java.io.InputStream;
-
+import org.junit.Assert;
 import org.junit.Test;
+
+import frames.ResponseFrame;
 
 public class FrameDecoderTest {
 	@Test
-	public void readNextIntTest() throws IOException {
-
-		InputStream inputStream = mock(InputStream.class);
-		when(inputStream.read()).thenReturn(0).thenReturn(2);
-
-		byte[] bytes = new byte[4];
-		when(bytes[1]).thenReturn((byte) 2);
-
+	public void readNextIntTest() {
+		byte[] bytes = { 0, 1, 1, 2 };
 		FrameDecoder decoder = new FrameDecoder();
-		byte[] bytes = new byte[4];
-
+		decoder.receiveBytesFromController(bytes);
 		int readInt = decoder.readNextInt();
-		System.out.println(readInt);
-		assertEquals(readInt, 2);
+
+		assertEquals(1, readInt);
+		readInt = decoder.readNextInt();
+		assertEquals(258, readInt);
+	}
+
+	@Test
+	public void getNextModbusFrameTest() {
+
+		byte[] bytes = { 1, 2, 0, 0, 0, 6, 25, 26, 1, 2, 1, 2 };
+		FrameDecoder decoder = new FrameDecoder();
+		decoder.receiveBytesFromController(bytes);
+		ResponseFrame responseFrame = decoder.getNextModbusFrame();
+		ResponseFrame exampleResponseFrame = createExmapleFrame();
+		assertEqualsFrame(responseFrame, exampleResponseFrame);
+		exampleResponseFrame = createExmapleFrame1();
+		assertEqualsFrame(exampleResponseFrame, responseFrame);
+	}
+
+	private void assertEqualsFrame(ResponseFrame responseFrame,
+			ResponseFrame exampleResponseFrame) {
+		Assert.assertArrayEquals(exampleResponseFrame.getDataBytes(),
+				responseFrame.getDataBytes());
+		assertEquals(exampleResponseFrame.getDataLength(),
+				responseFrame.getDataLength());
+		assertEquals(exampleResponseFrame.getFunctionCode(),
+				responseFrame.getFunctionCode());
+		assertEquals(exampleResponseFrame.getProtocolIdentifier(),
+				responseFrame.getProtocolIdentifier());
+		assertEquals(exampleResponseFrame.getTransactionIdentifier(),
+				responseFrame.getTransactionIdentifier());
+		assertEquals(exampleResponseFrame.getUnitIdentifier(),
+				responseFrame.getUnitIdentifier());
+	}
+
+	private ResponseFrame createExmapleFrame() {
+		byte[] bytes = { 1, 2, 1, 2 };
+		ResponseFrame eResponseFrame = mock(ResponseFrame.class);
+		when(eResponseFrame.getDataBytes()).thenReturn(bytes);
+		when(eResponseFrame.getDataLength()).thenReturn(6);
+		when(eResponseFrame.getFunctionCode()).thenReturn(26);
+		when(eResponseFrame.getTransactionIdentifier()).thenReturn(258);
+		when(eResponseFrame.getUnitIdentifier()).thenReturn(25);
+		return eResponseFrame;
+
+	}
+
+	private ResponseFrame createExmapleFrame1() {
+		byte[] bytes = { 1, 2, 1, 2 };
+		ResponseFrame eResponseFrame = new ResponseFrame();
+		eResponseFrame.setDataBytes(bytes);
+		eResponseFrame.setDataLength(6);
+		eResponseFrame.setFunctionCode(26);
+		eResponseFrame.setTransactionIdentifier(258);
+		eResponseFrame.setUnitIdentifier(25);
+		return eResponseFrame;
 	}
 
 }
