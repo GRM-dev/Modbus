@@ -15,7 +15,6 @@ public class CoderTest {
 
 	@Before
 	public void createCoder() {
-
 		koder = new Coder();
 	}
 
@@ -33,7 +32,7 @@ public class CoderTest {
 	@Test
 	public void codeFrameTest() {
 		Random generator = new Random();
-		RequestFrame frame = new RequestFrame(258, 25, 26, 258, 258);
+		RequestFrame frame = new RequestFrame(48, 25, 26, 258, 258);
 		koder.codeFrame(frame);
 		byte[] byteArray = koder.getFrameAsBytes();
 		byte[] exampleByteArray = createBytesList();
@@ -42,7 +41,7 @@ public class CoderTest {
 	}
 
 	private byte[] createBytesList() {
-		byte[] bytes = { 1, 2, 0, 0, 0, 6, 25, 26, 1, 2, 1, 2 };
+		byte[] bytes = { 0, 48, 0, 0, 0, 6, 25, 26, 1, 2, 1, 2 };
 		return bytes;
 
 	}
