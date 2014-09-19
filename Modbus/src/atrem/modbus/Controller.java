@@ -25,7 +25,7 @@ public class Controller {
 		ResponseFrame responseFrame = frameDecoder
 				.receiveBytesFromController(bytes);
 		frameStorage.addReceivedFrame(responseFrame);
-		System.out.println(responseFrame);
+		System.out.println(responseFrame);// TODO chwilowe wyswietlenie ramki
 	}
 
 	public void addAndMakeRequest(int id) { // TODO zmiana nazwy, rozbicie na 2
@@ -46,4 +46,7 @@ public class Controller {
 		this.connection = connection;
 	}
 
+	FrameStorage getFrameStorage() {
+		return frameStorage;
+	}
 }

@@ -7,8 +7,11 @@ import static org.mockito.Mockito.when;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.List;
 
 import org.junit.Test;
+
+import frames.RequestFrame;
 
 public class ControllerTest {
 
@@ -17,6 +20,13 @@ public class ControllerTest {
 		Controller controller = new Controller();
 		controller.setConnection(createConnection());
 		controller.addAndMakeRequest(69);
+		RequestFrameFactory requestFrameFactory = new RequestFrameFactory();
+		requestFrameFactory.loadDefinedInformation();
+		RequestFrame sampleRequestFrame = requestFrameFactory
+				.createRequestFrame();
+		FrameStorage frameStorage = controller.getFrameStorage();
+		List<RequestFrame> sentFrames = frameStorage.getSentFrames();
+		// RequestFrame requestFrame = sentFrames.get(0);
 
 	}
 

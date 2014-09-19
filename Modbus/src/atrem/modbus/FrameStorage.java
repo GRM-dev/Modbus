@@ -11,6 +11,7 @@ import frames.ResponseFrame;
 public class FrameStorage {
 
 	private List<RequestFrame> sentFrames = new ArrayList<RequestFrame>();
+
 	private List<ResponseFrame> receivedFrames = new ArrayList<ResponseFrame>();
 	private List<FramePairs> framePairs = new ArrayList<FramePairs>();
 	private FramePairs pair = new FramePairs();
@@ -63,20 +64,36 @@ public class FrameStorage {
 						+ "   "
 						+ receivedFrames.get(indexOFReceivedFrames)
 								.getTransactionIdentifier());
-				if (sentFrames.get(indexOfSentFrames)
-						.getTransactionIdentifier() == receivedFrames.get(
-						indexOFReceivedFrames).getTransactionIdentifier()) {
-					pair.setRequestFrame(sentFrames.get(indexOfSentFrames));
-					pair.setResponseFrame(receivedFrames
-							.get(indexOFReceivedFrames));
-					framePairs.add(pair);
-					System.out.println("compare test");
-					Domino.showRequestAndResponse(pair);
-					sentFrames.remove(indexOfSentFrames);
-					receivedFrames.remove(indexOFReceivedFrames);
-
+				if (isTheSameFrame(indexOfSentFrames, indexOFReceivedFrames)) {
+					pairFrame(indexOfSentFrames, indexOFReceivedFrames);
+					removePairedFrame(indexOfSentFrames, indexOFReceivedFrames);
 				}
 			}
 		}
+	}
+
+	private boolean isTheSameFrame(int indexOfSentFrames,
+			int indexOFReceivedFrames) {
+		return sentFrames.get(indexOfSentFrames).getTransactionIdentifier() == receivedFrames
+				.get(indexOFReceivedFrames).getTransactionIdentifier();
+	}
+
+	private void pairFrame(int indexOfSentFrames, int indexOFReceivedFrames) {
+		pair.setRequestFrame(sentFrames.get(indexOfSentFrames));
+		pair.setResponseFrame(receivedFrames.get(indexOFReceivedFrames));
+		framePairs.add(pair);
+		System.out.println("compare test");
+		Domino.showRequestAndResponse(pair);
+
+	}
+
+	private void removePairedFrame(int indexOfSentFrames,
+			int indexOFReceivedFrames) {
+		sentFrames.remove(indexOfSentFrames);
+		receivedFrames.remove(indexOFReceivedFrames);
+	}
+
+	List<RequestFrame> getSentFrames() {
+		return sentFrames;
 	}
 }
