@@ -5,7 +5,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.nio.ByteBuffer;
-import java.util.Random;
 
 public class Connection implements Runnable {
 
@@ -13,8 +12,7 @@ public class Connection implements Runnable {
 	private InputStream inStream;
 	private Controller controller;
 	private OutputStream outStream;
-	private int transactionId;
-	private Random rand;
+
 	private static final int HEADER_SIZE = 6; // TODO pole statyczne klasy ramki
 
 	public Connection(String ipAddress, int port) {
@@ -26,7 +24,7 @@ public class Connection implements Runnable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		rand = new Random();
+
 	}
 
 	public InputStream getInStream() {
@@ -46,12 +44,6 @@ public class Connection implements Runnable {
 	}
 
 	public void send(byte[] frame) {
-		transactionId = rand.nextInt(100);
-		byte[] bytes = new byte[2];
-		for (int i = 1; i >= 0; i--) {
-			bytes[i] = (byte) (transactionId >>> (i * 8));
-			frame[i] = bytes[i];
-		}
 
 		try {
 			outStream.write(frame);
@@ -93,7 +85,7 @@ public class Connection implements Runnable {
 			byte[] buff = new byte[HEADER_SIZE + length];
 			System.arraycopy(header, 0, buff, 0, HEADER_SIZE);
 			System.arraycopy(data, 0, buff, HEADER_SIZE, length);
-			controller.createBytesFromStream(buff);
+			controller.pickUpBytes(buff);
 		}
 	}
 
