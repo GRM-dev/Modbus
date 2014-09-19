@@ -27,11 +27,13 @@ public class Task extends TimerTask {
 
 	@Override
 	public void run() {
+
 		byte[] bytes;
 		RequestFrame requestFrame = requestFrameFactory.createRequestFrame();
 		coder.codeFrame(requestFrame);
 		bytes = coder.getFrameAsBytes();
 		connection.send(bytes);
+
 		frameStorage.addSentFrame(requestFrame);
 
 		if (!frameStorage.isWorking()) {

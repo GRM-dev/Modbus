@@ -1,5 +1,7 @@
 package atrem.modbus;
 
+import java.util.Random;
+
 import consoleService.ConsoleInputService;
 import consoleService.ConsoleOutputService;
 import frames.RequestFrame;
@@ -12,9 +14,12 @@ public class RequestFrameFactory {
 	private int functionCode;
 	private ConsoleOutputService consoleOutput;
 	private ConsoleInputService consoleInput;
+	private Random rand;
 
 	private final int FUNCTION_CODE = 3, UNIT_IDENTIFER = 5,
 			STARTING_ADRESS = 3027, QUANTITY_OF_REGISTERS = 2;
+
+	private final int TID_BOUND = 100;
 
 	public RequestFrameFactory() {
 		consoleInput = new ConsoleInputService();
@@ -36,8 +41,8 @@ public class RequestFrameFactory {
 
 	public RequestFrame createRequestFrame() {
 
-		return new RequestFrame(0, unitIdentifier, functionCode,
-				startingAdress, quantityOfRegisters);
+		return new RequestFrame(generateTransactionId(), unitIdentifier,
+				functionCode, startingAdress, quantityOfRegisters);
 	}
 
 	public void loadDefinedInformation() {
@@ -50,6 +55,10 @@ public class RequestFrameFactory {
 
 		setQuantityOfRegisters(QUANTITY_OF_REGISTERS);
 
+	}
+
+	private int generateTransactionId() {
+		return rand.nextInt(TID_BOUND);
 	}
 
 	public int getTransactionIdentifier() {

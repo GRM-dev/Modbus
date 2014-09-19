@@ -7,6 +7,7 @@ public class RequestFrame {
 	private int lengthField;
 	private int unitIdentifier;
 	private int functionCode;
+	public static final int HEADER_SIZE = 6; // TODO pole statyczne klasy ramki
 
 	@Override
 	public String toString() {
