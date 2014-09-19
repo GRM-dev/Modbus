@@ -12,8 +12,8 @@ public class Domino {
 
 	public static void main(String[] args) {
 		Controller controller = new Controller();
-
-		controller.addAndMakeRequest(69); // komi
+		controller.startConnection("10.7.7.121", 502);
+		controller.addAndMakeRequest(69);
 
 	}
 
