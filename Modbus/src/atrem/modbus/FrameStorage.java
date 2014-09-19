@@ -45,11 +45,12 @@ public class FrameStorage {
 
 					compare();
 				}
-
+				isWorking = false;
 			}
+
 		});
 
-		isWorking = false;
+		// isWorking = false;
 
 	}
 
@@ -57,11 +58,11 @@ public class FrameStorage {
 		for (int indexOfSentFrames = 0; indexOfSentFrames < sentFrames.size(); indexOfSentFrames++) {
 			for (int indexOFReceivedFrames = 0; indexOFReceivedFrames < receivedFrames
 					.size(); indexOFReceivedFrames++) {
-				// System.out.println(sentFrames.get(indexOfSentFrames)
-				// .getTransactionIdentifier()
-				// + "   "
-				// + receivedFrames.get(indexOFReceivedFrames)
-				// .getTransactionIdentifier());
+				System.out.println(sentFrames.get(indexOfSentFrames)
+						.getTransactionIdentifier()
+						+ "   "
+						+ receivedFrames.get(indexOFReceivedFrames)
+								.getTransactionIdentifier());
 				if (sentFrames.get(indexOfSentFrames)
 						.getTransactionIdentifier() == receivedFrames.get(
 						indexOFReceivedFrames).getTransactionIdentifier()) {

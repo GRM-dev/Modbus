@@ -33,6 +33,7 @@ public class Task extends TimerTask {
 
 		if (!frameStorage.isWorking()) {
 			frameStorage.makePairsOfFrames();
+			System.out.println("parujemy");
 
 		}
 
