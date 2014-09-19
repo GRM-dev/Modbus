@@ -64,7 +64,7 @@ public class Coder {
 		return bytes;
 	}
 
-	public byte[] changeListToArray() {
+	public byte[] getFrameAsBytes() {
 		byte[] bytetab = new byte[bytesList.size()];
 		for (int i = 0; i < bytesList.size(); i++) {
 			bytetab[i] = bytesList.get(i);

@@ -15,6 +15,7 @@ public class Connection implements Runnable {
 	private OutputStream outStream;
 	private int transactionId;
 	private Random rand;
+	private static final int HEADER_SIZE = 6; // TODO pole statyczne klasy ramki
 
 	public Connection(String ipAddress, int port) {
 		try {
@@ -68,22 +69,22 @@ public class Connection implements Runnable {
 		}
 	}
 
-	public void receive(Controller controller) {
+	public void receive(Controller controller) { // TODO zmiana nazwy
 		this.controller = controller;
-		new Thread(this, "watek odbierajacy ramki od domino").start();
+		new Thread(this, "watek odbierajacy ramki").start();
 
 	}
 
 	@Override
 	public void run() {
 		while (true) {
-			final int HEADER_SIZE = 6;
+
 			byte[] header = new byte[HEADER_SIZE];
 			readBytes(header, HEADER_SIZE);
 
 			ByteBuffer byteBuffer = ByteBuffer.wrap(header);
-			int dasd = byteBuffer.getShort();
-			int ledsdsd = byteBuffer.getShort();
+			int tid = byteBuffer.getShort();
+			int pid = byteBuffer.getShort();
 			int length = byteBuffer.getShort();
 
 			byte[] data = new byte[length];
@@ -91,8 +92,8 @@ public class Connection implements Runnable {
 
 			byte[] buff = new byte[HEADER_SIZE + length];
 			System.arraycopy(header, 0, buff, 0, HEADER_SIZE);
-			System.arraycopy(data, 0, buff, HEADER_SIZE - 1, length);
-			controller.createBytesFromStream(length + HEADER_SIZE, buff);
+			System.arraycopy(data, 0, buff, HEADER_SIZE, length);
+			controller.createBytesFromStream(buff);
 		}
 	}
 
@@ -100,8 +101,7 @@ public class Connection implements Runnable {
 		for (int i = 0; i < count; i++) {
 			try {
 				targetArray[i] = (byte) inStream.read();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
+			} catch (IOException e) { // TODO przechwycenie wyjatku z sensem
 				e.printStackTrace();
 			}
 		}

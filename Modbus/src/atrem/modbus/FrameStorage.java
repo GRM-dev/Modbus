@@ -61,6 +61,7 @@ public class FrameStorage {
 					pair.setResponseFrame(receivedFrames
 							.get(indexOFReceivedFrames));
 					framePairs.add(pair);
+					System.out.println("compare test");
 					Domino.showRequestAndResponse(pair);
 					sentFrames.remove(indexOfSentFrames);
 					receivedFrames.remove(indexOFReceivedFrames);
