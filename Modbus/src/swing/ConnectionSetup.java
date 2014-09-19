@@ -16,6 +16,8 @@ import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 
+import atrem.modbus.Domino;
+
 public class ConnectionSetup extends JDialog {
 
 	private final Box contentBox = Box.createHorizontalBox();
@@ -27,19 +29,20 @@ public class ConnectionSetup extends JDialog {
 
 	private String ipAddress;
 	private int port;
+	JPanel ipAddressPanel, serverPort;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		try {
-			ConnectionSetup dialog = new ConnectionSetup();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+	// public static void main(String[] args) {
+	// try {
+	// ConnectionSetup dialog = new ConnectionSetup();
+	// dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+	// dialog.setVisible(true);
+	// } catch (Exception e) {
+	// e.printStackTrace();
+	// }
+	// }
 
 	public ConnectionSetup() {
 
@@ -84,9 +87,8 @@ public class ConnectionSetup extends JDialog {
 		ipAddressTextArea = new JTextArea();
 		portTextArea = new JTextArea();
 
-		JPanel ipAddressPanel = createDialogPanel("IP Address: ",
-				ipAddressTextArea);
-		JPanel serverPort = createDialogPanel("Server Port: ", portTextArea);
+		ipAddressPanel = createDialogPanel("IP Address: ", ipAddressTextArea);
+		serverPort = createDialogPanel("Server Port: ", portTextArea);
 		box.add(ipAddressPanel);
 		box.add(serverPort);
 		box.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
@@ -111,6 +113,9 @@ public class ConnectionSetup extends JDialog {
 	private class OkButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			// Domino.receiveConnectionParameters(ipAddressTextArea.getText(),
+			// Integer.parseInt(portTextArea.getText()));
+			Domino.receiveConnectionParameters("10.7.7.121", 502);
 			dispose();
 
 		}

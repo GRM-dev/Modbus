@@ -10,8 +10,14 @@ import frames.ResponseFrame;
 public class Controller {
 
 	private List<Timer> tasks = new ArrayList<Timer>();
+
 	private Connection connection;
 	private RequestFrameFactory requestFrameFactory = new RequestFrameFactory();
+
+	public RequestFrameFactory getRequestFrameFactory() {
+		return requestFrameFactory;
+	}
+
 	private Timer timer;
 	private FrameStorage frameStorage = new FrameStorage();
 
@@ -26,11 +32,12 @@ public class Controller {
 				.receiveBytesFromController(bytes);
 		frameStorage.addReceivedFrame(responseFrame);
 		frameStorage.compare();
-		System.out.println(responseFrame);// TODO chwilowe wyswietlenie ramki
+		System.out.println(responseFrame);//
+
 	}
 
-	public void addAndMakeRequest(int id) { // TODO zmiana nazwy, rozbicie na 2
-											// metody,
+	public void addAndMakeRequest() { // TODO zmiana nazwy, rozbicie na 2
+										// metody,
 
 		requestFrameFactory.loadDefinedInformation();
 		timer = new Timer();

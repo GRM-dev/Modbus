@@ -17,6 +17,8 @@ import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 
+import atrem.modbus.Domino;
+
 public class ReadWriteDefinition extends JDialog {
 
 	private final Box contentBox = Box.createHorizontalBox();
@@ -33,25 +35,16 @@ public class ReadWriteDefinition extends JDialog {
 	private int startingAddress;
 	private int quantity;
 	private int scanRate;
+	private Domino domino;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		try {
-			ReadWriteDefinition dialog = new ReadWriteDefinition();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	public ReadWriteDefinition() {
+	public ReadWriteDefinition(Domino domino) {
 		setTitle("Read/Write Definition");
-
-		setBounds(300, 300, 300, 300);
+		this.domino = domino;
+		setBounds(300, 300, 332, 261);
 		setResizable(false);
 
 		getContentPane().setLayout(new BorderLayout());
@@ -152,7 +145,12 @@ public class ReadWriteDefinition extends JDialog {
 	private class OkButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			dispose();
+			// domino.creatRequestFrameFactory(
+			// Integer.parseInt(slaveIdTextArea.getText()),
+			// Integer.parseInt(startingAddressTextArea.getText()),
+			// Integer.parseInt(quantityTextArea.getText()), 3);
+
+			domino.creatRequestFrameFactory(5, 3027, 2, 3);
 
 		}
 	}
