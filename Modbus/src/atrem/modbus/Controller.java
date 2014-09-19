@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 
-import atrem.modbus.parsers.Coder;
 import atrem.modbus.parsers.FrameDecoder;
-import frames.RequestFrame;
 
 public class Controller {
 
@@ -35,15 +33,9 @@ public class Controller {
 											// metody,
 
 		requestFrameFactory.loadDefinedInformation();
-		RequestFrame requestFrame = requestFrameFactory.createRequestFrame();
-
-		// frameStorage.addSentFrame(requestFrame);
-		Coder coder = new Coder();
-
-		coder.codeFrame(requestFrame);
 		timer = new Timer();
-		timer.schedule(new Task(connection, coder.getFrameAsBytes(), id,
-				requestFrame, frameStorage), 0, 2000); // wysy³anie
+		timer.schedule(new Task(connection, requestFrameFactory, frameStorage),
+				0, 2000); // wysy³anie
 		// co
 		// 2
 		// sekundy
@@ -51,13 +43,4 @@ public class Controller {
 
 	}
 
-	// public void scheduleRequest(Coder coder) {
-	// timer = new Timer();
-	// timer.schedule(new Task(connection, coder.getFrameAsBytes(), id), 0,
-	// 2000); // wysy³anie
-	// // co
-	// // 2
-	// // sekundy
-	// tasks.add(timer);
-	// }
 }
