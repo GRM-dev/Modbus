@@ -13,7 +13,7 @@ public class Domino {
 	public static void main(String[] args) {
 		Controller controller = new Controller();
 
-		controller.addAndMakeRequest(69);
+		controller.addAndMakeRequest(69); // komi
 
 	}
 
@@ -30,9 +30,12 @@ public class Domino {
 	public static Connection createConnectionConstant() {
 
 		ip = "10.7.7.121";
-
 		port = 502;
+		return new Connection(ip, port);
 
+	}
+
+	public static Connection createConnectionSwing(String ip, int port) {
 		return new Connection(ip, port);
 	}
 

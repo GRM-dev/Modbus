@@ -7,6 +7,7 @@ public class RequestFrame {
 	private int lengthField;
 	private int unitIdentifier;
 	private int functionCode;
+	public static final int HEADER_SIZE = 6;
 
 	@Override
 	public String toString() {

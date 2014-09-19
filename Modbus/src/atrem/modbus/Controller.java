@@ -4,27 +4,26 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 
-import atrem.modbus.parsers.Coder;
 import atrem.modbus.parsers.FrameDecoder;
-import frames.RequestFrame;
 
 public class Controller {
 
 	private List<Timer> tasks = new ArrayList<Timer>();
-	private Connection connection;
+	private Connection connection = Domino.createConnectionConstant();
 	private RequestFrameFactory requestFrameFactory = new RequestFrameFactory();
 	private Timer timer;
 	private FrameStorage frameStorage = new FrameStorage();
 
 	public Controller() {
-
+		connection.startReceiveFrames(this);
 	}
 
 	public void startConnection(String ipAddress, int port) {
 		connection = new Connection(ipAddress, port);
+		connection.startReceiveFrames(this);
 	}
 
-	public void pickUpBytes(byte[] bytes) {
+	public void loadBytesToDecoder(byte[] bytes) {
 		FrameDecoder frameDecoder = new FrameDecoder();
 		frameDecoder.receiveBytesFromController(bytes); // TODO zlikwidowac
 														// rozbicie na 2 metody,
@@ -36,15 +35,9 @@ public class Controller {
 											// metody,
 
 		requestFrameFactory.loadDefinedInformation();
-		RequestFrame requestFrame = requestFrameFactory.createRequestFrame();
-
-		// frameStorage.addSentFrame(requestFrame);
-		Coder coder = new Coder();
-
-		coder.codeFrame(requestFrame);
 		timer = new Timer();
-		timer.schedule(new Task(connection, coder.getFrameAsBytes(), id,
-				requestFrame, frameStorage), 0, 2000); // wysy³anie
+		timer.schedule(new Task(connection, requestFrameFactory, frameStorage),
+				0, 2000); // wysy³anie
 		// co
 		// 2
 		// sekundy
@@ -56,13 +49,4 @@ public class Controller {
 		this.connection = connection;
 	}
 
-	// public void scheduleRequest(Coder coder) {
-	// timer = new Timer();
-	// timer.schedule(new Task(connection, coder.getFrameAsBytes(), id), 0,
-	// 2000); // wysy³anie
-	// // co
-	// // 2
-	// // sekundy
-	// tasks.add(timer);
-	// }
 }

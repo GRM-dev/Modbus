@@ -42,15 +42,15 @@ public class FrameStorage {
 			public void run() {
 				isWorking = true;
 				while (sentFrames.size() != 0) {
-					System.out.println("popopo");
 
 					compare();
 				}
-
+				isWorking = false;
 			}
+
 		});
 
-		isWorking = false;
+		// isWorking = false;
 
 	}
 
