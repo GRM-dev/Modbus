@@ -20,7 +20,7 @@ public class Controller {
 		connection.receive(this);
 	}
 
-	public void createBytesFromStream(byte[] bytes) { // TODO zmiana
+	public void pickUpBytes(byte[] bytes) { // TODO zmiana
 														// nazwy
 		FrameDecoder frameDecoder = new FrameDecoder();
 		frameDecoder.receiveBytesFromController(bytes); // TODO zlikwidowac
