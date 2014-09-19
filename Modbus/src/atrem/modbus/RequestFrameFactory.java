@@ -24,6 +24,7 @@ public class RequestFrameFactory {
 	public RequestFrameFactory() {
 		consoleInput = new ConsoleInputService();
 		consoleOutput = new ConsoleOutputService();
+		rand = new Random();
 	}
 
 	public void loadInformationFromConsole() {
@@ -58,7 +59,7 @@ public class RequestFrameFactory {
 	}
 
 	private int generateTransactionId() {
-		return rand.nextInt(TID_BOUND);
+		return rand.nextInt(100);
 	}
 
 	public int getTransactionIdentifier() {
