@@ -1,5 +1,7 @@
 package frames;
 
+import java.util.Date;
+
 public class RequestFrame {
 
 	private int transactionIdentifier;
@@ -7,6 +9,8 @@ public class RequestFrame {
 	private int lengthField;
 	private int unitIdentifier;
 	private int functionCode;
+	private Date sendDate;
+
 	public static final int HEADER_SIZE = 6;
 
 	@Override
@@ -29,6 +33,7 @@ public class RequestFrame {
 		this.functionCode = functionCode;
 		this.quantityOfRegisters = quantityOfRegisters;
 		this.startingAdress = startingAdress;
+		sendDate = new Date();
 
 	}
 
@@ -86,6 +91,10 @@ public class RequestFrame {
 
 	public void setFunctionCode(int functionCode) {
 		this.functionCode = functionCode;
+	}
+
+	public Date getSendDate() {
+		return sendDate;
 	}
 
 }
