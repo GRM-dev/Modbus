@@ -20,7 +20,7 @@ public class Controller {
 		connection.startReceiveFrames(this);
 	}
 
-	public void pickUpBytes(byte[] bytes) {
+	public void loadBytesToDecoder(byte[] bytes) {
 		FrameDecoder frameDecoder = new FrameDecoder();
 		frameDecoder.receiveBytesFromController(bytes); // TODO zlikwidowac
 														// rozbicie na 2 metody,

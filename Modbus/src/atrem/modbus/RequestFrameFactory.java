@@ -19,7 +19,7 @@ public class RequestFrameFactory {
 	private final int FUNCTION_CODE = 3, UNIT_IDENTIFER = 5,
 			STARTING_ADRESS = 3027, QUANTITY_OF_REGISTERS = 2;
 
-	private final int TID_BOUND = 100;
+	private static final int TID_BOUND = 100;
 
 	public RequestFrameFactory() {
 		consoleInput = new ConsoleInputService();

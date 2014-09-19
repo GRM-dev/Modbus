@@ -85,7 +85,7 @@ public class Connection implements Runnable {
 			byte[] buff = new byte[RequestFrame.HEADER_SIZE + length];
 			System.arraycopy(header, 0, buff, 0, RequestFrame.HEADER_SIZE);
 			System.arraycopy(data, 0, buff, RequestFrame.HEADER_SIZE, length);
-			controller.pickUpBytes(buff);
+			controller.loadBytesToDecoder(buff);
 		}
 	}
 
