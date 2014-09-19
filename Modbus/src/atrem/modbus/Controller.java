@@ -17,7 +17,7 @@ public class Controller {
 	private FrameStorage frameStorage = new FrameStorage();
 
 	public Controller() {
-		connection.receive(this);
+		connection.startReceiveFrames(this);
 	}
 
 	public void pickUpBytes(byte[] bytes) {
