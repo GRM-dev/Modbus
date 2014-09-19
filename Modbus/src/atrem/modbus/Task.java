@@ -41,7 +41,8 @@ public class Task extends TimerTask {
 
 		}
 
-		System.out.println("wyslalem " + id);
+		System.out.println("wyslalem "
+				+ requestFrame.getTransactionIdentifier());
 
 	}
 }
