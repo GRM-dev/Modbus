@@ -20,8 +20,7 @@ public class Controller {
 		connection.receive(this);
 	}
 
-	public void pickUpBytes(byte[] bytes) { // TODO zmiana
-														// nazwy
+	public void pickUpBytes(byte[] bytes) {
 		FrameDecoder frameDecoder = new FrameDecoder();
 		frameDecoder.receiveBytesFromController(bytes); // TODO zlikwidowac
 														// rozbicie na 2 metody,
@@ -34,10 +33,12 @@ public class Controller {
 
 	public void addAndMakeRequest(int id) { // TODO zmiana nazwy, rozbicie na 2
 											// metody,
-		Coder coder = new Coder();
+
 		requestFrameFactory.loadDefinedInformation();
 		RequestFrame requestFrame = requestFrameFactory.createRequestFrame();
-		System.out.println("id: " + requestFrame.getTransactionIdentifier());
+
+		// frameStorage.addSentFrame(requestFrame);
+		Coder coder = new Coder();
 
 		coder.codeFrame(requestFrame);
 		timer = new Timer();
@@ -49,4 +50,14 @@ public class Controller {
 		tasks.add(timer);
 
 	}
+
+	// public void scheduleRequest(Coder coder) {
+	// timer = new Timer();
+	// timer.schedule(new Task(connection, coder.getFrameAsBytes(), id), 0,
+	// 2000); // wysy³anie
+	// // co
+	// // 2
+	// // sekundy
+	// tasks.add(timer);
+	// }
 }
