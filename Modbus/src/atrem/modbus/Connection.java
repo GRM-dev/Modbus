@@ -46,6 +46,7 @@ public class Connection implements Runnable {
 	public void send(byte[] frame) {
 
 		try {
+			// System.out.println(outStream);
 			outStream.write(frame);
 		} catch (IOException e) {
 			e.printStackTrace();
