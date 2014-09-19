@@ -31,7 +31,7 @@ public class CoderTest {
 		Coder koder = new Coder();
 		koder.codeFrame(frame);
 		ArrayList<Byte> bytesList = koder.getBytesList();
-
+		System.out.println(bytesList);
 		check258(bytesList.subList(0, 2));
 		checkBytes(bytesList, 2, 0);
 		checkBytes(bytesList, 3, 0);

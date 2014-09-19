@@ -17,8 +17,10 @@ public class FrameDecoder {
 	}
 
 	private byte readNextByte() {
+		byte tmp = byteFromStream[numberBytes];
 		numberBytes++;
-		return byteFromStream[numberBytes - 1];
+
+		return tmp;
 	}
 
 	int readNextInt() {
