@@ -11,14 +11,24 @@ import frames.ResponseFrame;
 
 public class FrameStorage {
 
-	private List<RequestFrame> sentFrames = new ArrayList<RequestFrame>();
+	private List<RequestFrame> sentFrames;
 
-	private List<ResponseFrame> receivedFrames = new ArrayList<ResponseFrame>();
-	private List<FramePairs> framePairs = new ArrayList<FramePairs>();
+	private List<ResponseFrame> receivedFrames;
+	private List<FramePairs> framePairs;
 	private FramePairs pair = new FramePairs();
 	private boolean isWorking = false;
 	private ExecutorService executor = Executors
 			.newSingleThreadScheduledExecutor();
+
+	public FrameStorage() {
+		sentFrames = new ArrayList<RequestFrame>();
+		receivedFrames = new ArrayList<ResponseFrame>();
+		framePairs = new ArrayList<FramePairs>();
+	}
+
+	public FrameStorage(List<RequestFrame> sentFrames) {
+		this.sentFrames = sentFrames;
+	}
 
 	public void addSentFrame(RequestFrame modbusFrame) {
 		sentFrames.add(modbusFrame);
@@ -42,28 +52,26 @@ public class FrameStorage {
 
 			@Override
 			public void run() {
-				isWorking = true;
-				while (sentFrames.size() != 0) {
-					compare();
-				}
-				isWorking = false;
+				compare();
 			}
 
 		});
 
-		// isWorking = false;
 	}
 
-	public boolean hasNoResponse(int index) {
-		Date sendDate = sentFrames.get(index).getSendDate();
-		long sendTimeSeconds = sendDate.getTime();
-		Date currentDate = new Date();
-		long currentTimeSeconds = currentDate.getTime();
+	boolean hasNoResponse(int index) {
+		if (sentFrames.size() >= 0 && index < sentFrames.size()) {
+			Date sendDate = sentFrames.get(index).getSendDate();
+			long sendTimeSeconds = sendDate.getTime() / 1000;
+			Date currentDate = new Date();
+			long currentTimeSeconds = currentDate.getTime() / 1000;
 
-		if (currentTimeSeconds - sendTimeSeconds > 5)
-			return true;
-		else
-			return false;
+			if (currentTimeSeconds - sendTimeSeconds > 5)
+				return true;
+			else
+				return false;
+		}
+		return false;
 
 	}
 
@@ -73,9 +81,15 @@ public class FrameStorage {
 					.size(); indexOFReceivedFrames++) {
 				SysOutPairFrame(indexOfSentFrames, indexOFReceivedFrames);
 				if (isTheSameFrame(indexOfSentFrames, indexOFReceivedFrames)) {
+
 					pairFrame(indexOfSentFrames, indexOFReceivedFrames);
 					removePairedFrame(indexOfSentFrames, indexOFReceivedFrames);
+					continue;
 				}
+			}
+			if (hasNoResponse(indexOfSentFrames)) {
+				sentFrames.remove(indexOfSentFrames);
+
 			}
 		}
 	}

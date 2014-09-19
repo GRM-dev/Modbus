@@ -25,6 +25,7 @@ public class Controller {
 		ResponseFrame responseFrame = frameDecoder
 				.receiveBytesFromController(bytes);
 		frameStorage.addReceivedFrame(responseFrame);
+		frameStorage.compare();
 		System.out.println(responseFrame);// TODO chwilowe wyswietlenie ramki
 	}
 
