@@ -37,11 +37,15 @@ public class FrameStorage {
 	public void makePairsOfFrames() {
 
 		executor.execute(new Runnable() {
+
 			@Override
 			public void run() {
 				isWorking = true;
-				while (sentFrames.size() != 0)
+				while (sentFrames.size() != 0) {
+					System.out.println("popopo");
+
 					compare();
+				}
 
 			}
 		});
@@ -54,6 +58,11 @@ public class FrameStorage {
 		for (int indexOfSentFrames = 0; indexOfSentFrames < sentFrames.size(); indexOfSentFrames++) {
 			for (int indexOFReceivedFrames = 0; indexOFReceivedFrames < receivedFrames
 					.size(); indexOFReceivedFrames++) {
+				System.out.println(sentFrames.get(indexOfSentFrames)
+						.getTransactionIdentifier()
+						+ "   "
+						+ receivedFrames.get(indexOFReceivedFrames)
+								.getTransactionIdentifier());
 				if (sentFrames.get(indexOfSentFrames)
 						.getTransactionIdentifier() == receivedFrames.get(
 						indexOFReceivedFrames).getTransactionIdentifier()) {

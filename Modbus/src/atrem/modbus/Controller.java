@@ -27,8 +27,8 @@ public class Controller {
 														// rozbicie na 2 metody,
 														// wywolac raz, inna
 														// nazwa
-		System.out.println(frameDecoder.getNextModbusFrame());
-		// frameStorage.addReceivedFrame(frameDecoder.getNextModbusFrame());
+		// System.out.println(frameDecoder.getNextModbusFrame());
+		frameStorage.addReceivedFrame(frameDecoder.getNextModbusFrame());
 
 	}
 
@@ -38,14 +38,14 @@ public class Controller {
 		requestFrameFactory.loadDefinedInformation();
 		RequestFrame requestFrame = requestFrameFactory.createRequestFrame();
 		System.out.println("id: " + requestFrame.getTransactionIdentifier());
-		frameStorage.addSentFrame(requestFrame);
+
 		coder.codeFrame(requestFrame);
 		timer = new Timer();
-		timer.schedule(new Task(connection, coder.getFrameAsBytes(), id), 0,
-				2000); // wysy³anie
-						// co
-						// 2
-						// sekundy
+		timer.schedule(new Task(connection, coder.getFrameAsBytes(), id,
+				requestFrame, frameStorage), 0, 2000); // wysy³anie
+		// co
+		// 2
+		// sekundy
 		tasks.add(timer);
 
 	}
