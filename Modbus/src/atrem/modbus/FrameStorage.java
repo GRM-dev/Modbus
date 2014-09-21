@@ -12,13 +12,19 @@ import frames.ResponseFrame;
 public class FrameStorage {
 
 	private List<RequestFrame> sentFrames;
-	private FailedFramesPrinter failedFramesPrinter = new FailedFramesPrinter();
+	private FramesPrinter noResponseFramesPrinter = new FramesPrinter(
+			NO_RESPONSE_FRAMES_FILE);
+	private FramesPrinter pairedFramesPrinter = new FramesPrinter(
+			PAIRED_FRAMES_FILE);
 	private List<ResponseFrame> receivedFrames;
 	private List<FramePairs> framePairs;
 	private FramePairs pair = new FramePairs();
 	private boolean isWorking = false;
 	private ExecutorService executor = Executors
 			.newSingleThreadScheduledExecutor();
+
+	private static final String NO_RESPONSE_FRAMES_FILE = "NoResponseFrames ";
+	private static final String PAIRED_FRAMES_FILE = "PairedFrames ";
 
 	public FrameStorage() {
 		sentFrames = new ArrayList<RequestFrame>();
@@ -90,7 +96,7 @@ public class FrameStorage {
 				}
 			}
 			if (hasNoResponse(indexOfSentFrames)) {
-				failedFramesPrinter.writeToLog(""
+				noResponseFramesPrinter.writeToLog(""
 						+ sentFrames.get(indexOfSentFrames));
 				sentFrames.remove(indexOfSentFrames);
 
@@ -107,8 +113,7 @@ public class FrameStorage {
 						.getTransactionIdentifier());
 	}
 
-	private boolean isPairFrame(int indexOfSentFrames,
-			int indexOFReceivedFrames) {
+	private boolean isPairFrame(int indexOfSentFrames, int indexOFReceivedFrames) {
 		RequestFrame requestFrame = sentFrames.get(indexOfSentFrames);
 		ResponseFrame responseFrame = receivedFrames.get(indexOFReceivedFrames);
 		return requestFrame.equals(responseFrame);
@@ -119,6 +124,7 @@ public class FrameStorage {
 		pair.setResponseFrame(receivedFrames.get(indexOFReceivedFrames));
 		framePairs.add(pair);
 		Domino.showRequestAndResponse(pair);
+		pairedFramesPrinter.writeToLog("" + pair);
 
 	}
 

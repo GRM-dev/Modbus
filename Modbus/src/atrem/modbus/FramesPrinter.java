@@ -8,18 +8,18 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class FailedFramesPrinter {
+public class FramesPrinter {
 
 	private PrintWriter logWriter;
 
-	public FailedFramesPrinter() {
+	public FramesPrinter(String fileName) {
 
 		Calendar calendar = Calendar.getInstance();
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		String date = dateFormat.format(calendar.getTime());
 		String path = System.getProperty("user.home") + "/Desktop/";
 
-		File log = new File(path + date + ".txt");
+		File log = new File(path + fileName + date + ".txt");
 
 		try {
 			logWriter = new PrintWriter(new FileWriter(log, true));
