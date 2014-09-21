@@ -36,9 +36,7 @@ public class Controller {
 
 	}
 
-	public void startNewRequestTask(int id) { // TODO zmiana nazwy, rozbicie na
-												// 2
-												// metody,
+	public void startNewRequestTask(int id) {
 
 		requestFrameFactory.loadDefinedInformation();
 		timer = new Timer();
