@@ -16,22 +16,16 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 
-public class ModbusSwing extends JFrame {
+import atrem.modbus.Domino;
 
+public class ModbusSwing extends JFrame {
+	private Domino domino;
 	private final JPanel contentPanel = new JPanel();
 
-	public static void main(String[] args) {
-		try {
-			ModbusSwing dialog = new ModbusSwing();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	public ModbusSwing() {
-
+	public ModbusSwing(final Domino domino) {
+		this.domino = domino;
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		setVisible(true);
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setLayout(new FlowLayout());
@@ -71,7 +65,8 @@ public class ModbusSwing extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				try {
-					ReadWriteDefinition dialogRWD = new ReadWriteDefinition();
+					ReadWriteDefinition dialogRWD = new ReadWriteDefinition(
+							domino);
 					dialogRWD
 							.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 					dialogRWD.setVisible(true);
@@ -85,8 +80,8 @@ public class ModbusSwing extends JFrame {
 		menuBar.add(connectionMenu);
 		menuBar.add(setupMenu);
 
-		String[] columnNames = {"No.", "IP Address", "Port", "Registry Number",
-				"Registry Value"};
+		String[] columnNames = { "No.", "IP Address", "Port",
+				"Registry Number", "Registry Value" };
 		int rows = 100;
 		int columns = 5;
 		DataTablePanel dataTablePanel = new DataTablePanel(columnNames, rows,
@@ -112,7 +107,7 @@ class DataTablePanel extends JPanel {
 class DataTableModel extends AbstractTableModel {
 
 	String[] columnNames;
-	String[] columnValues = {"10.7.7.121", "502", "5027", "23.3"};
+	String[] columnValues = { "10.7.7.121", "502", "5027", "23.3" };
 	int rows;
 	int columns;
 

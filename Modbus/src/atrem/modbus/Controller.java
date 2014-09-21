@@ -10,8 +10,14 @@ import frames.ResponseFrame;
 public class Controller {
 
 	private List<Timer> tasks = new ArrayList<Timer>();
+
 	private Connection connection;
 	private RequestFrameFactory requestFrameFactory = new RequestFrameFactory();
+
+	public RequestFrameFactory getRequestFrameFactory() {
+		return requestFrameFactory;
+	}
+
 	private Timer timer;
 	private FrameStorage frameStorage = new FrameStorage();
 	private static final long PEROID = 2000;
@@ -27,6 +33,7 @@ public class Controller {
 				.receiveBytesFromController(bytes);
 		frameStorage.addReceivedFrame(responseFrame);
 		frameStorage.compare();
+
 	}
 
 	public void startNewRequestTask(int id) { // TODO zmiana nazwy, rozbicie na
@@ -36,7 +43,9 @@ public class Controller {
 		requestFrameFactory.loadDefinedInformation();
 		timer = new Timer();
 		timer.schedule(new Task(connection, requestFrameFactory, frameStorage),
-				0, PEROID);
+
+		0, PEROID);
+
 		tasks.add(timer);
 
 	}
