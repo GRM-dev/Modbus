@@ -12,7 +12,7 @@ import frames.ResponseFrame;
 public class FrameStorage {
 
 	private List<RequestFrame> sentFrames;
-
+	private FailedFramesPrinter failedFramesPrinter = new FailedFramesPrinter();
 	private List<ResponseFrame> receivedFrames;
 	private List<FramePairs> framePairs;
 	private FramePairs pair = new FramePairs();
@@ -24,6 +24,7 @@ public class FrameStorage {
 		sentFrames = new ArrayList<RequestFrame>();
 		receivedFrames = new ArrayList<ResponseFrame>();
 		framePairs = new ArrayList<FramePairs>();
+
 	}
 
 	public FrameStorage(List<RequestFrame> sentFrames) {
@@ -63,8 +64,8 @@ public class FrameStorage {
 		if (sentFrames.size() >= 0 && index < sentFrames.size()) {
 			Date sendDate = sentFrames.get(index).getSendDate();
 			long sendTimeSeconds = sendDate.getTime() / 1000;
-			Date currentDate = new Date();
-			long currentTimeSeconds = currentDate.getTime() / 1000;
+
+			long currentTimeSeconds = System.currentTimeMillis() / 1000;
 
 			if (currentTimeSeconds - sendTimeSeconds > 5)
 				return true;
@@ -84,10 +85,13 @@ public class FrameStorage {
 
 					pairFrame(indexOfSentFrames, indexOFReceivedFrames);
 					removePairedFrame(indexOfSentFrames, indexOFReceivedFrames);
+
 					continue;
 				}
 			}
 			if (hasNoResponse(indexOfSentFrames)) {
+				failedFramesPrinter.writeToLog(""
+						+ sentFrames.get(indexOfSentFrames));
 				sentFrames.remove(indexOfSentFrames);
 
 			}
@@ -113,7 +117,6 @@ public class FrameStorage {
 		pair.setRequestFrame(sentFrames.get(indexOfSentFrames));
 		pair.setResponseFrame(receivedFrames.get(indexOFReceivedFrames));
 		framePairs.add(pair);
-		System.out.println("compare test");
 		Domino.showRequestAndResponse(pair);
 
 	}

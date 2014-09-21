@@ -14,6 +14,7 @@ public class Controller {
 	private RequestFrameFactory requestFrameFactory = new RequestFrameFactory();
 	private Timer timer;
 	private FrameStorage frameStorage = new FrameStorage();
+	private static final long PEROID = 2000;
 
 	public void startConnection(String ipAddress, int port) {
 		connection = new Connection(ipAddress, port);
@@ -26,19 +27,16 @@ public class Controller {
 				.receiveBytesFromController(bytes);
 		frameStorage.addReceivedFrame(responseFrame);
 		frameStorage.compare();
-		System.out.println(responseFrame);// TODO chwilowe wyswietlenie ramki
 	}
 
-	public void addAndMakeRequest(int id) { // TODO zmiana nazwy, rozbicie na 2
-											// metody,
+	public void startNewRequestTask(int id) { // TODO zmiana nazwy, rozbicie na
+												// 2
+												// metody,
 
 		requestFrameFactory.loadDefinedInformation();
 		timer = new Timer();
 		timer.schedule(new Task(connection, requestFrameFactory, frameStorage),
-				0, 2000); // wysy³anie
-		// co
-		// 2
-		// sekundy
+				0, PEROID);
 		tasks.add(timer);
 
 	}

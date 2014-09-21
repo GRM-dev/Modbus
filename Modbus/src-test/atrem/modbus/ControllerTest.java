@@ -19,7 +19,7 @@ public class ControllerTest {
 	public void addAndMakeRequest() {
 		Controller controller = new Controller();
 		controller.setConnection(createConnection());
-		controller.addAndMakeRequest(69);
+		controller.startNewRequestTask(69);
 		RequestFrameFactory requestFrameFactory = new RequestFrameFactory();
 		requestFrameFactory.loadDefinedInformation();
 		RequestFrame sampleRequestFrame = requestFrameFactory

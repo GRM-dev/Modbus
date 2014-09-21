@@ -30,14 +30,5 @@ public class Task extends TimerTask {
 
 		frameStorage.addSentFrame(requestFrame);
 
-		if (!frameStorage.isWorking()) {
-			// frameStorage.makePairsOfFrames();
-			System.out.println("isWorking w tasku");
-
-		}
-
-		System.out.println("wyslalem "
-				+ requestFrame.getTransactionIdentifier());
-
 	}
 }
