@@ -24,8 +24,8 @@ public class ConnectionSetup extends JDialog {
 	private JButton		okButton;
 	private JTextField	ipAddressTextField;
 	private JTextField	portTextField;
-	private String		ipAddress;
-	private int			port;
+	private String		ipAddress	= "10.7.7.121";
+	private int			port		= 502;
 	JPanel				ipAddressPanel, serverPort;
 	private ModbusSwing	swing;
 	
@@ -78,7 +78,6 @@ public class ConnectionSetup extends JDialog {
 		panel.add(label);
 		panel.add(textField);
 		return panel;
-		
 	}
 	
 	private class OkButtonListener implements ActionListener {
@@ -86,8 +85,8 @@ public class ConnectionSetup extends JDialog {
 		public void actionPerformed(ActionEvent e) {
 			// Domino.receiveConnectionParameters(ipAddressTextField.getText(),
 			// Integer.parseInt(portTextField.getText()));
-			Domino.receiveConnectionParameters("10.7.7.121", 502);
-			swing.newConnFrame();
+			Domino.receiveConnectionParameters(ipAddress, port);
+			swing.newFrame(ipAddress);
 			dispose();
 		}
 	}

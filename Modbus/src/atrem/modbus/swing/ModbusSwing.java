@@ -5,8 +5,8 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.AbstractAction;
 import javax.swing.JDesktopPane;
@@ -21,25 +21,27 @@ import javax.swing.border.EmptyBorder;
 import atrem.modbus.Domino;
 
 public class ModbusSwing extends JFrame {
-	private final JPanel			contentPanel;
-	String[]						columnNames	= {
-			"No.", "IP Address", "Port", "Registry Number", "Registry Value"};
-	int								rows		= 100;
-	int								columns		= 5;
-	private JMenuBar				menuBar;
-	private JMenu					fileMenu;
-	private JMenu					connectionMenu;
-	private JMenu					setupMenu;
-	private JDesktopPane			desk;
-	private List<JInternalFrame>	framesList;
-	private Dimension				screenSize;
+	private final JPanel					contentPanel;
+	String[]								columnNames	= {
+			"No.", "Registry Number", "Registry Value"	};
+	int										rows		= 100;
+	int										columns		= 5;
+	private JMenuBar						menuBar;
+	private JMenu							fileMenu;
+	private JMenu							connectionMenu;
+	private JMenu							setupMenu;
+	private JDesktopPane					desk;
+	/**
+	 * Map of frames, where Integer is ip of modbus device.
+	 */
+	public static Map<String, InterFrame>	framesList	= new HashMap<String, InterFrame>();
+	private Dimension						screenSize;
 	
 	public ModbusSwing(final Domino domino) {
 		screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		contentPanel = new JPanel();
 		setTitle("Domino");
-		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		framesList = new ArrayList<JInternalFrame>();
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setVisible(true);
 		setMinimumSize(new Dimension(screenSize.width / 3, screenSize.height / 3));
 		setBounds(100, 100, screenSize.width, screenSize.height);
@@ -79,21 +81,12 @@ public class ModbusSwing extends JFrame {
 		setupMenu.add(new AbstractAction("Read/Write Definition...") {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				try {
-					ReadWriteDefinition dialogRWD = new ReadWriteDefinition(domino);
-					dialogRWD.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-					dialogRWD.setVisible(true);
-				}
-				catch (Exception exception) {
-					exception.printStackTrace();
-				}
+				setupDefinition(domino);
 			}
 		});
-		
 		menuBar.add(fileMenu);
 		menuBar.add(connectionMenu);
 		menuBar.add(setupMenu);
-		
 		pack();
 	}
 	
@@ -103,9 +96,19 @@ public class ModbusSwing extends JFrame {
 		dialogCS.setVisible(true);
 	}
 	
-	public void newConnFrame() {
-		JInternalFrame iFrame = new InterFrame("Created from Menu", framesList,
-				columnNames, rows, columns);
+	public void newFrame(String ip) {
+		JInternalFrame iFrame = new InterFrame(ip, columnNames);
 		desk.add(iFrame);
+	}
+	
+	private void setupDefinition(final Domino domino) {
+		try {
+			ReadWriteDefinition dialogRWD = new ReadWriteDefinition(domino, this);
+			dialogRWD.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+			dialogRWD.setVisible(true);
+		}
+		catch (Exception exception) {
+			exception.printStackTrace();
+		}
 	}
 }

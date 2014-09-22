@@ -3,20 +3,20 @@ package atrem.modbus.swing;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.beans.PropertyVetoException;
-import java.util.List;
 
 import javax.swing.JInternalFrame;
 
 public class InterFrame extends JInternalFrame {
-	public InterFrame(String name, List framesList, String[] columnNames, int rows,
-			int columns) {
-		framesList.add(this);
+	private DataTablePanel	table;
+	
+	public InterFrame(String name, String[] columnNames) {
+		ModbusSwing.framesList.put(name, this);
 		setResizable(true);
 		setClosable(true);
 		setIconifiable(true);
 		setLocation(10, 10);
 		getContentPane().setLayout(new BorderLayout());
-		DataTablePanel table = new DataTablePanel(columnNames, rows, columns);
+		table = new DataTablePanel(columnNames);
 		table.setVisible(true);
 		getContentPane().add(table);
 		setPreferredSize(new Dimension(300, 300));
@@ -29,5 +29,9 @@ public class InterFrame extends JInternalFrame {
 			e.printStackTrace();
 		}
 		setVisible(true);
+	}
+	
+	public void setupTable(int rows, int columns) {
+		table.setTableModel(rows, columns);
 	}
 }
