@@ -1,7 +1,7 @@
-package atrem.modbus;
+package atrem.modbus.frameServices;
 
-import frames.RequestFrame;
-import frames.ResponseFrame;
+import atrem.modbus.frames.RequestFrame;
+import atrem.modbus.frames.ResponseFrame;
 
 public class FramePairs {
 

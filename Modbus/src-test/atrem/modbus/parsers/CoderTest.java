@@ -8,7 +8,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import frames.RequestFrame;
+import atrem.modbus.frames.RequestFrame;
 
 public class CoderTest {
 	private Coder koder;

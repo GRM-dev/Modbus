@@ -2,10 +2,18 @@ package atrem.modbus;
 
 import javax.swing.SwingUtilities;
 
+<<<<<<< HEAD
 import swing.ErrorsBox;
 import swing.ModbusSwing;
 import consoleService.ConsoleInputService;
 import consoleService.ConsoleOutputService;
+=======
+import atrem.modbus.consoleService.ConsoleInputService;
+import atrem.modbus.consoleService.ConsoleOutputService;
+import atrem.modbus.frameServices.FramePairs;
+import atrem.modbus.frameServices.RequestFrameFactory;
+import atrem.modbus.swing.ModbusSwing;
+>>>>>>> branch 'master' of https://github.com/PatrykGala/Modbus.git
 
 public class Domino {
 
@@ -37,7 +45,7 @@ public class Domino {
 
 			}
 		});
-		//
+
 		// Controller controller = new Controller();
 		// controller.startConnection("10.7.7.121", 502);
 		// controller.startNewRequestTask(1);
