@@ -29,13 +29,6 @@ public class Task extends TimerTask {
 		connection.send(bytes);
 
 		frameStorage.addSentFrame(requestFrame);
-
-		if (!frameStorage.isWorking()) {
-
-			System.out.println("isWorking w tasku");
-
-		}
-
 		System.out.println("wyslalem "
 				+ requestFrame.getTransactionIdentifier());
 

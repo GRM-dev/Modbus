@@ -1,7 +1,7 @@
 package atrem.modbus;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -14,118 +14,89 @@ public class FrameStorage {
 	private List<RequestFrame> sentFrames;
 
 	private List<ResponseFrame> receivedFrames;
-	private List<FramePairs> framePairs;
-	private FramePairs pair = new FramePairs();
-	private boolean isWorking = false;
-	private ExecutorService executor = Executors
-			.newSingleThreadScheduledExecutor();
+	private List<FramePairs> framePairsList;
+	private ExecutorService executor;
 
 	public FrameStorage() {
-		sentFrames = new ArrayList<RequestFrame>();
-		receivedFrames = new ArrayList<ResponseFrame>();
-		framePairs = new ArrayList<FramePairs>();
+		executor = Executors.newSingleThreadScheduledExecutor();
+		sentFrames = new LinkedList<RequestFrame>();
+		receivedFrames = new LinkedList<ResponseFrame>();
+		framePairsList = new LinkedList<FramePairs>();
 	}
 
 	public FrameStorage(List<RequestFrame> sentFrames) {
 		this.sentFrames = sentFrames;
 	}
 
-	public void addSentFrame(RequestFrame modbusFrame) {
-		sentFrames.add(modbusFrame);
+	public void addSentFrame(RequestFrame requestFrame) {
+		sentFrames.add(requestFrame);
 	}
 
 	public void addReceivedFrame(ResponseFrame frameIncoming) {
 		receivedFrames.add(frameIncoming);
 	}
 
-	public boolean isWorking() {
-		return isWorking;
-	}
-
-	public void setWorking(boolean isWorking) {
-		this.isWorking = isWorking;
-	}
-
 	public void makePairsOfFrames() {
-
 		executor.execute(new Runnable() {
-
 			@Override
 			public void run() {
 				compare();
 			}
-
 		});
-
 	}
 
-	boolean hasNoResponse(int index) {
-		if (sentFrames.size() >= 0 && index < sentFrames.size()) {
-			Date sendDate = sentFrames.get(index).getSendDate();
-			long sendTimeSeconds = sendDate.getTime() / 1000;
-			Date currentDate = new Date();
-			long currentTimeSeconds = currentDate.getTime() / 1000;
-
-			if (currentTimeSeconds - sendTimeSeconds > 5)
-				return true;
-			else
-				return false;
-		}
-		return false;
-
-	}
-
-	public void compare() {
-		for (int indexOfSentFrames = 0; indexOfSentFrames < sentFrames.size(); indexOfSentFrames++) {
-			for (int indexOFReceivedFrames = 0; indexOFReceivedFrames < receivedFrames
-					.size(); indexOFReceivedFrames++) {
-				SysOutPairFrame(indexOfSentFrames, indexOFReceivedFrames);
-				if (isPairFrame(indexOfSentFrames, indexOFReceivedFrames)) {
-
-					pairFrame(indexOfSentFrames, indexOFReceivedFrames);
-					removePairedFrame(indexOfSentFrames, indexOFReceivedFrames);
-					continue;
-				}
-			}
-			if (hasNoResponse(indexOfSentFrames)) {
-				sentFrames.remove(indexOfSentFrames);
-
+	void compare() {
+		for (RequestFrame requestFrame : sentFrames) {
+			compareWithResponseFrame(requestFrame);
+			if (hasNoResponse(requestFrame)) {
+				sentFrames.remove(requestFrame);
 			}
 		}
 	}
 
-	private void SysOutPairFrame(int indexOfSentFrames,
-			int indexOFReceivedFrames) {
-		System.out.println(sentFrames.get(indexOfSentFrames)
-				.getTransactionIdentifier()
-				+ "   "
-				+ receivedFrames.get(indexOFReceivedFrames)
-						.getTransactionIdentifier());
+	private void compareWithResponseFrame(RequestFrame requestFrame) {
+		for (ResponseFrame responseFrame : receivedFrames) {
+			if (requestFrame.equals(responseFrame)) {
+				pairFrame(requestFrame, responseFrame);
+				// TODO wyswietlanie testowe parowanych ramek
+				SysOutPairFrame(requestFrame, responseFrame);
+				removePairedFrame(requestFrame, responseFrame);
+				continue;
+			}
+		}
 	}
 
-	private boolean isPairFrame(int indexOfSentFrames,
-			int indexOFReceivedFrames) {
-		RequestFrame requestFrame = sentFrames.get(indexOfSentFrames);
-		ResponseFrame responseFrame = receivedFrames.get(indexOFReceivedFrames);
-		return requestFrame.equals(responseFrame);
+	private void SysOutPairFrame(RequestFrame requestFrame,
+			ResponseFrame responseFrame) {
+		System.out.println(requestFrame.getTransactionIdentifier());
+		System.out.println(responseFrame.getTransactionIdentifier());
 	}
 
-	private void pairFrame(int indexOfSentFrames, int indexOFReceivedFrames) {
-		pair.setRequestFrame(sentFrames.get(indexOfSentFrames));
-		pair.setResponseFrame(receivedFrames.get(indexOFReceivedFrames));
-		framePairs.add(pair);
+	private void pairFrame(RequestFrame requestFrame,
+			ResponseFrame responseFrame) {
+		FramePairs framePairs = new FramePairs(requestFrame, responseFrame);
+		framePairsList.add(framePairs);
 		System.out.println("compare test");
-		Domino.showRequestAndResponse(pair);
+		Domino.showRequestAndResponse(framePairs);
 
 	}
 
-	private void removePairedFrame(int indexOfSentFrames,
-			int indexOFReceivedFrames) {
-		sentFrames.remove(indexOfSentFrames);
-		receivedFrames.remove(indexOFReceivedFrames);
+	private void removePairedFrame(RequestFrame requestFrame,
+			ResponseFrame responseFrame) {
+		sentFrames.remove(requestFrame);
+		receivedFrames.remove(responseFrame);
 	}
 
-	List<RequestFrame> getSentFrames() {
-		return sentFrames;
+	boolean hasNoResponse(RequestFrame sentFrame) {
+		Date sendDate = sentFrame.getSendDate();
+		long sendTimeSeconds = sendDate.getTime() / 1000;
+		Date currentDate = new Date();
+		long currentTimeSeconds = currentDate.getTime() / 1000;
+
+		if (currentTimeSeconds - sendTimeSeconds > 5)
+			return true;
+		else
+			return false;
 	}
+
 }

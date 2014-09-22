@@ -13,11 +13,6 @@ public class Controller {
 
 	private Connection connection;
 	private RequestFrameFactory requestFrameFactory = new RequestFrameFactory();
-
-	public RequestFrameFactory getRequestFrameFactory() {
-		return requestFrameFactory;
-	}
-
 	private Timer timer;
 	private FrameStorage frameStorage = new FrameStorage();
 
@@ -31,9 +26,9 @@ public class Controller {
 		ResponseFrame responseFrame = frameDecoder
 				.receiveBytesFromController(bytes);
 		frameStorage.addReceivedFrame(responseFrame);
-		frameStorage.compare();
+		frameStorage.makePairsOfFrames();
 		System.out.println(responseFrame);//
-
+		System.out.println("test");
 	}
 
 	public void addAndMakeRequest() { // TODO zmiana nazwy, rozbicie na 2
@@ -53,5 +48,9 @@ public class Controller {
 
 	FrameStorage getFrameStorage() {
 		return frameStorage;
+	}
+
+	public RequestFrameFactory getRequestFrameFactory() {
+		return requestFrameFactory;
 	}
 }
