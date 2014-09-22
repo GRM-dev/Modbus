@@ -12,7 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 
@@ -24,8 +24,8 @@ public class ConnectionSetup extends JDialog {
 
 	private JButton cancelButton;
 	private JButton okButton;
-	private JTextArea ipAddressTextArea;
-	private JTextArea portTextArea;
+	private JTextField ipAddressTextField;
+	private JTextField portTextField;
 
 	private String ipAddress;
 	private int port;
@@ -84,11 +84,11 @@ public class ConnectionSetup extends JDialog {
 
 		Box box = Box.createVerticalBox();
 
-		ipAddressTextArea = new JTextArea();
-		portTextArea = new JTextArea();
+		ipAddressTextField = new JTextField();
+		portTextField = new JTextField();
 
-		ipAddressPanel = createDialogPanel("IP Address: ", ipAddressTextArea);
-		serverPort = createDialogPanel("Server Port: ", portTextArea);
+		ipAddressPanel = createDialogPanel("IP Address: ", ipAddressTextField);
+		serverPort = createDialogPanel("Server Port: ", portTextField);
 		box.add(ipAddressPanel);
 		box.add(serverPort);
 		box.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
@@ -96,16 +96,16 @@ public class ConnectionSetup extends JDialog {
 		return box;
 	}
 
-	private JPanel createDialogPanel(String labelName, JTextArea textArea) {
+	private JPanel createDialogPanel(String labelName, JTextField textField) {
 
 		JLabel label = new JLabel(labelName);
-		textArea.setBorder(BorderFactory
+		textField.setBorder(BorderFactory
 				.createEtchedBorder(EtchedBorder.LOWERED));
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(0, 2));
 		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		panel.add(label);
-		panel.add(textArea);
+		panel.add(textField);
 		return panel;
 
 	}
