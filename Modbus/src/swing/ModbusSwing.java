@@ -15,6 +15,11 @@ import atrem.modbus.Domino;
 public class ModbusSwing extends JFrame {
 	private Domino domino;
 
+	/**
+	 * Main Frame of ModBus Program.
+	 * 
+	 * @param domino
+	 */
 	public ModbusSwing(final Domino domino) {
 		this.domino = domino;
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -27,7 +32,6 @@ public class ModbusSwing extends JFrame {
 
 		JMenu fileMenu = new JMenu("File");
 		fileMenu.add(new AbstractAction("Exit") {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
@@ -38,7 +42,6 @@ public class ModbusSwing extends JFrame {
 		connectionMenu.add(new AbstractAction("Connect") {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
 				try {
 					ConnectionSetup dialogCS = new ConnectionSetup();
 					dialogCS.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -53,7 +56,6 @@ public class ModbusSwing extends JFrame {
 		setupMenu.add(new AbstractAction("Read/Write Definition...") {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
 				try {
 					ReadWriteDefinition dialogRWD = new ReadWriteDefinition(
 							domino);
