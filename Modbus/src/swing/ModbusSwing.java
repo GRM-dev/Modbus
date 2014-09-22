@@ -1,7 +1,7 @@
 package swing;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
@@ -9,14 +9,11 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 
 import atrem.modbus.Domino;
 
 public class ModbusSwing extends JFrame {
 	private Domino domino;
-	private final JPanel contentPanel = new JPanel();
 
 	public ModbusSwing(final Domino domino) {
 		this.domino = domino;
@@ -24,9 +21,6 @@ public class ModbusSwing extends JFrame {
 		setVisible(true);
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
-		contentPanel.setLayout(new FlowLayout());
-		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		getContentPane().add(contentPanel, BorderLayout.CENTER);
 
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -76,13 +70,14 @@ public class ModbusSwing extends JFrame {
 		menuBar.add(connectionMenu);
 		menuBar.add(setupMenu);
 
-		String[] columnNames = { "No.", "IP Address", "Port",
-				"Registry Number", "Registry Value" };
+		String[] columnNames = {"No.", "IP Address", "Port", "Registry Number",
+				"Registry Value"};
 		int rows = 100;
 		int columns = 5;
 		DataTablePanel dataTablePanel = new DataTablePanel(columnNames, rows,
 				columns);
-		add(dataTablePanel);
+		getContentPane().add(dataTablePanel);
+		dataTablePanel.setLayout(new GridLayout(1, 0, 0, 0));
 
 		pack();
 	}
