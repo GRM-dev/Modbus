@@ -14,7 +14,7 @@ public class FrameStorageTest {
 	public void hasNoResponseTest() {
 
 		List<RequestFrame> sentFrames = new ArrayList<RequestFrame>();
-		sentFrames.add(new RequestFrame(0, 0, 0, 0, 0));
+		RequestFrame requestFrame = new RequestFrame(0, 0, 0, 0, 0);
 		FrameStorage frameStorage = new FrameStorage(sentFrames);
 		try {
 			Thread.sleep(2000);
@@ -22,21 +22,21 @@ public class FrameStorageTest {
 
 			e.printStackTrace();
 		}
-		assertTrue(!frameStorage.hasNoResponse(0));
+		assertTrue(!frameStorage.hasNoResponse(requestFrame));
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 
 			e.printStackTrace();
 		}
-		assertTrue(!frameStorage.hasNoResponse(0));
+		assertTrue(!frameStorage.hasNoResponse(requestFrame));
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 
 			e.printStackTrace();
 		}
-		assertTrue(frameStorage.hasNoResponse(0));
+		assertTrue(frameStorage.hasNoResponse(requestFrame));
 	}
 
 }

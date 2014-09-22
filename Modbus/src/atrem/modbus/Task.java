@@ -29,6 +29,9 @@ public class Task extends TimerTask {
 		connection.send(bytes);
 
 		frameStorage.addSentFrame(requestFrame);
+		System.out.println("wyslalem "
+				+ requestFrame.getTransactionIdentifier());
+
 
 	}
 }

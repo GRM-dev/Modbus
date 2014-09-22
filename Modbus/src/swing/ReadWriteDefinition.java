@@ -13,7 +13,7 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 
@@ -24,11 +24,11 @@ public class ReadWriteDefinition extends JDialog {
 	private final Box contentBox = Box.createHorizontalBox();
 	private JButton cancelButton;
 	private JButton okButton;
-	private JTextArea slaveIdTextArea;
+	private JTextField slaveIdTextField;
 	private JComboBox functionCodeComboBox;
-	private JTextArea startingAddressTextArea;
-	private JTextArea quantityTextArea;
-	private JTextArea scanRateTextArea;
+	private JTextField startingAddressTextField;
+	private JTextField quantityTextField;
+	private JTextField scanRateTextField;
 
 	private int slaveId;
 	private int functionCode;
@@ -78,16 +78,16 @@ public class ReadWriteDefinition extends JDialog {
 	private Box createQuestionBox() {
 
 		Box box = Box.createVerticalBox();
-		slaveIdTextArea = new JTextArea();
+		slaveIdTextField = new JTextField();
 		functionCodeComboBox = new JComboBox();
-		startingAddressTextArea = new JTextArea();
-		quantityTextArea = new JTextArea();
-		scanRateTextArea = new JTextArea();
-		box.add(createDialogPanel("Slave ID", slaveIdTextArea));
+		startingAddressTextField = new JTextField();
+		quantityTextField = new JTextField();
+		scanRateTextField = new JTextField();
+		box.add(createDialogPanel("Slave ID", slaveIdTextField));
 		box.add(createFunctionPanel(functionCodeComboBox));
-		box.add(createDialogPanel("Address:", startingAddressTextArea));
-		box.add(createDialogPanel("Quantity:", quantityTextArea));
-		box.add(createDialogPanel("Scan Rate", "[ms]", scanRateTextArea));
+		box.add(createDialogPanel("Address:", startingAddressTextField));
+		box.add(createDialogPanel("Quantity:", quantityTextField));
+		box.add(createDialogPanel("Scan Rate", scanRateTextField));
 
 		box.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
 
@@ -109,29 +109,29 @@ public class ReadWriteDefinition extends JDialog {
 		return panel;
 	}
 
-	private JPanel createDialogPanel(String labelName, JTextArea textArea) {
+	private JPanel createDialogPanel(String labelName, JTextField textField) {
 		JLabel label = new JLabel(labelName);
-		textArea = new JTextArea();
-		textArea.setBorder(BorderFactory
+		textField = new JTextField();
+		textField.setBorder(BorderFactory
 				.createEtchedBorder(EtchedBorder.LOWERED));
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(0, 2));
 		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		panel.add(label);
-		panel.add(textArea);
+		panel.add(textField);
 		return panel;
 	}
 
 	private JPanel createDialogPanel(String labelName, String labelName2,
-			JTextArea textArea) {
+			JTextField textField) {
 		JLabel label = new JLabel(labelName);
-		textArea = new JTextArea();
-		textArea.setBorder(BorderFactory
+		textField = new JTextField();
+		textField.setBorder(BorderFactory
 				.createEtchedBorder(EtchedBorder.LOWERED));
 		JLabel label2 = new JLabel(labelName2);
 		JPanel smallPanel = new JPanel();
 		smallPanel.setLayout(new GridLayout(0, 2));
-		smallPanel.add(textArea);
+		smallPanel.add(textField);
 		smallPanel.add(label2);
 
 		JPanel bigPanel = new JPanel();
@@ -146,11 +146,12 @@ public class ReadWriteDefinition extends JDialog {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// domino.creatRequestFrameFactory(
-			// Integer.parseInt(slaveIdTextArea.getText()),
-			// Integer.parseInt(startingAddressTextArea.getText()),
-			// Integer.parseInt(quantityTextArea.getText()), 3);
+			// Integer.parseInt(slaveIdTextField.getText()),
+			// Integer.parseInt(startingAddressTextField.getText()),
+			// Integer.parseInt(quantityTextField.getText()), 3);
 
 			domino.creatRequestFrameFactory(5, 3027, 2, 3);
+			dispose();
 
 		}
 	}

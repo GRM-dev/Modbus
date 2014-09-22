@@ -13,11 +13,6 @@ public class Controller {
 
 	private Connection connection;
 	private RequestFrameFactory requestFrameFactory = new RequestFrameFactory();
-
-	public RequestFrameFactory getRequestFrameFactory() {
-		return requestFrameFactory;
-	}
-
 	private Timer timer;
 	private FrameStorage frameStorage = new FrameStorage();
 	private static final long PEROID = 2000;
@@ -32,8 +27,8 @@ public class Controller {
 		ResponseFrame responseFrame = frameDecoder
 				.receiveBytesFromController(bytes);
 		frameStorage.addReceivedFrame(responseFrame);
-		frameStorage.compare();
-
+		frameStorage.makePairsOfFrames();
+		System.out.println(responseFrame);//
 	}
 
 	public void startNewRequestTask(int id) {
@@ -54,5 +49,9 @@ public class Controller {
 
 	FrameStorage getFrameStorage() {
 		return frameStorage;
+	}
+
+	public RequestFrameFactory getRequestFrameFactory() {
+		return requestFrameFactory;
 	}
 }
