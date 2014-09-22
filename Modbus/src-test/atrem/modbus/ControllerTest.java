@@ -6,6 +6,9 @@ import java.io.OutputStream;
 
 import org.junit.Test;
 
+import atrem.modbus.frameServices.FrameStorage;
+import atrem.modbus.frameServices.RequestFrameFactory;
+
 public class ControllerTest {
 
 	@Test

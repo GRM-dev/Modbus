@@ -1,4 +1,4 @@
-package atrem.modbus;
+package atrem.modbus.frameServices;
 
 import java.util.Date;
 import java.util.LinkedList;
@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import atrem.modbus.Domino;
 import frames.RequestFrame;
 import frames.ResponseFrame;
 

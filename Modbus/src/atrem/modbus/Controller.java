@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 
+import atrem.modbus.frameServices.FrameStorage;
+import atrem.modbus.frameServices.RequestFrameFactory;
 import atrem.modbus.parsers.FrameDecoder;
 import frames.ResponseFrame;
 
