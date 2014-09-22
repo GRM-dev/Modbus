@@ -23,7 +23,7 @@ public class Connection implements Runnable {
 			outStream = socket.getOutputStream();
 
 		} catch (IOException e) {
-			e.printStackTrace(); // TODO pazda do roboty
+			e.printStackTrace(); // TODO pazda do robotyy
 		}
 
 	}
