@@ -4,6 +4,9 @@ import frames.RequestFrame;
 import frames.ResponseFrame;
 
 public class FramePairs {
+
+	private String separator = System.lineSeparator();
+
 	private RequestFrame requestFrame;
 	private ResponseFrame responseFrame;
 
@@ -14,7 +17,8 @@ public class FramePairs {
 
 	@Override
 	public String toString() {
-		return "FramePair\n" + requestFrame + "\n" + responseFrame;
+		return "FramePair" + separator + separator + requestFrame + separator
+				+ responseFrame;
 	}
 
 	public RequestFrame getRequestFrame() {

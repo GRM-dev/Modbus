@@ -32,5 +32,6 @@ public class FramesPrinter {
 
 	public void writeToLog(String arg) {
 		logWriter.println(arg);
+		logWriter.flush();
 	}
 }
