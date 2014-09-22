@@ -98,8 +98,8 @@ public class FrameStorage {
 	boolean hasNoResponse(RequestFrame sentFrame) {
 		Date sendDate = sentFrame.getSendDate();
 		long sendTimeSeconds = sendDate.getTime() / 1000;
-		Date currentDate = new Date();
-		long currentTimeSeconds = currentDate.getTime() / 1000;
+
+		long currentTimeSeconds = System.currentTimeMillis() / 1000;
 
 		if (currentTimeSeconds - sendTimeSeconds > 5)
 			return true;
