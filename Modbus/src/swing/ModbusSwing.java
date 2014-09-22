@@ -20,7 +20,7 @@ public class ModbusSwing extends JFrame {
 
 	public ModbusSwing(final Domino domino) {
 		this.domino = domino;
-		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(JDialog.EXIT_ON_CLOSE);
 		setVisible(true);
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
@@ -36,6 +36,7 @@ public class ModbusSwing extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				domino.getController().getConnection().closeConnection();
 				System.exit(0);
 			}
 		});
@@ -46,7 +47,7 @@ public class ModbusSwing extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				try {
-					ConnectionSetup dialogCS = new ConnectionSetup();
+					ConnectionSetup dialogCS = new ConnectionSetup(domino);
 					dialogCS.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 					dialogCS.setVisible(true);
 				} catch (Exception exception) {

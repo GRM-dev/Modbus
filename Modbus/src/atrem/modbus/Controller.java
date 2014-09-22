@@ -16,10 +16,15 @@ public class Controller {
 	private Timer timer;
 	private FrameStorage frameStorage = new FrameStorage();
 	private static final long PEROID = 2000;
+	private Domino domino;
 
 	public void startConnection(String ipAddress, int port) {
-		connection = new Connection(ipAddress, port);
+		connection = new Connection(ipAddress, port, this);
 		connection.startReceiveFrames(this);
+	}
+
+	public Controller(Domino domino) {
+		this.domino = domino;
 	}
 
 	public void loadBytesToDecoder(byte[] bytes) {
@@ -54,4 +59,26 @@ public class Controller {
 	public RequestFrameFactory getRequestFrameFactory() {
 		return requestFrameFactory;
 	}
+
+	public void takeConnectionExepction() {
+		// domino.showConnextionError();
+		connection.closeConnection();
+		while (!connection.checkConnection()) {
+
+			connection.makeConnection();
+			System.out.println("jestem");
+			try {
+				Thread.sleep(5000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+	}
+
+	public Connection getConnection() {
+		return connection;
+	}
+
 }

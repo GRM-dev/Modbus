@@ -2,6 +2,7 @@ package atrem.modbus;
 
 import javax.swing.SwingUtilities;
 
+import swing.ErrorsBox;
 import swing.ModbusSwing;
 import consoleService.ConsoleInputService;
 import consoleService.ConsoleOutputService;
@@ -21,6 +22,10 @@ public class Domino {
 
 		Domino domino = new Domino();
 
+	}
+
+	public Controller getController() {
+		return controller;
 	}
 
 	public Domino() {
@@ -46,27 +51,27 @@ public class Domino {
 		consoleOutput.askPort();
 		port = consoleInput.insertPort();
 
-		return new Connection(ip, port);
+		return new Connection(ip, port, controller);
 	}
 
 	public static Connection createConnectionConstant() {
 
 		ip = "10.7.7.121";
 		port = 502;
-		return new Connection(ip, port);
+		return new Connection(ip, port, controller);
 
 	}
 
-	public static void receiveConnectionParameters(String ip, int port) {
+	public void receiveConnectionParameters(String ip, int port) {
 
-		controller = new Controller();
+		controller = new Controller(this);
 		controller.startConnection(ip, port);
 		requestFrameFactory = controller.getRequestFrameFactory();
 
 	}
 
 	public static Connection createConnectionSwing() {
-		return new Connection(ip, port);
+		return new Connection(ip, port, controller);
 	}
 
 	public static void showRequestAndResponse(FramePairs framePairs) {
@@ -80,6 +85,11 @@ public class Domino {
 		requestFrameFactory.setStartingAdress(startingAdress);
 		requestFrameFactory.setUnitIdentifier(unitIdentifier);
 		controller.startNewRequestTask(0); // TODO nie wiem o co loto pawel
+	}
+
+	public void showConnextionError() {
+		ErrorsBox error = new ErrorsBox();
+		error.ConnectionError();
 	}
 
 }

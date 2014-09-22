@@ -30,6 +30,7 @@ public class ConnectionSetup extends JDialog {
 	private String ipAddress;
 	private int port;
 	JPanel ipAddressPanel, serverPort;
+	private Domino domino;
 
 	/**
 	 * Launch the application.
@@ -44,8 +45,8 @@ public class ConnectionSetup extends JDialog {
 	// }
 	// }
 
-	public ConnectionSetup() {
-
+	public ConnectionSetup(Domino domino) {
+		this.domino = domino;
 		setTitle("Connection Setup");
 
 		setBounds(300, 300, 350, 220);
@@ -115,7 +116,7 @@ public class ConnectionSetup extends JDialog {
 		public void actionPerformed(ActionEvent e) {
 			// Domino.receiveConnectionParameters(ipAddressTextField.getText(),
 			// Integer.parseInt(portTextField.getText()));
-			Domino.receiveConnectionParameters("10.7.7.121", 502);
+			domino.receiveConnectionParameters("10.7.7.121", 502);
 			dispose();
 
 		}
