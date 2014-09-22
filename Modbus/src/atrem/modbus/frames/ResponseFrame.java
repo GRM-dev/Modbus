@@ -15,6 +15,8 @@ public class ResponseFrame {
 	private byte[] dataBytes;
 	private int functionCode;
 	private Date date;
+	private SimpleDateFormat timeFormat;
+	private String time;
 
 	public ResponseFrame() {
 
@@ -27,6 +29,8 @@ public class ResponseFrame {
 		this.protocolIdentifier = protocolIdentifier;
 		this.unitIdentifier = unitIdentifier;
 		date = new Date();
+		timeFormat = new SimpleDateFormat("HH:mm:ss");
+		time = timeFormat.format(date);
 	}
 
 	public int getTransactionIdentifier() {
@@ -88,9 +92,8 @@ public class ResponseFrame {
 
 	@Override
 	public String toString() {
-		SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
-		String time = timeFormat.format(date);
-		return "*ResponseFrame*" + time + FramesPrinter.NEW_LINE
+
+		return "*ResponseFrame* " + time + FramesPrinter.NEW_LINE
 				+ " [transactionIdentifier=" + transactionIdentifier
 				+ ", protocolIdentifier=" + protocolIdentifier
 				+ ", unitIdentifier=" + unitIdentifier + ", dataLength="
