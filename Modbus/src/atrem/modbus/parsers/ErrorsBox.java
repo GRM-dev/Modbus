@@ -1,4 +1,4 @@
-package swing;
+package atrem.modbus.parsers;
 
 import javax.swing.JOptionPane;
 

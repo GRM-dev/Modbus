@@ -16,8 +16,6 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 
-import atrem.modbus.Domino;
-
 public class ConnectionSetup extends JDialog {
 	private final Box	contentBox	= Box.createHorizontalBox();
 	private JButton		cancelButton;
@@ -85,7 +83,7 @@ public class ConnectionSetup extends JDialog {
 		public void actionPerformed(ActionEvent e) {
 			// Domino.receiveConnectionParameters(ipAddressTextField.getText(),
 			// Integer.parseInt(portTextField.getText()));
-			Domino.receiveConnectionParameters(ipAddress, port);
+			swing.domino.receiveConnectionParameters(ipAddress, port);
 			swing.newFrame(ipAddress);
 			dispose();
 		}

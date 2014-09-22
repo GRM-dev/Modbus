@@ -36,8 +36,10 @@ public class ModbusSwing extends JFrame {
 	 */
 	public static Map<String, InterFrame>	framesList	= new HashMap<String, InterFrame>();
 	private Dimension						screenSize;
+	public Domino							domino;
 	
 	public ModbusSwing(final Domino domino) {
+		this.domino = domino;
 		screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		contentPanel = new JPanel();
 		setTitle("Domino");
