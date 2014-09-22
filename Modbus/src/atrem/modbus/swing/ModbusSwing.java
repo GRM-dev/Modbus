@@ -5,13 +5,11 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
-import java.beans.PropertyVetoException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.JDesktopPane;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JMenu;
@@ -83,7 +81,7 @@ public class ModbusSwing extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					ReadWriteDefinition dialogRWD = new ReadWriteDefinition(domino);
-					dialogRWD.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+					dialogRWD.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 					dialogRWD.setVisible(true);
 				}
 				catch (Exception exception) {
@@ -100,30 +98,14 @@ public class ModbusSwing extends JFrame {
 	}
 	
 	private void newConnection() {
-		ConnectionSetup dialogCS = new ConnectionSetup();
+		ConnectionSetup dialogCS = new ConnectionSetup(this);
 		dialogCS.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		dialogCS.setVisible(true);
-		
-		JInternalFrame iFrame = new JInternalFrame("Created from Menu");
-		framesList.add(iFrame);
-		iFrame.setResizable(true);
-		iFrame.setClosable(true);
-		iFrame.setIconifiable(true);
-		iFrame.setLocation(10, 10);
-		iFrame.getContentPane().setLayout(new BorderLayout());
-		DataTablePanel table = new DataTablePanel(columnNames, rows, columns);
-		table.setVisible(true);
-		iFrame.getContentPane().add(table);
-		iFrame.setPreferredSize(new Dimension(300, 300));
-		iFrame.pack();
-		try {
-			iFrame.setSelected(true);
-			iFrame.setMaximizable(true);
-		}
-		catch (PropertyVetoException e) {
-			e.printStackTrace();
-		}
-		iFrame.setVisible(true);
+	}
+	
+	public void newConnFrame() {
+		JInternalFrame iFrame = new InterFrame("Created from Menu", framesList,
+				columnNames, rows, columns);
 		desk.add(iFrame);
 	}
 }
