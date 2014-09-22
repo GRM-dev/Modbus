@@ -1,8 +1,11 @@
 package atrem.modbus.frames;
 
 import java.nio.ByteBuffer;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
+
+import atrem.modbus.frameServices.FramesPrinter;
 
 public class ResponseFrame {
 	private int transactionIdentifier;
@@ -85,7 +88,10 @@ public class ResponseFrame {
 
 	@Override
 	public String toString() {
-		return "ResponseFrame [transactionIdentifier=" + transactionIdentifier
+		SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+		String time = timeFormat.format(date);
+		return "*ResponseFrame*" + time + FramesPrinter.NEW_LINE
+				+ " [transactionIdentifier=" + transactionIdentifier
 				+ ", protocolIdentifier=" + protocolIdentifier
 				+ ", unitIdentifier=" + unitIdentifier + ", dataLength="
 				+ dataLength + ", dataBytes=" + Arrays.toString(dataBytes)
