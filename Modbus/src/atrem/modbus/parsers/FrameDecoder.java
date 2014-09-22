@@ -3,7 +3,7 @@ package atrem.modbus.parsers;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
-import frames.ResponseFrame;
+import atrem.modbus.frames.ResponseFrame;
 
 public class FrameDecoder {
 

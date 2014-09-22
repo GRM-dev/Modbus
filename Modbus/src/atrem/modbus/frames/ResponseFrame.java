@@ -1,4 +1,4 @@
-package frames;
+package atrem.modbus.frames;
 
 import java.nio.ByteBuffer;
 import java.util.Arrays;

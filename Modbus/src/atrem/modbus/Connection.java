@@ -7,7 +7,7 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.nio.ByteBuffer;
 
-import frames.RequestFrame;
+import atrem.modbus.frames.RequestFrame;
 
 public class Connection implements Runnable {
 

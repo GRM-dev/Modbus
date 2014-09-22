@@ -1,4 +1,4 @@
-package swing;
+package atrem.modbus.swing;
 
 import javax.swing.table.AbstractTableModel;
 

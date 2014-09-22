@@ -1,4 +1,4 @@
-package consoleService;
+package atrem.modbus.consoleService;
 
 public class ConsoleOutputService {
 

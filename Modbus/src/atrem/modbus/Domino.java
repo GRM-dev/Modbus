@@ -2,11 +2,11 @@ package atrem.modbus;
 
 import javax.swing.SwingUtilities;
 
+import atrem.modbus.consoleService.ConsoleInputService;
+import atrem.modbus.consoleService.ConsoleOutputService;
 import atrem.modbus.frameServices.FramePairs;
 import atrem.modbus.frameServices.RequestFrameFactory;
-import swing.ModbusSwing;
-import consoleService.ConsoleInputService;
-import consoleService.ConsoleOutputService;
+import atrem.modbus.swing.ModbusSwing;
 
 public class Domino {
 

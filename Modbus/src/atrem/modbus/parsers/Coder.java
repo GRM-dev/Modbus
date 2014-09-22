@@ -2,7 +2,7 @@ package atrem.modbus.parsers;
 
 import java.util.ArrayList;
 
-import frames.RequestFrame;
+import atrem.modbus.frames.RequestFrame;
 
 public class Coder {
 

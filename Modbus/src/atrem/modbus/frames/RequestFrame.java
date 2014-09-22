@@ -1,4 +1,4 @@
-package frames;
+package atrem.modbus.frames;
 
 import java.util.Date;
 

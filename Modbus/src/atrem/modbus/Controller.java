@@ -6,8 +6,8 @@ import java.util.Timer;
 
 import atrem.modbus.frameServices.FrameStorage;
 import atrem.modbus.frameServices.RequestFrameFactory;
+import atrem.modbus.frames.ResponseFrame;
 import atrem.modbus.parsers.FrameDecoder;
-import frames.ResponseFrame;
 
 public class Controller {
 

@@ -7,7 +7,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import frames.ResponseFrame;
+import atrem.modbus.frames.ResponseFrame;
 
 public class FrameDecoderTest {
 	FrameDecoder decoder;
