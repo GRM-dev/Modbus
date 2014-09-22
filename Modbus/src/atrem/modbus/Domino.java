@@ -77,7 +77,7 @@ public class Domino {
 		requestFrameFactory.setQuantityOfRegisters(quantityOfRegisters);
 		requestFrameFactory.setStartingAdress(startingAdress);
 		requestFrameFactory.setUnitIdentifier(unitIdentifier);
-		controller.addAndMakeRequest();
+		controller.startNewRequestTask(0); // TODO nie wiem o co loto pawel
 	}
 
 }

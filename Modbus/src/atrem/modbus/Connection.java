@@ -52,7 +52,6 @@ public class Connection implements Runnable {
 	public void send(byte[] frame) {
 
 		try {
-			// System.out.println(outStream);
 			outStream.write(frame);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -83,7 +82,7 @@ public class Connection implements Runnable {
 			readBytes(header, RequestFrame.HEADER_SIZE);
 
 			ByteBuffer byteBuffer = ByteBuffer.wrap(header);
-			int tid = byteBuffer.getShort();
+			int tid = byteBuffer.getShort(); // TODO byteBuffer.position(4)
 			int pid = byteBuffer.getShort();
 			int length = byteBuffer.getShort();
 

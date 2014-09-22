@@ -12,10 +12,16 @@ import frames.ResponseFrame;
 public class FrameStorage {
 
 	private List<RequestFrame> sentFrames;
-
+	private FramesPrinter noResponseFramesPrinter = new FramesPrinter(
+			NO_RESPONSE_FRAMES_FILE);
+	private FramesPrinter pairedFramesPrinter = new FramesPrinter(
+			PAIRED_FRAMES_FILE);
 	private List<ResponseFrame> receivedFrames;
 	private List<FramePairs> framePairsList;
 	private ExecutorService executor;
+
+	private static final String NO_RESPONSE_FRAMES_FILE = "NoResponseFrames ";
+	private static final String PAIRED_FRAMES_FILE = "PairedFrames ";
 
 	public FrameStorage() {
 		executor = Executors.newSingleThreadScheduledExecutor();

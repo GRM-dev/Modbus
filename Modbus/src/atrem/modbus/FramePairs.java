@@ -14,8 +14,7 @@ public class FramePairs {
 
 	@Override
 	public String toString() {
-		return "FramePairs [requestFrame=" + requestFrame
-				+ "\n\n responseFrame=" + responseFrame + "]";
+		return "FramePair\n" + requestFrame + "\n" + responseFrame;
 	}
 
 	public RequestFrame getRequestFrame() {

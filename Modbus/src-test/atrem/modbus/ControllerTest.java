@@ -23,6 +23,14 @@ public class ControllerTest {
 		// .createRequestFrame();
 		// FrameStorage frameStorage = controller.getFrameStorage();
 		// List<RequestFrame> sentFrames = frameStorage.getSentFrames();
+		controller.setConnection(createConnection());
+		controller.startNewRequestTask(69);
+		RequestFrameFactory requestFrameFactory = new RequestFrameFactory();
+		requestFrameFactory.loadDefinedInformation();
+		RequestFrame sampleRequestFrame = requestFrameFactory
+				.createRequestFrame();
+		FrameStorage frameStorage = controller.getFrameStorage();
+		List<RequestFrame> sentFrames = frameStorage.getSentFrames();
 		// RequestFrame requestFrame = sentFrames.get(0);
 
 	}
