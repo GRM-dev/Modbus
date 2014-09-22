@@ -11,11 +11,11 @@ import frames.ResponseFrame;
 
 public class FrameStorage {
 
-	private List<RequestFrame> sentFrames;
 	private FramesPrinter noResponseFramesPrinter = new FramesPrinter(
 			NO_RESPONSE_FRAMES_FILE);
 	private FramesPrinter pairedFramesPrinter = new FramesPrinter(
 			PAIRED_FRAMES_FILE);
+	private List<RequestFrame> sentFrames;
 	private List<ResponseFrame> receivedFrames;
 	private List<FramePairs> framePairsList;
 	private ExecutorService executor;
