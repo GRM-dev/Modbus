@@ -146,11 +146,12 @@ public class ReadWriteDefinition extends JDialog {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// domino.creatRequestFrameFactory(
-			// Integer.parseInt(slaveIdTextArea.getText()),
-			// Integer.parseInt(startingAddressTextArea.getText()),
-			// Integer.parseInt(quantityTextArea.getText()), 3);
+			// Integer.parseInt(slaveIdTextField.getText()),
+			// Integer.parseInt(startingAddressTextField.getText()),
+			// Integer.parseInt(quantityTextField.getText()), 3);
 
 			domino.creatRequestFrameFactory(5, 3027, 2, 3);
+			dispose();
 
 		}
 	}

@@ -113,8 +113,8 @@ public class ConnectionSetup extends JDialog {
 	private class OkButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// Domino.receiveConnectionParameters(ipAddressTextArea.getText(),
-			// Integer.parseInt(portTextArea.getText()));
+			// Domino.receiveConnectionParameters(ipAddressTextField.getText(),
+			// Integer.parseInt(portTextField.getText()));
 			Domino.receiveConnectionParameters("10.7.7.121", 502);
 			dispose();
 
