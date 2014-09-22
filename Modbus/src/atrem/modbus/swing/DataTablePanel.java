@@ -1,4 +1,4 @@
-package swing;
+package atrem.modbus.swing;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;

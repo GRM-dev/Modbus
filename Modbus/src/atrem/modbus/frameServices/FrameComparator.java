@@ -1,8 +1,8 @@
-package atrem.modbus;
+package atrem.modbus.frameServices;
 
 import java.util.Comparator;
 
-import frames.ResponseFrame;
+import atrem.modbus.frames.ResponseFrame;
 
 public class FrameComparator implements Comparator<ResponseFrame> {
 

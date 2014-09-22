@@ -4,9 +4,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.net.SocketException;
 import java.nio.ByteBuffer;
 
-import frames.RequestFrame;
+import atrem.modbus.frames.RequestFrame;
 
 public class Connection implements Runnable {
 
@@ -22,7 +23,7 @@ public class Connection implements Runnable {
 			outStream = socket.getOutputStream();
 
 		} catch (IOException e) {
-			e.printStackTrace();
+			e.printStackTrace(); // TODO pazda do robotyy
 		}
 
 	}
@@ -101,6 +102,8 @@ public class Connection implements Runnable {
 		for (int i = 0; i < count; i++) {
 			try {
 				targetArray[i] = (byte) inStream.read();
+			} catch (SocketException e) {
+				System.out.println("test socketexception");
 			} catch (IOException e) { // TODO przechwycenie wyjatku z sensem
 				e.printStackTrace();
 			}

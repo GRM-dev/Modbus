@@ -1,10 +1,10 @@
-package atrem.modbus;
+package atrem.modbus.frameServices;
 
 import java.util.Random;
 
-import consoleService.ConsoleInputService;
-import consoleService.ConsoleOutputService;
-import frames.RequestFrame;
+import atrem.modbus.consoleService.ConsoleInputService;
+import atrem.modbus.consoleService.ConsoleOutputService;
+import atrem.modbus.frames.RequestFrame;
 
 public class RequestFrameFactory {
 	private int transactionIdentifier;
