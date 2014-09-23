@@ -34,4 +34,12 @@ public class DataTablePanel extends JPanel {
 		tableModel.setTableModel(rows, columns);
 		table.updateUI();
 	}
+	
+	public void addNewRow() {
+		
+	}
+	
+	public void addNewRow(int value) {
+		
+	}
 }

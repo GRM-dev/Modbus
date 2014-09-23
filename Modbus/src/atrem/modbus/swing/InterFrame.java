@@ -34,4 +34,18 @@ public class InterFrame extends JInternalFrame {
 	public void setupTable(int rows, int columns) {
 		table.setTableModel(rows, columns);
 	}
+	
+	public void addNewRow(int... values) {
+		switch (values.length) {
+			case 0 :
+				table.addNewRow();
+				break;
+			case 1 :
+				table.addNewRow(values[0]);
+				break;
+			default :
+				System.out.println("Wrong values count: " + values.length);
+				break;
+		}
+	}
 }

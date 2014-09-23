@@ -32,14 +32,19 @@ public class ModbusSwing extends JFrame {
 	private JMenu							setupMenu;
 	private JDesktopPane					desk;
 	/**
-	 * Map of frames, where Integer is ip of modbus device.
+	 * Map of frames, where String is ip of modbus device.
 	 */
 	public static Map<String, InterFrame>	framesList	= new HashMap<String, InterFrame>();
 	private Dimension						screenSize;
 	public Domino							domino;
 	
-	public ModbusSwing(final Domino domino) {
-		this.domino = domino;
+	/**
+	 * Create Main Program main frame.
+	 * 
+	 * @param dominot
+	 */
+	public ModbusSwing(Domino dominot) {
+		this.domino = dominot;
 		screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		contentPanel = new JPanel();
 		setTitle("Domino");
@@ -103,7 +108,7 @@ public class ModbusSwing extends JFrame {
 		desk.add(iFrame);
 	}
 	
-	private void setupDefinition(final Domino domino) {
+	private void setupDefinition(Domino domino) {
 		try {
 			ReadWriteDefinition dialogRWD = new ReadWriteDefinition(domino, this);
 			dialogRWD.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -112,5 +117,11 @@ public class ModbusSwing extends JFrame {
 		catch (Exception exception) {
 			exception.printStackTrace();
 		}
+	}
+	
+	public void addNewRow(String ipAdress, int... values) {
+		if (framesList.containsKey(ipAdress))
+			if (values.length == 0)
+				framesList.get(ipAdress).addNewRow();
 	}
 }
