@@ -69,8 +69,14 @@ public class Connection implements Runnable {
 	}
 
 	public void startReceiveFrames(Controller controller) {
+		innerStartReceiveFrames(controller);
+	}
+
+	Thread innerStartReceiveFrames(Controller controller) {
 		this.controller = controller;
-		new Thread(this, "watek odbierajacy ramki").start();
+		Thread thread = new Thread(this, "watek odbierajacy ramki");
+		thread.start();
+		return thread;
 
 	}
 
@@ -78,7 +84,6 @@ public class Connection implements Runnable {
 	public void run() {
 
 		while (true) {
-			System.out.println("w runie");
 			byte[] header = new byte[RequestFrame.HEADER_SIZE];
 			readBytes(header, RequestFrame.HEADER_SIZE);
 
@@ -108,5 +113,9 @@ public class Connection implements Runnable {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	public void setController(Controller controller) {
+		this.controller = controller;
 	}
 }

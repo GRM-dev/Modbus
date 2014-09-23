@@ -1,7 +1,5 @@
 package atrem.modbus;
 
-import javax.swing.SwingUtilities;
-
 import atrem.modbus.consoleService.ConsoleInputService;
 import atrem.modbus.consoleService.ConsoleOutputService;
 import atrem.modbus.frameServices.FramePairs;
@@ -26,19 +24,25 @@ public class Domino {
 	}
 
 	public Domino() {
-		SwingUtilities.invokeLater(new Runnable() {
+		// SwingUtilities.invokeLater(new Runnable() {
+		//
+		// @Override
+		// public void run() {
+		// modbusSwing = new ModbusSwing(Domino.this);
+		//
+		// }
+		// });
 
-			@Override
-			public void run() {
-				modbusSwing = new ModbusSwing(Domino.this);
+		Controller controller = new Controller();
+		controller.startConnection("10.7.7.121", 502);
+		controller.startNewRequestTask(1);
 
-			}
-		});
+	}
 
-		// Controller controller = new Controller();
-		// controller.startConnection("10.7.7.121", 502);
-		// controller.startNewRequestTask(1);
+	Domino(Connection connection, Controller controller) {
 
+		controller.setConnection(connection);
+		controller.startNewRequestTask(1);
 	}
 
 	public static Connection createConnection() {
