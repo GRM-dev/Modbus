@@ -6,6 +6,7 @@ import java.util.Timer;
 
 import atrem.modbus.frameServices.FrameStorage;
 import atrem.modbus.frameServices.RequestFrameFactory;
+import atrem.modbus.frames.RequestFrame;
 import atrem.modbus.frames.ResponseFrame;
 import atrem.modbus.parsers.FrameDecoder;
 
@@ -19,10 +20,22 @@ public class Controller {
 	private FrameStorage frameStorage;
 	private static final long PEROID = 2000;
 	private Domino domino;
+	private List<ControllerListener> controllerListener;
 
 	public Controller() {
 		requestFrameFactory = new RequestFrameFactory();
 		frameStorage = new FrameStorage();
+		controllerListener = new ArrayList<ControllerListener>();
+	}
+
+	public void addListener(ControllerListener listener) {
+		controllerListener.add(listener);
+	}
+
+	private void onFrame(RequestFrame requestFrame) {
+		for (ControllerListener controllerListener2 : controllerListener) {
+			controllerListener2.update(requestFrame);
+		}
 	}
 
 	public Controller(Domino domino) {
@@ -60,6 +73,10 @@ public class Controller {
 		this.connection = connection;
 	}
 
+	public Connection getConnection() {
+		return connection;
+	}
+
 	FrameStorage getFrameStorage() {
 		return frameStorage;
 	}
@@ -83,10 +100,6 @@ public class Controller {
 			}
 		}
 
-	}
-
-	public Connection getConnection() {
-		return connection;
 	}
 
 }
