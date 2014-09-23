@@ -15,7 +15,6 @@ public class Domino {
 	static private int port;
 	static private ConsoleInputService consoleInput;
 	static private ConsoleOutputService consoleOutput;
-	private Connection connection;
 	private static Controller controller;
 	ModbusSwing modbusSwing;
 	private static RequestFrameFactory requestFrameFactory = new RequestFrameFactory();
@@ -23,14 +22,20 @@ public class Domino {
 	public static void main(String[] args) {
 
 		Domino domino = new Domino();
-
+		domino.runModbusGUI();
 	}
 
-	public Controller getController() {
-		return controller;
-	}
+
 
 	public Domino() {
+
+		// Controller controller = new Controller();
+		// controller.startConnection("10.7.7.121", 502);
+		// controller.startNewRequestTask(1);
+
+	}
+
+	private void runModbusGUI() {
 		SwingUtilities.invokeLater(new Runnable() {
 
 			@Override
@@ -39,11 +44,6 @@ public class Domino {
 
 			}
 		});
-
-		// Controller controller = new Controller();
-		// controller.startConnection("10.7.7.121", 502);
-		// controller.startNewRequestTask(1);
-
 	}
 
 	Domino(Connection connection, Controller controller) {
@@ -112,9 +112,8 @@ public class Domino {
 		ErrorsBox error = new ErrorsBox();
 		error.ConnectionError();
 	}
-
-	public ModbusSwing getModbusSwing() {
-		return modbusSwing;
+	
+	public Controller getController() {
+		return controller;
 	}
-
 }
