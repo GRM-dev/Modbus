@@ -59,8 +59,9 @@ public class ModbusSwing extends JFrame {
 
 	}
 
-	public void initializeNewFrame(String name) {
-		JInternalFrame iFrame = new InterFrame(name);
+	public void initializeNewFrame() {
+		JInternalFrame iFrame = new InterFrame("ModbusExplorer"
+				+ ((Integer) internalFramesList.size()).toString());
 		internalFramesList.add(iFrame);
 		desk.add(iFrame);
 	}

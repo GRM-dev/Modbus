@@ -127,8 +127,7 @@ public class ReadWriteDefinitionDialog extends JDialog {
 			// Integer.parseInt(quantityTextField.getText()), 3);
 
 			// domino.creatRequestFrameFactory(5, 3027, 2, 3);
-			domino.getModbusSwing().initializeNewFrame(
-					startingAddressTextField.getText());
+			domino.getModbusSwing().initializeNewFrame();
 			dispose();
 
 			// ModbusSwing.framesList.get("10.7.7.121").setupTable(10, 3);
