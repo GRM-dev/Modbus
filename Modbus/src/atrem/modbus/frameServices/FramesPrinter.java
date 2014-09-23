@@ -10,29 +10,50 @@ import java.util.Date;
 
 public class FramesPrinter {
 
-	private PrintWriter logWriter;
+	private PrintWriter noResponselogWriter;
+	private PrintWriter pairedLogWriter;
 	public static final String NEW_LINE = System.lineSeparator();
+	private static final String NO_RESPONSE_FRAMES_FILE = "NoResponseFrames ";
+	private static final String PAIRED_FRAMES_FILE = "PairedFrames ";
 
-	public FramesPrinter(String fileName) {
+	public FramesPrinter() {
 
 		Calendar calendar = Calendar.getInstance();
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		String date = dateFormat.format(calendar.getTime());
 		String path = System.getProperty("user.home") + "/Desktop/";
 
-		File log = new File(path + fileName + date + ".txt");
-
-		try {
-			logWriter = new PrintWriter(new FileWriter(log, true));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		logWriter.println("" + new Date());
+		noResponselogWriter = createPrintWriter(date, path,
+				NO_RESPONSE_FRAMES_FILE);
+		pairedLogWriter = createPrintWriter(date, path, PAIRED_FRAMES_FILE);
 
 	}
 
-	public void writeToLog(String arg) {
-		logWriter.println(arg);
-		logWriter.flush();
+	private PrintWriter createPrintWriter(String date, String path,
+			String fileName) {
+		File log = new File(path + fileName + date + ".txt");
+		PrintWriter printWriter = null;
+		try {
+			printWriter = new PrintWriter(new FileWriter(log, true));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		printWriter.println("" + new Date());
+		return printWriter;
+	}
+
+	private void writeToLog(PrintWriter printWriter, String arg) {
+		noResponselogWriter.println(arg);
+		noResponselogWriter.flush();
+	}
+
+	public void saveNoResponseFrame(String frame) {
+		writeToLog(noResponselogWriter, frame);
+
+	}
+
+	public void savePairedFrame(String frame) {
+		writeToLog(pairedLogWriter, frame);
+
 	}
 }

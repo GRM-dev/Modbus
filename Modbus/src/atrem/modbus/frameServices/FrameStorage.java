@@ -13,22 +13,17 @@ import atrem.modbus.frames.ResponseFrame;
 public class FrameStorage {
 
 	private List<RequestFrame> sentFrames;
-	private FramesPrinter noResponseFramesPrinter = new FramesPrinter(
-			NO_RESPONSE_FRAMES_FILE);
-	private FramesPrinter pairedFramesPrinter = new FramesPrinter(
-			PAIRED_FRAMES_FILE);
+	private FramesPrinter framesPrinter;
 	private List<ResponseFrame> receivedFrames;
 	private List<FramePairs> framePairsList;
 	private ExecutorService executor;
-
-	private static final String NO_RESPONSE_FRAMES_FILE = "NoResponseFrames ";
-	private static final String PAIRED_FRAMES_FILE = "PairedFrames ";
 
 	public FrameStorage() {
 		executor = Executors.newSingleThreadScheduledExecutor();
 		sentFrames = new LinkedList<RequestFrame>();
 		receivedFrames = new LinkedList<ResponseFrame>();
 		framePairsList = new LinkedList<FramePairs>();
+		framesPrinter = new FramesPrinter();
 	}
 
 	public FrameStorage(List<RequestFrame> sentFrames) {
@@ -44,7 +39,7 @@ public class FrameStorage {
 	}
 
 	public void makePairsOfFrames() {
-		executor.execute(new Runnable() {
+		executor.execute(new Runnable() { // wywalic executor
 			@Override
 			public void run() {
 				compare();
@@ -56,7 +51,7 @@ public class FrameStorage {
 		for (RequestFrame requestFrame : sentFrames) {
 			compareWithResponseFrame(requestFrame);
 			if (hasNoResponse(requestFrame)) {
-				noResponseFramesPrinter.writeToLog("" + requestFrame);
+				framesPrinter.saveNoResponseFrame("" + requestFrame);
 				sentFrames.remove(requestFrame);
 			}
 		}
@@ -64,7 +59,7 @@ public class FrameStorage {
 
 	private void compareWithResponseFrame(RequestFrame requestFrame) {
 		for (ResponseFrame responseFrame : receivedFrames) {
-			if (requestFrame.equals(responseFrame)) {
+			if (requestFrame.equals(responseFrame)) {// TODO zmiana nazwy
 				pairFrame(requestFrame, responseFrame);
 				// TODO wyswietlanie testowe parowanych ramek
 				SysOutPairFrame(requestFrame, responseFrame);
@@ -85,7 +80,7 @@ public class FrameStorage {
 			ResponseFrame responseFrame) {
 		FramePairs framePairs = new FramePairs(requestFrame, responseFrame);
 		framePairsList.add(framePairs);
-		pairedFramesPrinter.writeToLog("" + framePairs);
+		framesPrinter.savePairedFrame("" + framePairs);
 		Domino.showRequestAndResponse(framePairs);
 
 	}

@@ -14,19 +14,25 @@ public class Controller {
 	private List<Timer> tasks = new ArrayList<Timer>();
 
 	private Connection connection;
-	private RequestFrameFactory requestFrameFactory = new RequestFrameFactory();
+	private RequestFrameFactory requestFrameFactory;
 	private Timer timer;
-	private FrameStorage frameStorage = new FrameStorage();
+	private FrameStorage frameStorage;
 	private static final long PEROID = 2000;
 	private Domino domino;
+
+	public Controller() {
+		requestFrameFactory = new RequestFrameFactory();
+		frameStorage = new FrameStorage();
+	}
+
+	public Controller(Domino domino) {
+		this();
+		this.domino = domino;
+	}
 
 	public void startConnection(String ipAddress, int port) {
 		connection = new Connection(ipAddress, port, this);
 		connection.startReceiveFrames(this);
-	}
-
-	public Controller(Domino domino) {
-		this.domino = domino;
 	}
 
 	public void loadBytesToDecoder(byte[] bytes) {
