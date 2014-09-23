@@ -18,11 +18,12 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 
+import atrem.modbus.Controller;
 import atrem.modbus.ControllerListener;
 import atrem.modbus.Domino;
 import atrem.modbus.frames.RequestFrame;
 
-public class ReadWriteDefinition extends JDialog implements ControllerListener {
+public class ReadWriteDefinition extends JDialog {
 	private final Box contentBox = Box.createHorizontalBox();
 	private JButton cancelButton;
 	private JButton okButton;
@@ -151,17 +152,29 @@ public class ReadWriteDefinition extends JDialog implements ControllerListener {
 		}
 	}
 
-	@Override
-	public void update(RequestFrame requestFrame) {
+	public void update2(RequestFrame requestFrame) {
 		SwingUtilities.invokeLater(new Runnable() {
 
 			@Override
 			public void run() {
 				// TODO aktualizacja wyniku w oknie
-				// TODO Grzegorz
 
 			}
 		});
 
 	}
+
+	Controller controller;// TODO to pole tez musi byc
+
+	public void function() {
+		controller.addListener(new ControllerListener() {
+
+			@Override
+			public void update(RequestFrame requestFrame) {
+				// TODO grzegorz
+
+			}
+		});
+	}
+
 }
