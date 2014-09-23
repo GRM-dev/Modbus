@@ -23,7 +23,7 @@ public class Domino {
 	public static void main(String[] args) {
 
 		Domino domino = new Domino();
-
+		// heiuheihe
 	}
 
 	public Controller getController() {
