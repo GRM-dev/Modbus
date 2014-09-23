@@ -1,50 +1,39 @@
 package atrem.modbus.swing;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.beans.PropertyVetoException;
 
 import javax.swing.JInternalFrame;
 
-public class InterFrame extends JInternalFrame {
-	private DataTablePanel table;
+import atrem.modbus.Domino;
 
-	public InterFrame(String name, String[] columnNames) {
-		ModbusSwing.framesList.put(name, this);
+public class InterFrame extends JInternalFrame {
+
+	private TableDemo tableDemo;
+	public Domino domino;
+
+	public InterFrame(String title) {
+
 		setResizable(true);
 		setClosable(true);
 		setIconifiable(true);
+		setTitle(title);
 		setLocation(10, 10);
 		getContentPane().setLayout(new BorderLayout());
-		table = new DataTablePanel(columnNames);
-		table.setVisible(true);
-		getContentPane().add(table);
-		setPreferredSize(new Dimension(300, 300));
-		pack();
-		try {
-			setSelected(true);
-			setMaximizable(true);
-		} catch (PropertyVetoException e) {
-			e.printStackTrace();
-		}
+		tableDemo = new TableDemo();
+		getContentPane().add(tableDemo);
+
 		setVisible(true);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		pack();
+
 	}
 
-	public void setupTable(int rows, int columns) {
-		table.setTableModel(rows, columns);
+	public TableDemo getTableDemo() {
+		return tableDemo;
 	}
 
-	public void addNewRow(int... values) {
-		switch (values.length) {
-		case 0:
-			table.addNewRow();
-			break;
-		case 1:
-			table.addNewRow(values[0]);
-			break;
-		default:
-			System.out.println("Wrong values count: " + values.length);
-			break;
-		}
+	public void setTableDemo(TableDemo tableDemo) {
+		this.tableDemo = tableDemo;
 	}
+
 }
