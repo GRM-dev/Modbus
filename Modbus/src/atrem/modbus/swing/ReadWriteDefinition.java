@@ -52,6 +52,7 @@ public class ReadWriteDefinition extends JDialog {
 		contentBox.add(createQuestionBox());
 		getContentPane().add(createButtonPanel(), BorderLayout.SOUTH);
 		pack();
+
 	}
 
 	private JPanel createButtonPanel() {
@@ -170,8 +171,9 @@ public class ReadWriteDefinition extends JDialog {
 		controller.addListener(new ControllerListener() {
 
 			@Override
-			public void update(RequestFrame requestFrame) {
+			public void receiverFrame(RequestFrame requestFrame) {
 				// TODO grzegorz
+				System.out.println("test listenera2");
 
 			}
 		});
