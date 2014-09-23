@@ -34,7 +34,7 @@ public class Controller {
 
 	private void onFrame(RequestFrame requestFrame) {
 		for (ControllerListener controllerListener2 : controllerListener) {
-			controllerListener2.update(requestFrame);
+			controllerListener2.receiverFrame(requestFrame);
 		}
 	}
 
@@ -54,6 +54,7 @@ public class Controller {
 				.receiveBytesFromController(bytes);
 		frameStorage.addReceivedFrame(responseFrame);
 		frameStorage.makePairsOfFrames();
+		onFrame(frameStorage.getLastRequestFrame());
 		System.out.println(responseFrame);//
 	}
 
