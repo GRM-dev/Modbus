@@ -27,10 +27,12 @@ public class Connection implements Runnable {
 
 	public void makeConnection() {
 		try {
-			this.socket = new Socket(ipAddress, port);
+			socket = new Socket(ipAddress, port);
 			inStream = socket.getInputStream();
 			outStream = socket.getOutputStream();
 
+		} catch (SocketException e) {
+			controller.takeConnectionExepction();
 		} catch (IOException e) {
 			e.printStackTrace();
 			controller.takeConnectionExepction();// TODO pazda do robotyy
@@ -63,6 +65,8 @@ public class Connection implements Runnable {
 
 		try {
 			outStream.write(frame);
+		} catch (SocketException e) {
+			controller.takeConnectionExepction();
 		} catch (IOException e) {
 			e.printStackTrace();
 			controller.takeConnectionExepction();
@@ -99,8 +103,9 @@ public class Connection implements Runnable {
 			readBytes(header, RequestFrame.HEADER_SIZE);
 
 			ByteBuffer byteBuffer = ByteBuffer.wrap(header);
-			int tid = byteBuffer.getShort(); // TODO byteBuffer.position(4)
-			int pid = byteBuffer.getShort();
+			byteBuffer.position(4);
+			// int tid = byteBuffer.getShort(); // TODO nie wiem czy to dziala
+			// int pid = byteBuffer.getShort();
 			int length = byteBuffer.getShort();
 
 			byte[] data = new byte[length];
@@ -120,7 +125,6 @@ public class Connection implements Runnable {
 				targetArray[i] = (byte) inStream.read();
 				System.out.println(targetArray[i]);
 			} catch (SocketException e) {
-				System.out.println("test socketexception");
 				controller.takeConnectionExepction();
 			} catch (IOException e) { // TODO przechwycenie wyjatku z sensem
 				e.printStackTrace();
