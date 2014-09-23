@@ -16,7 +16,9 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 
-public class ConnectionSetup extends JDialog {
+import atrem.modbus.Domino;
+
+public class ConnectionSetupDialog extends JDialog {
 	private final Box contentBox = Box.createHorizontalBox();
 	private JButton cancelButton;
 	private JButton okButton;
@@ -24,14 +26,13 @@ public class ConnectionSetup extends JDialog {
 	private JTextField portTextField;
 	private String ipAddress = "10.7.7.121";
 	private int port = 502;
-	JPanel ipAddressPanel, serverPort;
-	private InterFrame interFrame;
+	private JPanel ipAddressPanel, serverPort;
 
-	/**
-	 * @param modbusSwing
-	 */
-	public ConnectionSetup(InterFrame interFrame) {
-		this.interFrame = interFrame;
+	private Domino domino;
+
+	public ConnectionSetupDialog(Domino domino) {
+
+		this.domino = domino;
 		setTitle("Connection Setup");
 		setBounds(300, 300, 350, 220);
 		setResizable(false);
@@ -82,9 +83,9 @@ public class ConnectionSetup extends JDialog {
 	private class OkButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// Domino.receiveConnectionParameters(ipAddressTextField.getText(),
+			// domino.receiveConnectionParameters(ipAddressTextField.getText(),
 			// Integer.parseInt(portTextField.getText()));
-			// swing.domino.receiveConnectionParameters(ipAddress, port);
+			// domino.receiveConnectionParameters(ipAddress, port);
 			dispose();
 		}
 	}

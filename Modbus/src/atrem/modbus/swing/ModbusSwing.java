@@ -1,9 +1,7 @@
 package atrem.modbus.swing;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,70 +16,126 @@ import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
+import atrem.modbus.Domino;
+
 public class ModbusSwing extends JFrame {
-	private final JPanel contentPanel;
-	String[] columnNames = {"No.", "Registry Number", "Registry Value"};
-	int rows = 100;
-	int columns = 5;
-	private JMenuBar menuBar;
-	private JMenu fileMenu;
+
 	private JDesktopPane desk;
-	// static Map<String, InterFrame> framesList = new HashMap<String,
-	// InterFrame>();
 	private List<JInternalFrame> internalFramesList = new ArrayList<JInternalFrame>();
-	private Dimension screenSize;
+	private Domino domino;
 
 	public static void main(String[] args) {
-		ModbusSwing modbusSwing = new ModbusSwing();
+		Domino domino = new Domino();
+		// ModbusSwing modbusSwing = new ModbusSwing(domino);
 	}
-	public ModbusSwing() {
+
+	public ModbusSwing(Domino domino) {
 
 		this.domino = domino;
-		screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		contentPanel = new JPanel();
-		setTitle("Domino");
+		initialize();
+
+	}
+
+	private void initialize() {
+
+		setTitle("ModbusExplorer");
+		setBounds(300, 200, 600, 400);
+		getContentPane().setLayout(new BorderLayout());
+		add(createContentPanel(), BorderLayout.CENTER);
+		setJMenuBar(createMenuBar());
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setVisible(true);
-		setMinimumSize(new Dimension(screenSize.width / 3,
-				screenSize.height / 3));
-		setBounds(100, 100, screenSize.width, screenSize.height);
-		getContentPane().setLayout(new BorderLayout());
+
+	}
+
+	private JPanel createContentPanel() {
+
+		JPanel contentPanel = new JPanel();
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(new GridLayout(0, 1, 0, 0));
 		desk = new JDesktopPane();
-		desk.setMinimumSize(new Dimension());
 		contentPanel.add(desk);
+		return contentPanel;
 
-		menuBar = new JMenuBar();
-		setJMenuBar(menuBar);
+	}
 
-		fileMenu = new JMenu("File");
+	public void initializeNewFrame(String name) {
+		JInternalFrame iFrame = new InterFrame(name);
+		internalFramesList.add(iFrame);
+		desk.add(iFrame);
+	}
 
-		fileMenu.add(new AbstractAction("New") {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				newFrame();
-			}
-		});
+	private JMenuBar createMenuBar() {
+		JMenuBar menuBar = new JMenuBar();
+		menuBar.add(createFileMenu());
+		menuBar.add(createConnectionMenu());
+		menuBar.add(createSetupMenu());
+		return menuBar;
+	}
 
-		fileMenu.add(new AbstractAction("Exit") {
+	private JMenu createFileMenu() {
+
+		JMenu menu = new JMenu("File");
+		menu.add(new AbstractAction("Exit") {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
 			}
 		});
-
-		menuBar.add(fileMenu);
-		pack();
+		return menu;
 	}
 
-	public void newFrame() {
+	private JMenu createConnectionMenu() {
 
-		JInternalFrame iFrame = new InterFrame(createName(), columnNames);
-		internalFramesList.add(iFrame);
-		desk.add(iFrame);
+		JMenu menu = new JMenu("Connection");
+		menu.add(new AbstractAction("Connect") {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					newConnection();
+				} catch (Exception exception) {
+					exception.printStackTrace();
+				}
+			}
+		});
 
+		return menu;
+
+	}
+	private JMenu createSetupMenu() {
+
+		JMenu menu = new JMenu("Setup");
+		menu.add(new AbstractAction("Read/Write Definition...") {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					setupDefinition();
+				} catch (Exception exception) {
+					exception.printStackTrace();
+				}
+			}
+		});
+		return menu;
+	}
+
+	private void newConnection() {
+		ConnectionSetupDialog connectionSetupDialog = new ConnectionSetupDialog(
+				domino);
+		connectionSetupDialog
+				.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		connectionSetupDialog.setVisible(true);
+	}
+
+	private void setupDefinition() {
+		try {
+			ReadWriteDefinitionDialog readWriteDefinitionDialog = new ReadWriteDefinitionDialog(
+					domino);
+			readWriteDefinitionDialog
+					.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+			readWriteDefinitionDialog.setVisible(true);
+		} catch (Exception exception) {
+			exception.printStackTrace();
+		}
 	}
 
 	private String createName() {

@@ -11,27 +11,25 @@ import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 
 public class TableDemo extends JPanel {
-	private String[] columnNames;
 	private JTable table;
 	private MyTableModel myTableModel;
 
-	public TableDemo(String[] columnNames) {
-		super(new GridLayout(1, 0));
+	public TableDemo() {
 
-		this.columnNames = columnNames;
+		super(new GridLayout(1, 0));
 		myTableModel = new MyTableModel();
 		table = new JTable(myTableModel);
 		table.setPreferredScrollableViewportSize(new Dimension(500, 70));
 		table.setFillsViewportHeight(true);
-
 		JScrollPane scrollPane = new JScrollPane(table);
-
 		add(scrollPane);
 	}
 
 	class MyTableModel extends AbstractTableModel {
 
 		// private Object[][] data = {{1, 1, 1}, {2, 2, 2}, {3, 3, 3}};
+		private String[] columnNames = {"No.", "Registry Address",
+				"Registry Value"};
 		private List<Integer[]> data = new ArrayList<Integer[]>();
 
 		@Override
@@ -59,23 +57,9 @@ public class TableDemo extends JPanel {
 			return getValueAt(0, c).getClass();
 		}
 
-		// @Override
-		// public boolean isCellEditable(int row, int col) {
-		//
-		// if (col < 2) {
-		// return false;
-		// } else {
-		// return true;
-		// }
-		// }
-
 		public void addRow(Integer[] nextData) {
 			data.add(nextData);
 			fireTableCellUpdated(data.size() - 2, data.size() - 1);
-		}
-
-		public void refreshValues(int nextRegistryValue) {
-
 		}
 
 	}

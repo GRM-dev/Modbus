@@ -19,7 +19,7 @@ import javax.swing.border.EtchedBorder;
 
 import atrem.modbus.Domino;
 
-public class ReadWriteDefinition extends JDialog {
+public class ReadWriteDefinitionDialog extends JDialog {
 	private final Box contentBox = Box.createHorizontalBox();
 	private JButton cancelButton;
 	private JButton okButton;
@@ -28,18 +28,12 @@ public class ReadWriteDefinition extends JDialog {
 	private JTextField startingAddressTextField;
 	private JTextField quantityTextField;
 	private JTextField scanRateTextField;
-	private int slaveId;
-	private int functionCode;
-	private int startingAddress;
-	private int quantity;
-	private int scanRate;
-	private Domino domino;
-	private InterFrame interFrame;
 
-	public ReadWriteDefinition(Domino domino, InterFrame interFrame) {
-		this.interFrame = interFrame;
-		setTitle("Read/Write Definition");
+	private Domino domino;
+
+	public ReadWriteDefinitionDialog(Domino domino) {
 		this.domino = domino;
+		setTitle("Read/Write Definition");
 		setBounds(300, 300, 332, 261);
 		setResizable(false);
 		getContentPane().setLayout(new BorderLayout());
@@ -133,19 +127,11 @@ public class ReadWriteDefinition extends JDialog {
 			// Integer.parseInt(quantityTextField.getText()), 3);
 
 			// domino.creatRequestFrameFactory(5, 3027, 2, 3);
-
-			for (int i = 0; i < Integer.parseInt(quantityTextField.getText()); i++) {
-				Integer[] nextRow = {
-						i,
-						Integer.parseInt(startingAddressTextField.getText())
-								+ i, i};
-				interFrame.getTableDemo().getMyTableModel().addRow(nextRow);
-
-			}
-
+			domino.getModbusSwing().initializeNewFrame(
+					startingAddressTextField.getText());
 			dispose();
 
-			// ModbusSwing.framesList.get("10.7.7.121").setupTable(10, 3);;
+			// ModbusSwing.framesList.get("10.7.7.121").setupTable(10, 3);
 		}
 	}
 
