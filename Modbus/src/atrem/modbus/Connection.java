@@ -103,8 +103,9 @@ public class Connection implements Runnable {
 			readBytes(header, RequestFrame.HEADER_SIZE);
 
 			ByteBuffer byteBuffer = ByteBuffer.wrap(header);
-			int tid = byteBuffer.getShort(); // TODO byteBuffer.position(4)
-			int pid = byteBuffer.getShort();
+			byteBuffer.position(4);
+			// int tid = byteBuffer.getShort(); // TODO nie wiem czy to dziala
+			// int pid = byteBuffer.getShort();
 			int length = byteBuffer.getShort();
 
 			byte[] data = new byte[length];

@@ -25,10 +25,6 @@ public class Domino {
 		domino.runModbusGUI();
 	}
 
-	public Controller getController() {
-		return controller;
-	}
-
 	public Domino() {
 
 		// Controller controller = new Controller();
@@ -115,4 +111,7 @@ public class Domino {
 		error.ConnectionError();
 	}
 
+	public Controller getController() {
+		return controller;
+	}
 }
