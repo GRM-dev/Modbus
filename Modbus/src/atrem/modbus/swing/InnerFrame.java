@@ -6,12 +6,12 @@ import javax.swing.JInternalFrame;
 
 import atrem.modbus.Domino;
 
-public class InterFrame extends JInternalFrame {
+public class InnerFrame extends JInternalFrame {
 
 	private TableDemo tableDemo;
 	public Domino domino;
 
-	public InterFrame(String title) {
+	public InnerFrame(String title) {
 
 		setResizable(true);
 		setClosable(true);
