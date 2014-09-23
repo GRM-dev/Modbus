@@ -14,28 +14,31 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 
+import atrem.modbus.ControllerListener;
 import atrem.modbus.Domino;
+import atrem.modbus.frames.RequestFrame;
 
-public class ReadWriteDefinition extends JDialog {
-	private final Box			contentBox	= Box.createHorizontalBox();
-	private JButton				cancelButton;
-	private JButton				okButton;
-	private JTextField			slaveIdTextField;
-	private JComboBox<String>	functionCodeComboBox;
-	private JTextField			startingAddressTextField;
-	private JTextField			quantityTextField;
-	private JTextField			scanRateTextField;
-	private int					slaveId;
-	private int					functionCode;
-	private int					startingAddress;
-	private int					quantity;
-	private int					scanRate;
-	private Domino				domino;
-	private ModbusSwing			modbusSwing;
-	
+public class ReadWriteDefinition extends JDialog implements ControllerListener {
+	private final Box contentBox = Box.createHorizontalBox();
+	private JButton cancelButton;
+	private JButton okButton;
+	private JTextField slaveIdTextField;
+	private JComboBox<String> functionCodeComboBox;
+	private JTextField startingAddressTextField;
+	private JTextField quantityTextField;
+	private JTextField scanRateTextField;
+	private int slaveId;
+	private int functionCode;
+	private int startingAddress;
+	private int quantity;
+	private int scanRate;
+	private Domino domino;
+	private ModbusSwing modbusSwing;
+
 	public ReadWriteDefinition(Domino domino, ModbusSwing modbusSwing) {
 		this.modbusSwing = modbusSwing;
 		setTitle("Read/Write Definition");
@@ -49,7 +52,7 @@ public class ReadWriteDefinition extends JDialog {
 		getContentPane().add(createButtonPanel(), BorderLayout.SOUTH);
 		pack();
 	}
-	
+
 	private JPanel createButtonPanel() {
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -61,7 +64,7 @@ public class ReadWriteDefinition extends JDialog {
 		buttonPanel.add(cancelButton);
 		return buttonPanel;
 	}
-	
+
 	private Box createQuestionBox() {
 		Box box = Box.createVerticalBox();
 		slaveIdTextField = new JTextField();
@@ -77,7 +80,7 @@ public class ReadWriteDefinition extends JDialog {
 		box.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
 		return box;
 	}
-	
+
 	private JPanel createFunctionPanel(JComboBox comboBox) {
 		JLabel label = new JLabel("Function:");
 		comboBox = new JComboBox();
@@ -91,11 +94,12 @@ public class ReadWriteDefinition extends JDialog {
 		panel.add(comboBox);
 		return panel;
 	}
-	
+
 	private JPanel createDialogPanel(String labelName, JTextField textField) {
 		JLabel label = new JLabel(labelName);
 		textField = new JTextField();
-		textField.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
+		textField.setBorder(BorderFactory
+				.createEtchedBorder(EtchedBorder.LOWERED));
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(0, 2));
 		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -103,18 +107,19 @@ public class ReadWriteDefinition extends JDialog {
 		panel.add(textField);
 		return panel;
 	}
-	
+
 	private JPanel createDialogPanel(String labelName, String labelName2,
 			JTextField textField) {
 		JLabel label = new JLabel(labelName);
 		textField = new JTextField();
-		textField.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
+		textField.setBorder(BorderFactory
+				.createEtchedBorder(EtchedBorder.LOWERED));
 		JLabel label2 = new JLabel(labelName2);
 		JPanel smallPanel = new JPanel();
 		smallPanel.setLayout(new GridLayout(0, 2));
 		smallPanel.add(textField);
 		smallPanel.add(label2);
-		
+
 		JPanel bigPanel = new JPanel();
 		bigPanel.setLayout(new GridLayout(0, 2));
 		bigPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -122,7 +127,7 @@ public class ReadWriteDefinition extends JDialog {
 		bigPanel.add(smallPanel);
 		return bigPanel;
 	}
-	
+
 	private class OkButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -130,19 +135,33 @@ public class ReadWriteDefinition extends JDialog {
 			// Integer.parseInt(slaveIdTextField.getText()),
 			// Integer.parseInt(startingAddressTextField.getText()),
 			// Integer.parseInt(quantityTextField.getText()), 3);
-			
-			domino.creatRequestFrameFactory(5, 3027, 2, 3);
+
+			domino.creatRequestFrameFactory(5, 3027, 2, 3);// TODO nazwa metody
 			dispose();
 			// TODO zmieniæ na wartoœci zmienne
 			ModbusSwing.framesList.get("10.7.7.121").setupTable(10, 3);
 			;
 		}
 	}
-	
+
 	private class CancelButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			dispose();
 		}
+	}
+
+	@Override
+	public void update(RequestFrame requestFrame) {
+		SwingUtilities.invokeLater(new Runnable() {
+
+			@Override
+			public void run() {
+				// TODO aktualizacja wyniku w oknie
+				// TODO Grzegorz
+
+			}
+		});
+
 	}
 }
