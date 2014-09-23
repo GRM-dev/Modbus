@@ -1,6 +1,9 @@
 package atrem.modbus.frames;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import atrem.modbus.frameServices.FramesPrinter;
 
 public class RequestFrame {
 
@@ -15,7 +18,11 @@ public class RequestFrame {
 
 	@Override
 	public String toString() {
-		return "RequestFrame [transactionIdentifier=" + transactionIdentifier
+		SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+		String time = timeFormat.format(sendDate);
+
+		return "RequestFrame" + time + FramesPrinter.NEW_LINE
+				+ "[transactionIdentifier=" + transactionIdentifier
 				+ ", protocolIdentifier=" + protocolIdentifier
 				+ ", lengthField=" + lengthField + ", unitIdentifier="
 				+ unitIdentifier + ", functionCode=" + functionCode

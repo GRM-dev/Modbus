@@ -11,6 +11,7 @@ import java.util.Date;
 public class FramesPrinter {
 
 	private PrintWriter logWriter;
+	public static final String NEW_LINE = System.lineSeparator();
 
 	public FramesPrinter(String fileName) {
 
