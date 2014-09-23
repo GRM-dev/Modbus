@@ -1,5 +1,6 @@
 package atrem.modbus;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -30,7 +31,7 @@ public class Controller {
 		this.domino = domino;
 	}
 
-	public void startConnection(String ipAddress, int port) {
+	public void startConnection(String ipAddress, int port) throws IOException {
 		connection = new Connection(ipAddress, port, this);
 		connection.startReceiveFrames(this);
 	}
@@ -66,23 +67,6 @@ public class Controller {
 
 	public RequestFrameFactory getRequestFrameFactory() {
 		return requestFrameFactory;
-	}
-
-	public void takeConnectionExepction() {
-		// domino.showConnextionError();
-		connection.closeConnection();
-		while (!connection.checkConnection()) {
-
-			connection.makeConnection();
-			System.out.println("jestem");
-			try {
-				Thread.sleep(5000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
 	}
 
 	public Connection getConnection() {

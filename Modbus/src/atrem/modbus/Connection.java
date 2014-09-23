@@ -18,25 +18,20 @@ public class Connection implements Runnable {
 	private String ipAddress;
 	private int port;
 
-	public Connection(String ipAddress, int port, Controller controller) {
+	public Connection(String ipAddress, int port, Controller controller)
+			throws IOException {
 		this.ipAddress = ipAddress;
 		this.port = port;
 		this.controller = controller;
 		makeConnection();
 	}
 
-	public void makeConnection() {
-		try {
-			socket = new Socket(ipAddress, port);
-			inStream = socket.getInputStream();
-			outStream = socket.getOutputStream();
+	public void makeConnection() throws IOException {
 
-		} catch (SocketException e) {
-			controller.takeConnectionExepction();
-		} catch (IOException e) {
-			e.printStackTrace();
-			controller.takeConnectionExepction();// TODO pazda do robotyy
-		}
+		socket = new Socket(ipAddress, port);
+		inStream = socket.getInputStream();
+		outStream = socket.getOutputStream();
+
 	}
 
 	Connection(InputStream inStream, OutputStream outStream) {
@@ -66,10 +61,10 @@ public class Connection implements Runnable {
 		try {
 			outStream.write(frame);
 		} catch (SocketException e) {
-			controller.takeConnectionExepction();
+
 		} catch (IOException e) {
 			e.printStackTrace();
-			controller.takeConnectionExepction();
+
 		}
 
 	}
@@ -79,7 +74,7 @@ public class Connection implements Runnable {
 			socket.close();
 		} catch (IOException e) {
 			e.printStackTrace();
-			controller.takeConnectionExepction();
+
 		}
 	}
 
@@ -124,10 +119,10 @@ public class Connection implements Runnable {
 				targetArray[i] = (byte) inStream.read();
 				System.out.println(targetArray[i]);
 			} catch (SocketException e) {
-				controller.takeConnectionExepction();
+
 			} catch (IOException e) { // TODO przechwycenie wyjatku z sensem
 				e.printStackTrace();
-				controller.takeConnectionExepction();
+
 			}
 		}
 	}
