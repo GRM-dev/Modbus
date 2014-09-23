@@ -1,4 +1,4 @@
-package atrem.modbus;
+package atrem.modbus.frameServices;
 
 import static org.junit.Assert.assertTrue;
 
