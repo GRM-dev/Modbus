@@ -21,7 +21,7 @@ public class RequestFrame {
 		SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
 		String time = timeFormat.format(sendDate);
 
-		return "RequestFrame" + time + FramesPrinter.NEW_LINE
+		return "*RequestFrame* " + time + FramesPrinter.NEW_LINE
 				+ "[transactionIdentifier=" + transactionIdentifier
 				+ ", protocolIdentifier=" + protocolIdentifier
 				+ ", lengthField=" + lengthField + ", unitIdentifier="
