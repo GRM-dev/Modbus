@@ -123,7 +123,6 @@ public class Connection implements Runnable {
 		for (int i = 0; i < count; i++) {
 			try {
 				targetArray[i] = (byte) inStream.read();
-				System.out.println(targetArray[i]);
 			} catch (SocketException e) {
 				controller.takeConnectionExepction();
 			} catch (IOException e) { // TODO przechwycenie wyjatku z sensem
