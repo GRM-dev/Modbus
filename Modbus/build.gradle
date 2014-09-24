@@ -1,0 +1,9 @@
+
+apply plugin:'application'
+
+version = "1.0.0"
+
+mainClassName = "atrem.modbus.Domino"
+
+sourceCompatibility = JavaVersion.VERSION_1_7
+targetCompatibility = JavaVersion.VERSION_1_7
