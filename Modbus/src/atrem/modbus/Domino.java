@@ -19,6 +19,7 @@ public class Domino {
 	private Connection connection;
 	private Controller controller;
 	ModbusSwing modbusSwing;
+
 	private static RequestFrameFactory requestFrameFactory = new RequestFrameFactory();
 
 	public static void main(String[] args) {
@@ -88,4 +89,7 @@ public class Domino {
 		controller.startNewRequestTask(0); // TODO nie wiem o co loto pawel
 	}
 
+	public ModbusSwing getModbusSwing() {
+		return modbusSwing;
+	}
 }

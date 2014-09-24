@@ -5,6 +5,7 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -83,10 +84,16 @@ public class ConnectionSetupDialog extends JDialog {
 	private class OkButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			domino.receiveConnectionParameters(ipAddressTextField.getText(),
-					Integer.parseInt(portTextField.getText()));
+			try {
+				domino.receiveConnectionParameters(
+						ipAddressTextField.getText(),
+						Integer.parseInt(portTextField.getText()));
+			} catch (NumberFormatException e1) {
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 			// domino.receiveConnectionParameters(ipAddress, port);
-
 			dispose();
 		}
 	}

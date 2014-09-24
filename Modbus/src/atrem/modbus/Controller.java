@@ -75,10 +75,6 @@ public class Controller {
 		this.connection = connection;
 	}
 
-	public Connection getConnection() {
-		return connection;
-	}
-
 	FrameStorage getFrameStorage() {
 		return frameStorage;
 	}
