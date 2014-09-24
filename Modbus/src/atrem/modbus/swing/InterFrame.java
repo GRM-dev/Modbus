@@ -51,7 +51,7 @@ public class InterFrame extends JInternalFrame {
 					public void run() {
 						System.out.println("stara dobra metoda debugowania");
 						Data nextData = new Data(3027, responseFrame1
-								.getDataLength());
+								.getDataValue());
 						tableDemo.getMyTableModel().addRow(nextData);
 
 					}
