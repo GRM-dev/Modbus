@@ -20,11 +20,13 @@ public class Controller {
 	private static final long PEROID = 2000;
 	private Domino domino; // TODO usunac
 	private List<ControllerListener> controllerListener;
+	private List<DeviceListener> deviceListeners;
 
 	public Controller() {
 		requestFrameFactory = new RequestFrameFactory();
 		frameStorage = new FrameStorage();
 		controllerListener = new ArrayList<ControllerListener>();
+		deviceListeners = new ArrayList<DeviceListener>();
 	}
 
 	public Domino getDomino() {
@@ -39,9 +41,19 @@ public class Controller {
 		controllerListener.add(listener);
 	}
 
+	public void addDeviceListener(DeviceListener listener) {
+		deviceListeners.add(listener);
+	}
+
 	private void onFrame(ResponseFrame responseFrame) {
 		for (ControllerListener controllerListener2 : controllerListener) {
 			controllerListener2.frameReceiver(responseFrame);
+		}
+	}
+
+	private void onDevice(boolean isConnected) {
+		for (DeviceListener deviceListener2 : deviceListeners) {
+			deviceListener2.showConnectionStatus(isConnected);
 		}
 	}
 
@@ -52,10 +64,10 @@ public class Controller {
 
 	public void startConnection(String ipAddress, int port) throws IOException {
 		connection = new Connection(ipAddress, port, this);
-		domino.showConnectionStatus(connection.checkConnection()); // TODO
-																	// usunac,
-																	// dodac
-																	// listenera
+		onDevice(connection.checkConnection()); // TODO
+												// usunac,
+												// dodac
+												// listenera
 		connection.startReceiveFrames(); //
 	}
 

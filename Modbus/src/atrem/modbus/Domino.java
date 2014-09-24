@@ -71,6 +71,18 @@ public class Domino {
 			throws IOException {
 
 		controller = new Controller(this);
+		controller.addDeviceListener(new DeviceListener() {
+
+			@Override
+			public void showConnectionStatus(boolean isConnected) {
+
+				if (isConnected)
+					modbusSwing.setStatus("CONNECTED!", new Color(0, 255, 0));
+				else
+					modbusSwing
+							.setStatus("NOT CONNECTED", new Color(255, 0, 0));
+			}
+		});
 		controller.startConnection(ip, port);
 
 		requestFrameFactory = controller.getRequestFrameFactory(); // TODO
