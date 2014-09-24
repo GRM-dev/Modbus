@@ -106,12 +106,13 @@ public class ReadWriteDefinitionDialog extends JDialog {
 				.createEtchedBorder(EtchedBorder.LOWERED));
 		JLabel label2 = new JLabel(labelName2);
 
-		JPanel smallPanel = createEmptyPanel();
-		smallPanel.add(label);
+		JPanel smallPanel = new JPanel();
+		smallPanel.setLayout(new GridLayout(0, 2));
 		smallPanel.add(textField);
+		smallPanel.add(label2);
 		JPanel bigPanel = createEmptyPanel();
+		bigPanel.add(label);
 		bigPanel.add(smallPanel);
-		bigPanel.add(label2);
 		return bigPanel;
 
 	}
