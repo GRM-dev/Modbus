@@ -3,13 +3,17 @@ package atrem.modbus;
 import java.io.File;
 import java.net.URL;
 
-public class AudioFilePlayer extends Thread {
+import javax.media.Manager;
+import javax.media.MediaLocator;
+import javax.media.Player;
+
+public class SoundPlayer extends Thread {
 
 	private String desktopPath = System.getProperty("user.home") + "/Desktop/";
 	private String fileName;
 	Player player;
 
-	public AudioFilePlayer(String fileName) {
+	public SoundPlayer(String fileName) {
 		this.fileName = fileName;
 		player = createPlayer();
 	}
@@ -40,6 +44,6 @@ public class AudioFilePlayer extends Thread {
 	}
 
 	public static void main(String[] args) {
-		new AudioFilePlayer("sound.mp3").play();
+		new SoundPlayer("sound.mp3").play();
 	}
 }
