@@ -24,6 +24,7 @@ public class Connection implements Runnable {
 		this.port = port;
 		this.controller = controller;
 		makeConnection();
+
 	}
 
 	public void makeConnection() throws IOException {

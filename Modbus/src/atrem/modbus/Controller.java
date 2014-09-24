@@ -28,6 +28,14 @@ public class Controller {
 		controllerListener = new ArrayList<ControllerListener>();
 	}
 
+	public Domino getDomino() {
+		return domino;
+	}
+
+	public void setRequestFrameFactory(RequestFrameFactory requestFrameFactory) {
+		this.requestFrameFactory = requestFrameFactory;
+	}
+
 	public void addListener(ControllerListener listener) {
 		controllerListener.add(listener);
 	}
@@ -46,6 +54,7 @@ public class Controller {
 
 	public void startConnection(String ipAddress, int port) throws IOException {
 		connection = new Connection(ipAddress, port, this);
+		domino.showConnectionStatus(connection.checkConnection());
 		connection.startReceiveFrames(this);
 	}
 

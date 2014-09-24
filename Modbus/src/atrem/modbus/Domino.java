@@ -72,6 +72,7 @@ public class Domino {
 
 		controller = new Controller(this);
 		controller.startConnection(ip, port);
+
 		requestFrameFactory = controller.getRequestFrameFactory();
 
 	}
@@ -91,5 +92,12 @@ public class Domino {
 
 	public ModbusSwing getModbusSwing() {
 		return modbusSwing;
+	}
+
+	public void showConnectionStatus(boolean isConnected) {
+		if (isConnected)
+			modbusSwing.setStatus("CONNECTED!");
+		else
+			modbusSwing.setStatus("NOT CONNECTED");
 	}
 }

@@ -1,15 +1,18 @@
 package atrem.modbus.swing;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.AbstractAction;
+import javax.swing.BorderFactory;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
@@ -23,6 +26,7 @@ public class ModbusSwing extends JFrame {
 	private JDesktopPane desk;
 	private List<JInternalFrame> internalFramesList = new ArrayList<JInternalFrame>();
 	private Domino domino;
+	private JLabel connectionStatus;
 
 	public static void main(String[] args) {
 		Domino domino = new Domino();
@@ -74,10 +78,13 @@ public class ModbusSwing extends JFrame {
 	}
 
 	private JMenuBar createMenuBar() {
+		connectionStatus = new JLabel(" CONNECTION STATUS ");
+		connectionStatus.setBorder(BorderFactory.createLineBorder(Color.black));
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.add(createFileMenu());
 		menuBar.add(createConnectionMenu());
 		menuBar.add(createSetupMenu());
+		menuBar.add(connectionStatus);
 		return menuBar;
 	}
 
@@ -158,6 +165,10 @@ public class ModbusSwing extends JFrame {
 
 	public void setFramesList(List<JInternalFrame> framesList) {
 		this.internalFramesList = framesList;
+	}
+
+	public void setStatus(String status) {
+		connectionStatus.setText("  " + status + "  ");
 	}
 
 }
