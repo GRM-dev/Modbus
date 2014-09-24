@@ -73,11 +73,16 @@ public class ConnectionSetupDialog extends JDialog {
 		JLabel label = new JLabel(labelName);
 		textField.setBorder(BorderFactory
 				.createEtchedBorder(EtchedBorder.LOWERED));
+		JPanel panel = createEmptyPanel();
+		panel.add(label);
+		panel.add(textField);
+		return panel;
+	}
+
+	private JPanel createEmptyPanel() {
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(0, 2));
 		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		panel.add(label);
-		panel.add(textField);
 		return panel;
 	}
 
@@ -85,15 +90,18 @@ public class ConnectionSetupDialog extends JDialog {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			try {
-				domino.receiveConnectionParameters(
-						ipAddressTextField.getText(),
-						Integer.parseInt(portTextField.getText()));
+				domino.connect(ipAddressTextField.getText(),
+						Integer.parseInt(portTextField.getText())); // TODO
+																	// wyniesc
+																	// wyzej
+
 			} catch (NumberFormatException e1) {
 				e1.printStackTrace();
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
 			// domino.receiveConnectionParameters(ipAddress, port);
+
 			dispose();
 		}
 	}

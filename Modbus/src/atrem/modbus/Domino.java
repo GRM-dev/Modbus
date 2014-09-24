@@ -14,7 +14,11 @@ public class Domino {
 	private Controller controller;
 	ModbusSwing modbusSwing;
 
-	private static RequestFrameFactory requestFrameFactory = new RequestFrameFactory();
+	private static RequestFrameFactory requestFrameFactory = new RequestFrameFactory(); // TODO
+																						// nie
+																						// ma
+																						// byc
+																						// statyczne
 
 	public static void main(String[] args) {
 
@@ -31,7 +35,8 @@ public class Domino {
 
 			@Override
 			public void run() {
-				modbusSwing = new ModbusSwing(Domino.this);
+				modbusSwing = new ModbusSwing(Domino.this); // TODO do metody
+															// init
 
 			}
 		});
@@ -61,13 +66,16 @@ public class Domino {
 
 	}
 
-	public void receiveConnectionParameters(String ip, int port)
+	public void connect(String ip, int port) // TODO wyjatek obslugiwany w
+												// prezenterze
 			throws IOException {
 
 		controller = new Controller(this);
 		controller.startConnection(ip, port);
 
-		requestFrameFactory = controller.getRequestFrameFactory();
+		requestFrameFactory = controller.getRequestFrameFactory(); // TODO
+																	// raczej
+																	// niepotrzebne
 
 	}
 
@@ -75,7 +83,8 @@ public class Domino {
 		System.out.println(framePairs);
 	}
 
-	public void creatRequestFrameFactory(int unitIdentifier,
+	public void creatRequestFrameFactory(int unitIdentifier, // TODO to tez nie
+																// bardzo
 			int startingAdress, int quantityOfRegisters, int functionCode) {
 
 		requestFrameFactory.setQuantityOfRegisters(quantityOfRegisters);
@@ -84,11 +93,12 @@ public class Domino {
 		controller.startNewRequestTask(0); // TODO nie wiem o co loto pawel
 	}
 
-	public ModbusSwing getModbusSwing() {
+	public ModbusSwing getModbusSwing() { // TODO do wywalenia
 		return modbusSwing;
 	}
 
-	public void showConnectionStatus(boolean isConnected) {
+	public void showConnectionStatus(boolean isConnected) { // TODO ewentualnie
+															// przez interfejs
 		if (isConnected)
 			modbusSwing.setStatus("CONNECTED!", new Color(0, 255, 0));
 		else

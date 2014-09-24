@@ -12,14 +12,13 @@ import atrem.modbus.parsers.FrameDecoder;
 
 public class Controller {
 
-	private List<Timer> tasks = new ArrayList<Timer>();
+	private List<Timer> tasks = new ArrayList<Timer>(); // TODO moze inna nazwa
 
 	private Connection connection;
 	private RequestFrameFactory requestFrameFactory;
-	private Timer timer;
 	private FrameStorage frameStorage;
 	private static final long PEROID = 2000;
-	private Domino domino;
+	private Domino domino; // TODO usunac
 	private List<ControllerListener> controllerListener;
 
 	public Controller() {
@@ -53,30 +52,28 @@ public class Controller {
 
 	public void startConnection(String ipAddress, int port) throws IOException {
 		connection = new Connection(ipAddress, port, this);
-		domino.showConnectionStatus(connection.checkConnection());
-		connection.startReceiveFrames(this);
+		domino.showConnectionStatus(connection.checkConnection()); // TODO
+																	// usunac,
+																	// dodac
+																	// listenera
+		connection.startReceiveFrames(); //
 	}
 
-	public void loadBytesToDecoder(byte[] bytes) {
+	public void loadBytes(byte[] bytes) {
 		FrameDecoder frameDecoder = new FrameDecoder();
-		ResponseFrame responseFrame = frameDecoder
-				.receiveBytesFromController(bytes);
+		ResponseFrame responseFrame = frameDecoder.decodeBytes(bytes);
 		frameStorage.addReceivedFrame(responseFrame);
 		frameStorage.makePairsOfFrames();
 		onFrame(frameStorage.getLastResponseFrame());
 		System.out.println(responseFrame);//
 	}
 
-	public void startNewRequestTask(int id) {
-
+	public void startNewRequestTask(int id) { // TODO tu raczej obiekt Request
 		requestFrameFactory.loadDefinedInformation();
-		timer = new Timer();
+		Timer timer = new Timer();
 		timer.schedule(new Task(connection, requestFrameFactory, frameStorage),
-
-		0, PEROID);
-
+				0, PEROID);
 		tasks.add(timer);
-
 	}
 
 	public void setConnection(Connection connection) {

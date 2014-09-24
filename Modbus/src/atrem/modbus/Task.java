@@ -14,7 +14,12 @@ public class Task extends TimerTask {
 	private RequestFrameFactory requestFrameFactory;
 	private Coder coder = new Coder();
 
-	public Task(Connection connection, RequestFrameFactory requestFrameFactory,
+	public Task(Connection connection, RequestFrameFactory requestFrameFactory, // TODO
+																				// tu
+																				// gdzies
+																				// new
+																				// factory
+
 			FrameStorage frameStorage) {
 		this.connection = connection;
 		this.frameStorage = frameStorage;
@@ -33,7 +38,6 @@ public class Task extends TimerTask {
 		frameStorage.addSentFrame(requestFrame);
 		System.out.println("wyslalem "
 				+ requestFrame.getTransactionIdentifier());
-
 
 	}
 }

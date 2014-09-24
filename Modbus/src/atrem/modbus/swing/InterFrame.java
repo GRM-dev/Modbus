@@ -57,7 +57,8 @@ public class InterFrame extends JInternalFrame {
 
 			@Override
 			public void run() {
-				Data nextData = new Data(3027, responseFrame1.getDataValue());
+				Data nextData = new Data(responseFrame1.getRegistryValue(),
+						responseFrame1.getDataValue());
 				tableDemo.getMyTableModel().addRow(nextData);
 
 			}

@@ -29,10 +29,10 @@ public class ReadWriteDefinitionDialog extends JDialog {
 	private JTextField quantityTextField;
 	private JTextField scanRateTextField;
 
-	private String[] functionNames = {"01 Read Coils",
+	private String[] functionNames = { "01 Read Coils",
 			"02 Read Discrete Inputs", "03 Read Holding Registers",
 			"04 Read Input Registers", "05 Write Single Coil",
-			"06 Write Single Register"};
+			"06 Write Single Register" };
 
 	private Domino domino;
 
@@ -83,9 +83,7 @@ public class ReadWriteDefinitionDialog extends JDialog {
 		JLabel label = new JLabel("Function:");
 		comboBox.setSelectedIndex(2);
 		comboBox.setEditable(false);
-		JPanel panel = new JPanel();
-		panel.setLayout(new GridLayout(0, 2));
-		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		JPanel panel = createEmptyPanel();
 		panel.add(label);
 		panel.add(comboBox);
 		return panel;
@@ -95,8 +93,10 @@ public class ReadWriteDefinitionDialog extends JDialog {
 		JLabel label = new JLabel(labelName);
 		textField.setBorder(BorderFactory
 				.createEtchedBorder(EtchedBorder.LOWERED));
-
-		return createPanel(label, textField);
+		JPanel panel = createEmptyPanel();
+		panel.add(label);
+		panel.add(textField);
+		return panel;
 	}
 
 	private JPanel createDialogPanel(String labelName, String labelName2,
@@ -105,38 +105,30 @@ public class ReadWriteDefinitionDialog extends JDialog {
 		textField.setBorder(BorderFactory
 				.createEtchedBorder(EtchedBorder.LOWERED));
 		JLabel label2 = new JLabel(labelName2);
-		return createPanel(label, label2, textField);
-
-	}
-
-	private JPanel createPanel(JLabel label, JTextField textField) {
-		JPanel panel = new JPanel();
-		panel.setLayout(new GridLayout(0, 2));
-		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		panel.add(label);
-		panel.add(textField);
-		return panel;
-	}
-
-	private JPanel createPanel(JLabel label, JLabel label2, JTextField textField) {
 
 		JPanel smallPanel = new JPanel();
 		smallPanel.setLayout(new GridLayout(0, 2));
 		smallPanel.add(textField);
 		smallPanel.add(label2);
-		JPanel bigPanel = new JPanel();
-		bigPanel.setLayout(new GridLayout(0, 2));
-		bigPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		JPanel bigPanel = createEmptyPanel();
 		bigPanel.add(label);
 		bigPanel.add(smallPanel);
 		return bigPanel;
 
 	}
 
+	private JPanel createEmptyPanel() {
+		JPanel panel = new JPanel();
+		panel.setLayout(new GridLayout(0, 2));
+		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		return panel;
+	}
+
 	private class OkButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			domino.creatRequestFrameFactory(
+					// TODO tu moze bedzie addRequest
 					Integer.parseInt(slaveIdTextField.getText()),
 					Integer.parseInt(startingAddressTextField.getText()),
 					Integer.parseInt(quantityTextField.getText()),

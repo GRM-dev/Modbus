@@ -20,7 +20,7 @@ public class FrameDecoderTest {
 	@Test
 	public void readNextIntTest() {
 		byte[] bytes = { 0, 1, 1, 2 };
-		decoder.receiveBytesFromController(bytes);
+		decoder.decodeBytes(bytes);
 		int readInt = decoder.readNextInt();
 
 		assertEquals(1, readInt);
@@ -32,7 +32,7 @@ public class FrameDecoderTest {
 	public void getNextModbusFrameTest() {
 
 		byte[] bytes = { 1, 2, 0, 0, 0, 6, 25, 26, 1, 2, 1, 2 };
-		decoder.receiveBytesFromController(bytes);
+		decoder.decodeBytes(bytes);
 		ResponseFrame responseFrame = decoder.getNextModbusFrame();
 		ResponseFrame exampleResponseFrame = createExmapleFrame();
 		Assert.assertTrue(exampleResponseFrame.equals(responseFrame));

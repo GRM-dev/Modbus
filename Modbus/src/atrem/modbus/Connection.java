@@ -32,8 +32,7 @@ public class Connection implements Runnable {
 		socket = new Socket(ipAddress, port);
 		inStream = socket.getInputStream();
 		outStream = socket.getOutputStream();
-		new SoundPlayer("connect_sound.mp3").play();
-
+		// new SoundPlayer("connect_sound.mp3").play();
 	}
 
 	Connection(InputStream inStream, OutputStream outStream) {
@@ -80,12 +79,11 @@ public class Connection implements Runnable {
 		}
 	}
 
-	public void startReceiveFrames(Controller controller) {
-		innerStartReceiveFrames(controller);
+	public void startReceiveFrames() {
+		innerStartReceiveFrames();
 	}
 
-	Thread innerStartReceiveFrames(Controller controller) {
-		this.controller = controller;
+	Thread innerStartReceiveFrames() {
 		Thread thread = new Thread(this, "watek odbierajacy ramki");
 		thread.start();
 		return thread;
@@ -112,7 +110,7 @@ public class Connection implements Runnable {
 			System.arraycopy(header, 0, buff, 0, RequestFrame.HEADER_SIZE);
 			System.arraycopy(data, 0, buff, RequestFrame.HEADER_SIZE, length);
 
-			controller.loadBytesToDecoder(buff);
+			controller.loadBytes(buff);
 		}
 	}
 
