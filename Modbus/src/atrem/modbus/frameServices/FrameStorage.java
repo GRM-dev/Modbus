@@ -98,6 +98,7 @@ public class FrameStorage {
 		FramePairs framePairs = new FramePairs(requestFrame, responseFrame);
 		framePairsList.add(framePairs);
 		lastResponseFrame = responseFrame;
+		lastResponseFrame.setRegistryValue(requestFrame.getStartingAdress());
 		framesPrinter.savePairedFrame("" + framePairs);
 		Domino.showRequestAndResponse(framePairs);
 
