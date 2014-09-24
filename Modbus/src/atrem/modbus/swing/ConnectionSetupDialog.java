@@ -18,22 +18,21 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 
 import atrem.modbus.Domino;
-import atrem.modbus.SoundPlayer;
 
 public class ConnectionSetupDialog extends JDialog {
-	private final Box	contentBox	= Box.createHorizontalBox();
-	private JButton		cancelButton;
-	private JButton		okButton;
-	private JTextField	ipAddressTextField;
-	private JTextField	portTextField;
-	private String		ipAddress	= "10.7.7.121";
-	private int			port		= 502;
-	private JPanel		ipAddressPanel, serverPort;
-	
-	private Domino		domino;
-	
+	private final Box contentBox = Box.createHorizontalBox();
+	private JButton cancelButton;
+	private JButton okButton;
+	private JTextField ipAddressTextField;
+	private JTextField portTextField;
+	private String ipAddress = "10.7.7.121";
+	private int port = 502;
+	private JPanel ipAddressPanel, serverPort;
+
+	private Domino domino;
+
 	public ConnectionSetupDialog(Domino domino) {
-		
+
 		this.domino = domino;
 		setTitle("Connection Setup");
 		setBounds(300, 300, 350, 220);
@@ -45,7 +44,7 @@ public class ConnectionSetupDialog extends JDialog {
 		getContentPane().add(createButtonPanel(), BorderLayout.SOUTH);
 		pack();
 	}
-	
+
 	private JPanel createButtonPanel() {
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -57,7 +56,7 @@ public class ConnectionSetupDialog extends JDialog {
 		buttonPanel.add(cancelButton);
 		return buttonPanel;
 	}
-	
+
 	private Box createQuestionBox() {
 		Box box = Box.createVerticalBox();
 		ipAddressTextField = new JTextField("10.7.7.121");
@@ -69,23 +68,24 @@ public class ConnectionSetupDialog extends JDialog {
 		box.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
 		return box;
 	}
-	
+
 	private JPanel createDialogPanel(String labelName, JTextField textField) {
 		JLabel label = new JLabel(labelName);
-		textField.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
+		textField.setBorder(BorderFactory
+				.createEtchedBorder(EtchedBorder.LOWERED));
 		JPanel panel = createEmptyPanel();
 		panel.add(label);
 		panel.add(textField);
 		return panel;
 	}
-	
+
 	private JPanel createEmptyPanel() {
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(0, 2));
 		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		return panel;
 	}
-	
+
 	private class OkButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -94,20 +94,18 @@ public class ConnectionSetupDialog extends JDialog {
 						Integer.parseInt(portTextField.getText())); // TODO
 																	// wyniesc
 																	// wyzej
-				
-			}
-			catch (NumberFormatException e1) {
+
+			} catch (NumberFormatException e1) {
 				e1.printStackTrace();
-			}
-			catch (IOException e1) {
+			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
 			// domino.receiveConnectionParameters(ipAddress, port);
-			new SoundPlayer("connect_sound.mp3").play();
+
 			dispose();
 		}
 	}
-	
+
 	private class CancelButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
