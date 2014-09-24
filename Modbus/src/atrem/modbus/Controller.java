@@ -6,7 +6,6 @@ import java.util.Timer;
 
 import atrem.modbus.frameServices.FrameStorage;
 import atrem.modbus.frameServices.RequestFrameFactory;
-import atrem.modbus.frames.RequestFrame;
 import atrem.modbus.frames.ResponseFrame;
 import atrem.modbus.parsers.FrameDecoder;
 
@@ -32,9 +31,10 @@ public class Controller {
 		controllerListener.add(listener);
 	}
 
-	private void onFrame(RequestFrame requestFrame) {
+	private void onFrame(ResponseFrame responseFrame) {
 		for (ControllerListener controllerListener2 : controllerListener) {
-			controllerListener2.receiverFrame(requestFrame);
+			System.out.println("w kontrolerze");
+			controllerListener2.frameReceiver(responseFrame);
 		}
 	}
 
@@ -54,7 +54,7 @@ public class Controller {
 				.receiveBytesFromController(bytes);
 		frameStorage.addReceivedFrame(responseFrame);
 		frameStorage.makePairsOfFrames();
-		onFrame(frameStorage.getLastRequestFrame());
+		onFrame(frameStorage.getLastResponseFrame());
 		System.out.println(responseFrame);//
 	}
 

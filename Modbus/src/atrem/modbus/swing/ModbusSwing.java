@@ -36,6 +36,14 @@ public class ModbusSwing extends JFrame {
 
 	}
 
+	public void onListener() {
+		for (JInternalFrame jInternalFrame : internalFramesList) {
+			InterFrame interFrame = (InterFrame) jInternalFrame;
+			System.out.println("pusta?");
+			interFrame.function();
+		}
+	}
+
 	private void initialize() {
 
 		setTitle("ModbusExplorer");
@@ -60,7 +68,7 @@ public class ModbusSwing extends JFrame {
 	}
 
 	public void initializeNewFrame(String name) {
-		JInternalFrame iFrame = new InterFrame(name);
+		JInternalFrame iFrame = new InterFrame(name, domino);
 		internalFramesList.add(iFrame);
 		desk.add(iFrame);
 	}
@@ -102,6 +110,7 @@ public class ModbusSwing extends JFrame {
 		return menu;
 
 	}
+
 	private JMenu createSetupMenu() {
 
 		JMenu menu = new JMenu("Setup");
@@ -146,6 +155,7 @@ public class ModbusSwing extends JFrame {
 	public List<JInternalFrame> getFramesList() {
 		return internalFramesList;
 	}
+
 	public void setFramesList(List<JInternalFrame> framesList) {
 		this.internalFramesList = framesList;
 	}

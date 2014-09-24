@@ -58,8 +58,8 @@ public class ConnectionSetupDialog extends JDialog {
 
 	private Box createQuestionBox() {
 		Box box = Box.createVerticalBox();
-		ipAddressTextField = new JTextField();
-		portTextField = new JTextField();
+		ipAddressTextField = new JTextField("10.7.7.121");
+		portTextField = new JTextField("502");
 		ipAddressPanel = createDialogPanel("IP Address: ", ipAddressTextField);
 		serverPort = createDialogPanel("Server Port: ", portTextField);
 		box.add(ipAddressPanel);
@@ -83,9 +83,10 @@ public class ConnectionSetupDialog extends JDialog {
 	private class OkButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// domino.receiveConnectionParameters(ipAddressTextField.getText(),
-			// Integer.parseInt(portTextField.getText()));
+			domino.receiveConnectionParameters(ipAddressTextField.getText(),
+					Integer.parseInt(portTextField.getText()));
 			// domino.receiveConnectionParameters(ipAddress, port);
+
 			dispose();
 		}
 	}

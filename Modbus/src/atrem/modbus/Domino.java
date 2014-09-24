@@ -16,7 +16,7 @@ public class Domino {
 	static private ConsoleInputService consoleInput;
 	static private ConsoleOutputService consoleOutput;
 	private Connection connection;
-	private static Controller controller;
+	private Controller controller;
 	ModbusSwing modbusSwing;
 	private static RequestFrameFactory requestFrameFactory = new RequestFrameFactory();
 
@@ -65,7 +65,7 @@ public class Domino {
 
 	}
 
-	public static Connection createConnection() {
+	public Connection createConnection() {
 		consoleOutput.askTcpIpAdress();
 		ip = consoleInput.insertTcpIpAdres();
 
@@ -75,7 +75,7 @@ public class Domino {
 		return new Connection(ip, port, controller);
 	}
 
-	public static Connection createConnectionConstant() {
+	public Connection createConnectionConstant() {
 
 		ip = "10.7.7.121";
 		port = 502;
@@ -91,7 +91,7 @@ public class Domino {
 
 	}
 
-	public static Connection createConnectionSwing() {
+	public Connection createConnectionSwing() {
 		return new Connection(ip, port, controller);
 	}
 
