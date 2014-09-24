@@ -76,7 +76,7 @@ public class FrameStorage {
 
 	private void compareWithResponseFrame(RequestFrame requestFrame) {
 		for (ResponseFrame receivedFramesTmp : receivedFrames) {
-			if (requestFrame.equals(receivedFramesTmp)) {// TODO zmiana nazwy
+			if (requestFrame.match(receivedFramesTmp)) {// TODO zmiana nazwy
 				addToListPairedFrame(requestFrame, receivedFramesTmp);
 				// TODO wyswietlanie testowe parowanych ramek
 				SysOutPairFrame(requestFrame, receivedFramesTmp);
@@ -98,6 +98,7 @@ public class FrameStorage {
 		FramePairs framePairs = new FramePairs(requestFrame, responseFrame);
 		framePairsList.add(framePairs);
 		lastResponseFrame = responseFrame;
+		lastResponseFrame.setRegistryValue(requestFrame.getStartingAdress());
 		framesPrinter.savePairedFrame("" + framePairs);
 		Domino.showRequestAndResponse(framePairs);
 

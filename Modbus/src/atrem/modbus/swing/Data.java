@@ -2,13 +2,12 @@ package atrem.modbus.swing;
 
 public class Data {
 	private int registryAddress;
+	private int registryValue;
 
 	public Data(int registryAddress, int registryValue) {
 		this.registryAddress = registryAddress;
 		this.registryValue = registryValue;
 	}
-
-	private int registryValue;
 
 	public int getRegistryAddress() {
 		return registryAddress;

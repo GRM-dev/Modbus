@@ -42,7 +42,6 @@ public class Controller {
 
 	private void onFrame(ResponseFrame responseFrame) {
 		for (ControllerListener controllerListener2 : controllerListener) {
-			System.out.println("w kontrolerze");
 			controllerListener2.frameReceiver(responseFrame);
 		}
 	}

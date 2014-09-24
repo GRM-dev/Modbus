@@ -18,6 +18,7 @@ public class ResponseFrame {
 	private SimpleDateFormat timeFormat;
 	private String time;
 	private int dataValue;
+	private int registryValue;
 
 	public ResponseFrame() {
 		date = new Date();
@@ -88,6 +89,14 @@ public class ResponseFrame {
 
 	public void setDataValue(int dataValue) {
 		this.dataValue = dataValue;
+	}
+
+	public int getRegistryValue() {
+		return registryValue;
+	}
+
+	public void setRegistryValue(int registryValue) {
+		this.registryValue = registryValue;
 	}
 
 	@Override

@@ -104,7 +104,7 @@ public class RequestFrame {
 		return sendDate;
 	}
 
-	public boolean equals(ResponseFrame responseFrame) {
+	public boolean match(ResponseFrame responseFrame) {
 		if (responseFrame == null)
 			return false;
 		if (functionCode != responseFrame.getFunctionCode())
