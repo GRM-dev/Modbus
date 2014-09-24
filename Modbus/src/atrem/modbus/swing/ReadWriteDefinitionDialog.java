@@ -83,9 +83,7 @@ public class ReadWriteDefinitionDialog extends JDialog {
 		JLabel label = new JLabel("Function:");
 		comboBox.setSelectedIndex(2);
 		comboBox.setEditable(false);
-		JPanel panel = new JPanel();
-		panel.setLayout(new GridLayout(0, 2));
-		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		JPanel panel = createEmptyPanel();
 		panel.add(label);
 		panel.add(comboBox);
 		return panel;
@@ -95,8 +93,10 @@ public class ReadWriteDefinitionDialog extends JDialog {
 		JLabel label = new JLabel(labelName);
 		textField.setBorder(BorderFactory
 				.createEtchedBorder(EtchedBorder.LOWERED));
-
-		return createPanel(label, textField);
+		JPanel panel = createEmptyPanel();
+		panel.add(label);
+		panel.add(textField);
+		return panel;
 	}
 
 	private JPanel createDialogPanel(String labelName, String labelName2,
@@ -105,32 +105,22 @@ public class ReadWriteDefinitionDialog extends JDialog {
 		textField.setBorder(BorderFactory
 				.createEtchedBorder(EtchedBorder.LOWERED));
 		JLabel label2 = new JLabel(labelName2);
-		return createPanel(label, label2, textField);
+
+		JPanel smallPanel = createEmptyPanel();
+		smallPanel.add(label);
+		smallPanel.add(textField);
+		JPanel bigPanel = createEmptyPanel();
+		bigPanel.add(smallPanel);
+		bigPanel.add(label2);
+		return bigPanel;
 
 	}
 
-	private JPanel createPanel(JLabel label, JTextField textField) {
+	private JPanel createEmptyPanel() {
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(0, 2));
 		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		panel.add(label);
-		panel.add(textField);
 		return panel;
-	}
-
-	private JPanel createPanel(JLabel label, JLabel label2, JTextField textField) {
-
-		JPanel smallPanel = new JPanel();
-		smallPanel.setLayout(new GridLayout(0, 2));
-		smallPanel.add(textField);
-		smallPanel.add(label2);
-		JPanel bigPanel = new JPanel();
-		bigPanel.setLayout(new GridLayout(0, 2));
-		bigPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		bigPanel.add(label);
-		bigPanel.add(smallPanel);
-		return bigPanel;
-
 	}
 
 	private class OkButtonListener implements ActionListener {
