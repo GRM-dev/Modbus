@@ -29,6 +29,11 @@ public class ReadWriteDefinitionDialog extends JDialog {
 	private JTextField quantityTextField;
 	private JTextField scanRateTextField;
 
+	private String[] functionNames = {"01 Read Coils",
+			"02 Read Discrete Inputs", "03 Read Holding Registers",
+			"04 Read Input Registers", "05 Write Single Coil",
+			"06 Write Single Register"};
+
 	private Domino domino;
 
 	public ReadWriteDefinitionDialog(Domino domino) {
@@ -58,17 +63,17 @@ public class ReadWriteDefinitionDialog extends JDialog {
 
 	private Box createQuestionBox() {
 		Box box = Box.createVerticalBox();
-		slaveIdTextField = new JTextField();
-		functionCodeComboBox = new JComboBox<String>();
-		startingAddressTextField = new JTextField();
-		quantityTextField = new JTextField();
-		scanRateTextField = new JTextField();
+		slaveIdTextField = new JTextField("5");
+		functionCodeComboBox = new JComboBox(functionNames);
+		startingAddressTextField = new JTextField("3027");
+		quantityTextField = new JTextField("2");
+		scanRateTextField = new JTextField("10000");
 		box.add(createDialogPanel("Slave ID", slaveIdTextField));
 		box.add(createFunctionPanel(functionCodeComboBox));
 		box.add(createDialogPanel("First Registry Address:",
 				startingAddressTextField));
 		box.add(createDialogPanel("Quantity Of Registries:", quantityTextField));
-		box.add(createDialogPanel("Scan Rate", scanRateTextField));
+		box.add(createDialogPanel("Scan Rate", "[ms]", scanRateTextField));
 
 		box.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
 		return box;
@@ -76,9 +81,8 @@ public class ReadWriteDefinitionDialog extends JDialog {
 
 	private JPanel createFunctionPanel(JComboBox comboBox) {
 		JLabel label = new JLabel("Function:");
+		comboBox.setSelectedIndex(2);
 		comboBox.setEditable(false);
-		comboBox.addItem("03 Read Holding Registers");
-		comboBox.addItem("06 Write Single Register");
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(0, 2));
 		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -91,12 +95,8 @@ public class ReadWriteDefinitionDialog extends JDialog {
 		JLabel label = new JLabel(labelName);
 		textField.setBorder(BorderFactory
 				.createEtchedBorder(EtchedBorder.LOWERED));
-		JPanel panel = new JPanel();
-		panel.setLayout(new GridLayout(0, 2));
-		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		panel.add(label);
-		panel.add(textField);
-		return panel;
+
+		return createPanel(label, textField);
 	}
 
 	private JPanel createDialogPanel(String labelName, String labelName2,
@@ -105,33 +105,47 @@ public class ReadWriteDefinitionDialog extends JDialog {
 		textField.setBorder(BorderFactory
 				.createEtchedBorder(EtchedBorder.LOWERED));
 		JLabel label2 = new JLabel(labelName2);
+		return createPanel(label, label2, textField);
+
+	}
+
+	private JPanel createPanel(JLabel label, JTextField textField) {
+		JPanel panel = new JPanel();
+		panel.setLayout(new GridLayout(0, 2));
+		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		panel.add(label);
+		panel.add(textField);
+		return panel;
+	}
+
+	private JPanel createPanel(JLabel label, JLabel label2, JTextField textField) {
+
 		JPanel smallPanel = new JPanel();
 		smallPanel.setLayout(new GridLayout(0, 2));
 		smallPanel.add(textField);
 		smallPanel.add(label2);
-
 		JPanel bigPanel = new JPanel();
 		bigPanel.setLayout(new GridLayout(0, 2));
 		bigPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		bigPanel.add(label);
 		bigPanel.add(smallPanel);
 		return bigPanel;
+
 	}
 
 	private class OkButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// domino.creatRequestFrameFactory(
-			// Integer.parseInt(slaveIdTextField.getText()),
-			// Integer.parseInt(startingAddressTextField.getText()),
-			// Integer.parseInt(quantityTextField.getText()), 3);
+			domino.creatRequestFrameFactory(
+					Integer.parseInt(slaveIdTextField.getText()),
+					Integer.parseInt(startingAddressTextField.getText()),
+					Integer.parseInt(quantityTextField.getText()),
+					functionCodeComboBox.getSelectedIndex() + 1);
 
-			domino.creatRequestFrameFactory(5, 3027, 2, 3);
 			domino.getModbusSwing().initializeNewFrame(
 					startingAddressTextField.getText());
 			dispose();
 			domino.getModbusSwing().onListener();
-			// ModbusSwing.framesList.get("10.7.7.121").setupTable(10, 3);
 		}
 	}
 
