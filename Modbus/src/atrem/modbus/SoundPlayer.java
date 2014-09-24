@@ -9,7 +9,7 @@ import javax.media.Player;
 
 public class SoundPlayer extends Thread {
 
-	private String desktopPath = System.getProperty("user.home") + "/Desktop/";
+	private String desktopPath = "Sounds/";
 	private String fileName;
 	Player player;
 
