@@ -1,4 +1,4 @@
-package atrem.modbus.database;
+package atrem.jdbc;
 
 /*
  * Copyright 2003 Sun Microsystems, Inc. ALL RIGHTS RESERVED.

@@ -29,10 +29,10 @@ public class ReadWriteDefinitionDialog extends JDialog {
 	private JTextField quantityTextField;
 	private JTextField scanRateTextField;
 
-	private String[] functionNames = {"01 Read Coils",
+	private String[] functionNames = { "01 Read Coils",
 			"02 Read Discrete Inputs", "03 Read Holding Registers",
 			"04 Read Input Registers", "05 Write Single Coil",
-			"06 Write Single Register"};
+			"06 Write Single Register" };
 
 	private Domino domino;
 
@@ -128,6 +128,7 @@ public class ReadWriteDefinitionDialog extends JDialog {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			domino.creatRequestFrameFactory(
+					// TODO tu moze bedzie addRequest
 					Integer.parseInt(slaveIdTextField.getText()),
 					Integer.parseInt(startingAddressTextField.getText()),
 					Integer.parseInt(quantityTextField.getText()),

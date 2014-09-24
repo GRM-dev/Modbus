@@ -90,9 +90,11 @@ public class ConnectionSetupDialog extends JDialog {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			try {
-				domino.receiveConnectionParameters(
-						ipAddressTextField.getText(),
-						Integer.parseInt(portTextField.getText()));
+				domino.connect(ipAddressTextField.getText(),
+						Integer.parseInt(portTextField.getText())); // TODO
+																	// wyniesc
+																	// wyzej
+
 			} catch (NumberFormatException e1) {
 				e1.printStackTrace();
 			} catch (IOException e1) {
