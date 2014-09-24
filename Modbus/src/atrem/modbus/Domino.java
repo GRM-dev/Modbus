@@ -17,7 +17,7 @@ public class Domino {
 	static private ConsoleInputService consoleInput;
 	static private ConsoleOutputService consoleOutput;
 	private Connection connection;
-	private static Controller controller;
+	private Controller controller;
 	ModbusSwing modbusSwing;
 	private static RequestFrameFactory requestFrameFactory = new RequestFrameFactory();
 

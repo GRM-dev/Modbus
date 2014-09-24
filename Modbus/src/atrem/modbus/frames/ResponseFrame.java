@@ -19,15 +19,6 @@ public class ResponseFrame {
 	private String time;
 
 	public ResponseFrame() {
-
-	}
-
-	public ResponseFrame(int transactionIdentifier, int protocolIdentifier,
-			int unitIdentifier) {
-		super();
-		this.transactionIdentifier = transactionIdentifier;
-		this.protocolIdentifier = protocolIdentifier;
-		this.unitIdentifier = unitIdentifier;
 		date = new Date();
 		timeFormat = new SimpleDateFormat("HH:mm:ss");
 		time = timeFormat.format(date);

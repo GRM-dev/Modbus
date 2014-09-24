@@ -20,10 +20,23 @@ public class Controller {
 	private FrameStorage frameStorage;
 	private static final long PEROID = 2000;
 	private Domino domino;
+	private List<ControllerListener> controllerListener;
 
 	public Controller() {
 		requestFrameFactory = new RequestFrameFactory();
 		frameStorage = new FrameStorage();
+		controllerListener = new ArrayList<ControllerListener>();
+	}
+
+	public void addListener(ControllerListener listener) {
+		controllerListener.add(listener);
+	}
+
+	private void onFrame(ResponseFrame responseFrame) {
+		for (ControllerListener controllerListener2 : controllerListener) {
+			System.out.println("w kontrolerze");
+			controllerListener2.frameReceiver(responseFrame);
+		}
 	}
 
 	public Controller(Domino domino) {
@@ -42,6 +55,7 @@ public class Controller {
 				.receiveBytesFromController(bytes);
 		frameStorage.addReceivedFrame(responseFrame);
 		frameStorage.makePairsOfFrames();
+		onFrame(frameStorage.getLastResponseFrame());
 		System.out.println(responseFrame);//
 	}
 
@@ -59,6 +73,10 @@ public class Controller {
 
 	public void setConnection(Connection connection) {
 		this.connection = connection;
+	}
+
+	public Connection getConnection() {
+		return connection;
 	}
 
 	FrameStorage getFrameStorage() {

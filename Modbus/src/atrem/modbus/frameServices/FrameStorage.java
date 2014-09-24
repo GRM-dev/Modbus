@@ -17,6 +17,7 @@ public class FrameStorage {
 	private List<ResponseFrame> receivedFrames;
 	private List<FramePairs> framePairsList;
 	private ExecutorService executor;
+	private ResponseFrame lastResponseFrame;
 
 	public FrameStorage() {
 		executor = Executors.newSingleThreadScheduledExecutor();
@@ -30,12 +31,28 @@ public class FrameStorage {
 		this.sentFrames = sentFrames;
 	}
 
-	public void addSentFrame(RequestFrame requestFrame) {
-		sentFrames.add(requestFrame);
+	public void addSentFrame(final RequestFrame requestFrame) {
+		executor.execute(new Runnable() {
+
+			@Override
+			public void run() {
+				sentFrames.add(requestFrame);
+
+			}
+		});
+
 	}
 
-	public void addReceivedFrame(ResponseFrame frameIncoming) {
-		receivedFrames.add(frameIncoming);
+	public void addReceivedFrame(final ResponseFrame frameIncoming) {
+		executor.execute(new Runnable() {
+
+			@Override
+			public void run() {
+				receivedFrames.add(frameIncoming);
+
+			}
+		});
+
 	}
 
 	public void makePairsOfFrames() {
@@ -48,23 +65,23 @@ public class FrameStorage {
 	}
 
 	void compare() {
-		for (RequestFrame requestFrame : sentFrames) {
-			compareWithResponseFrame(requestFrame);
-			if (hasNoResponse(requestFrame)) {
-				framesPrinter.saveNoResponseFrame("" + requestFrame);
-				sentFrames.remove(requestFrame);
+		for (RequestFrame sentFramesTmp : sentFrames) {
+			compareWithResponseFrame(sentFramesTmp);
+			if (hasNoResponse(sentFramesTmp)) {
+				framesPrinter.saveNoResponseFrame("" + sentFramesTmp);
+				sentFrames.remove(sentFramesTmp);
 			}
 		}
 	}
 
 	private void compareWithResponseFrame(RequestFrame requestFrame) {
-		for (ResponseFrame responseFrame : receivedFrames) {
-			if (requestFrame.equals(responseFrame)) {// TODO zmiana nazwy
-				pairFrame(requestFrame, responseFrame);
+		for (ResponseFrame receivedFramesTmp : receivedFrames) {
+			if (requestFrame.equals(receivedFramesTmp)) {// TODO zmiana nazwy
+				addToListPairedFrame(requestFrame, receivedFramesTmp);
 				// TODO wyswietlanie testowe parowanych ramek
-				SysOutPairFrame(requestFrame, responseFrame);
+				SysOutPairFrame(requestFrame, receivedFramesTmp);
 
-				removePairedFrame(requestFrame, responseFrame);
+				removePairedFrame(requestFrame, receivedFramesTmp);
 				continue;
 			}
 		}
@@ -76,10 +93,11 @@ public class FrameStorage {
 		System.out.println(responseFrame.getTransactionIdentifier());
 	}
 
-	private void pairFrame(RequestFrame requestFrame,
+	private void addToListPairedFrame(RequestFrame requestFrame,
 			ResponseFrame responseFrame) {
 		FramePairs framePairs = new FramePairs(requestFrame, responseFrame);
 		framePairsList.add(framePairs);
+		lastResponseFrame = responseFrame;
 		framesPrinter.savePairedFrame("" + framePairs);
 		Domino.showRequestAndResponse(framePairs);
 
@@ -103,4 +121,7 @@ public class FrameStorage {
 			return false;
 	}
 
+	public ResponseFrame getLastResponseFrame() {
+		return lastResponseFrame;
+	}
 }

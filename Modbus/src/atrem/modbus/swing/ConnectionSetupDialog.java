@@ -5,7 +5,6 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -17,7 +16,9 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 
-public class ConnectionSetup extends JDialog {
+import atrem.modbus.Domino;
+
+public class ConnectionSetupDialog extends JDialog {
 	private final Box contentBox = Box.createHorizontalBox();
 	private JButton cancelButton;
 	private JButton okButton;
@@ -25,14 +26,13 @@ public class ConnectionSetup extends JDialog {
 	private JTextField portTextField;
 	private String ipAddress = "10.7.7.121";
 	private int port = 502;
-	JPanel ipAddressPanel, serverPort;
-	private ModbusSwing swing;
+	private JPanel ipAddressPanel, serverPort;
 
-	/**
-	 * @param modbusSwing
-	 */
-	public ConnectionSetup(ModbusSwing modbusSwing) {
-		this.swing = modbusSwing;
+	private Domino domino;
+
+	public ConnectionSetupDialog(Domino domino) {
+
+		this.domino = domino;
 		setTitle("Connection Setup");
 		setBounds(300, 300, 350, 220);
 		setResizable(false);
@@ -58,8 +58,8 @@ public class ConnectionSetup extends JDialog {
 
 	private Box createQuestionBox() {
 		Box box = Box.createVerticalBox();
-		ipAddressTextField = new JTextField();
-		portTextField = new JTextField();
+		ipAddressTextField = new JTextField("10.7.7.121");
+		portTextField = new JTextField("502");
 		ipAddressPanel = createDialogPanel("IP Address: ", ipAddressTextField);
 		serverPort = createDialogPanel("Server Port: ", portTextField);
 		box.add(ipAddressPanel);
@@ -83,16 +83,10 @@ public class ConnectionSetup extends JDialog {
 	private class OkButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// Domino.receiveConnectionParameters(ipAddressTextField.getText(),
-			// Integer.parseInt(portTextField.getText()));
-			try {
-				swing.domino.receiveConnectionParameters(ipAddress, port);
-			} catch (IOException e1) {
-				ErrorsBox error = new ErrorsBox();
-				error.connectionError();
-				e1.printStackTrace();
-			}
-			swing.newFrame(ipAddress);
+			domino.receiveConnectionParameters(ipAddressTextField.getText(),
+					Integer.parseInt(portTextField.getText()));
+			// domino.receiveConnectionParameters(ipAddress, port);
+
 			dispose();
 		}
 	}
