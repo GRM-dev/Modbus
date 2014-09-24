@@ -14,16 +14,12 @@ public class Domino {
 	private Controller controller;
 	ModbusSwing modbusSwing;
 
-	private static RequestFrameFactory requestFrameFactory = new RequestFrameFactory(); // TODO
-																						// nie
-																						// ma
-																						// byc
-																						// statyczne
+	private RequestFrameFactory requestFrameFactory;
 
 	public static void main(String[] args) {
 
 		Domino domino = new Domino();
-
+		domino.init();
 	}
 
 	public Controller getController() {
@@ -31,20 +27,22 @@ public class Domino {
 	}
 
 	public Domino() {
-		SwingUtilities.invokeLater(new Runnable() {
-
-			@Override
-			public void run() {
-				modbusSwing = new ModbusSwing(Domino.this); // TODO do metody
-															// init
-
-			}
-		});
+		requestFrameFactory = new RequestFrameFactory();
 
 		// Controller controller = new Controller();
 		// controller.startConnection("10.7.7.121", 502);
 		// controller.startNewRequestTask(1);
 
+	}
+
+	private void init() {
+		SwingUtilities.invokeLater(new Runnable() {
+
+			@Override
+			public void run() {
+				modbusSwing = new ModbusSwing(Domino.this);
+			}
+		});
 	}
 
 	Domino(Connection connection, Controller controller) {
@@ -75,12 +73,7 @@ public class Domino {
 
 			@Override
 			public void showConnectionStatus(boolean isConnected) {
-
-				if (isConnected)
-					modbusSwing.setStatus("CONNECTED!", new Color(0, 255, 0));
-				else
-					modbusSwing
-							.setStatus("NOT CONNECTED", new Color(255, 0, 0));
+				showConnectionStatus1(isConnected);
 			}
 		});
 		controller.startConnection(ip, port);
@@ -98,10 +91,11 @@ public class Domino {
 	public void creatRequestFrameFactory(int unitIdentifier, // TODO to tez nie
 																// bardzo
 			int startingAdress, int quantityOfRegisters, int functionCode) {
-
+		RequestFrameFactory requestFrameFactory = new RequestFrameFactory();
 		requestFrameFactory.setQuantityOfRegisters(quantityOfRegisters);
 		requestFrameFactory.setStartingAdress(startingAdress);
 		requestFrameFactory.setUnitIdentifier(unitIdentifier);
+		controller.setRequestFrameFactory(requestFrameFactory);
 		controller.startNewRequestTask(0); // TODO nie wiem o co loto pawel
 	}
 
@@ -109,8 +103,7 @@ public class Domino {
 		return modbusSwing;
 	}
 
-	public void showConnectionStatus(boolean isConnected) { // TODO ewentualnie
-															// przez interfejs
+	private void showConnectionStatus1(boolean isConnected) {
 		if (isConnected)
 			modbusSwing.setStatus("CONNECTED!", new Color(0, 255, 0));
 		else

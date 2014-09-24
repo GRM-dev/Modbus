@@ -89,19 +89,13 @@ public class ConnectionSetupDialog extends JDialog {
 	private class OkButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			Integer port = Integer.parseInt(portTextField.getText());
+			String ip = ipAddressTextField.getText();
 			try {
-				domino.connect(ipAddressTextField.getText(),
-						Integer.parseInt(portTextField.getText())); // TODO
-																	// wyniesc
-																	// wyzej
-
-			} catch (NumberFormatException e1) {
-				e1.printStackTrace();
+				domino.connect(ip, port);
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
-			// domino.receiveConnectionParameters(ipAddress, port);
-
 			dispose();
 		}
 	}
