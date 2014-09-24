@@ -1,5 +1,6 @@
 package atrem.modbus;
 
+import java.awt.Color;
 import java.io.IOException;
 
 import javax.swing.SwingUtilities;
@@ -89,8 +90,8 @@ public class Domino {
 
 	public void showConnectionStatus(boolean isConnected) {
 		if (isConnected)
-			modbusSwing.setStatus("CONNECTED!");
+			modbusSwing.setStatus("CONNECTED!", new Color(0, 255, 0));
 		else
-			modbusSwing.setStatus("NOT CONNECTED");
+			modbusSwing.setStatus("NOT CONNECTED", new Color(255, 0, 0));
 	}
 }
