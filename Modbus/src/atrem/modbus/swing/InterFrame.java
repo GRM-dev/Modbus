@@ -3,6 +3,7 @@ package atrem.modbus.swing;
 import java.awt.BorderLayout;
 
 import javax.swing.JInternalFrame;
+import javax.swing.SwingUtilities;
 
 import atrem.modbus.ControllerListener;
 import atrem.modbus.Domino;
@@ -13,8 +14,8 @@ public class InterFrame extends JInternalFrame {
 	private TableDemo tableDemo;
 	public Domino domino;
 
-	public InterFrame(String title,Domino domino) {
-this.domino=domino;
+	public InterFrame(String title, Domino domino) {
+		this.domino = domino;
 		setResizable(true);
 		setClosable(true);
 		setIconifiable(true);
@@ -43,9 +44,18 @@ this.domino=domino;
 
 			@Override
 			public void frameReceiver(ResponseFrame responseFrame) {
-				System.out.println("stara dobra metoda debugowania");
-				Data nextData = new Data(3027, responseFrame.getDataLength());
-				tableDemo.getMyTableModel().addRow(nextData);
+				final ResponseFrame responseFrame1 = responseFrame;
+				SwingUtilities.invokeLater(new Runnable() {
+
+					@Override
+					public void run() {
+						System.out.println("stara dobra metoda debugowania");
+						Data nextData = new Data(3027, responseFrame1
+								.getDataLength());
+						tableDemo.getMyTableModel().addRow(nextData);
+
+					}
+				});
 
 			}
 		});
