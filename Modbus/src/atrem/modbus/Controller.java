@@ -87,8 +87,4 @@ public class Controller {
 		return requestFrameFactory;
 	}
 
-	public Connection getConnection() {
-		return connection;
-	}
-
 }
