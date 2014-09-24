@@ -44,18 +44,21 @@ public class InterFrame extends JInternalFrame {
 
 			@Override
 			public void frameReceiver(ResponseFrame responseFrame) {
-				final ResponseFrame responseFrame1 = responseFrame;
-				SwingUtilities.invokeLater(new Runnable() {
+				addDataToTable(responseFrame);
 
-					@Override
-					public void run() {
-						System.out.println("stara dobra metoda debugowania");
-						Data nextData = new Data(3027, responseFrame1
-								.getDataValue());
-						tableDemo.getMyTableModel().addRow(nextData);
+			}
 
-					}
-				});
+		});
+
+	}
+
+	private void addDataToTable(final ResponseFrame responseFrame1) {
+		SwingUtilities.invokeLater(new Runnable() {
+
+			@Override
+			public void run() {
+				Data nextData = new Data(3027, responseFrame1.getDataValue());
+				tableDemo.getMyTableModel().addRow(nextData);
 
 			}
 		});

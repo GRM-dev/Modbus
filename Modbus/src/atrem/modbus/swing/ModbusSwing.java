@@ -131,8 +131,12 @@ public class ModbusSwing extends JFrame {
 		ConnectionSetupDialog connectionSetupDialog = new ConnectionSetupDialog(
 				domino);
 		connectionSetupDialog
-				.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+				.setDefaultCloseOperation(test());
 		connectionSetupDialog.setVisible(true);
+	}
+
+	private int test() {
+		return WindowConstants.DISPOSE_ON_CLOSE;
 	}
 
 	private void setupDefinition() {
@@ -140,7 +144,7 @@ public class ModbusSwing extends JFrame {
 			ReadWriteDefinitionDialog readWriteDefinitionDialog = new ReadWriteDefinitionDialog(
 					domino);
 			readWriteDefinitionDialog
-					.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+					.setDefaultCloseOperation(test());
 			readWriteDefinitionDialog.setVisible(true);
 		} catch (Exception exception) {
 			exception.printStackTrace();
