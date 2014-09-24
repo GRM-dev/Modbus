@@ -17,7 +17,7 @@ public class FrameStorage {
 	private List<ResponseFrame> receivedFrames;
 	private List<FramePairs> framePairsList;
 	private ExecutorService executor;
-	private RequestFrame lastRequestFrame;
+	private ResponseFrame lastResponseFrame;
 
 	public FrameStorage() {
 		executor = Executors.newSingleThreadScheduledExecutor();
@@ -64,11 +64,6 @@ public class FrameStorage {
 		});
 	}
 
-	public RequestFrame getLastRequestFrame() {
-		return lastRequestFrame;
-
-	}
-
 	void compare() {
 		for (RequestFrame sentFramesTmp : sentFrames) {
 			compareWithResponseFrame(sentFramesTmp);
@@ -102,7 +97,7 @@ public class FrameStorage {
 			ResponseFrame responseFrame) {
 		FramePairs framePairs = new FramePairs(requestFrame, responseFrame);
 		framePairsList.add(framePairs);
-		lastRequestFrame = requestFrame;
+		lastResponseFrame = responseFrame;
 		framesPrinter.savePairedFrame("" + framePairs);
 		Domino.showRequestAndResponse(framePairs);
 
@@ -126,4 +121,7 @@ public class FrameStorage {
 			return false;
 	}
 
+	public ResponseFrame getLastResponseFrame() {
+		return lastResponseFrame;
+	}
 }

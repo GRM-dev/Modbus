@@ -1,12 +1,12 @@
 package atrem.modbus;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 
 import atrem.modbus.frameServices.FrameStorage;
 import atrem.modbus.frameServices.RequestFrameFactory;
-import atrem.modbus.frames.RequestFrame;
 import atrem.modbus.frames.ResponseFrame;
 import atrem.modbus.parsers.FrameDecoder;
 
@@ -32,9 +32,10 @@ public class Controller {
 		controllerListener.add(listener);
 	}
 
-	private void onFrame(RequestFrame requestFrame) {
+	private void onFrame(ResponseFrame responseFrame) {
 		for (ControllerListener controllerListener2 : controllerListener) {
-			controllerListener2.receiverFrame(requestFrame);
+			System.out.println("w kontrolerze");
+			controllerListener2.frameReceiver(responseFrame);
 		}
 	}
 
@@ -43,7 +44,7 @@ public class Controller {
 		this.domino = domino;
 	}
 
-	public void startConnection(String ipAddress, int port) {
+	public void startConnection(String ipAddress, int port) throws IOException {
 		connection = new Connection(ipAddress, port, this);
 		connection.startReceiveFrames(this);
 	}
@@ -54,7 +55,7 @@ public class Controller {
 				.receiveBytesFromController(bytes);
 		frameStorage.addReceivedFrame(responseFrame);
 		frameStorage.makePairsOfFrames();
-		onFrame(frameStorage.getLastRequestFrame());
+		onFrame(frameStorage.getLastResponseFrame());
 		System.out.println(responseFrame);//
 	}
 
@@ -74,33 +75,12 @@ public class Controller {
 		this.connection = connection;
 	}
 
-	public Connection getConnection() {
-		return connection;
-	}
-
 	FrameStorage getFrameStorage() {
 		return frameStorage;
 	}
 
 	public RequestFrameFactory getRequestFrameFactory() {
 		return requestFrameFactory;
-	}
-
-	public void takeConnectionExepction() {
-		// domino.showConnextionError();
-		connection.closeConnection();
-		while (!connection.checkConnection()) {
-
-			connection.makeConnection();
-			System.out.println("jestem");
-			try {
-				Thread.sleep(5000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
 	}
 
 }

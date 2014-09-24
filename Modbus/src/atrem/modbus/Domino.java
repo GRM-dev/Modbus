@@ -1,12 +1,13 @@
 package atrem.modbus;
 
+import java.io.IOException;
+
 import javax.swing.SwingUtilities;
 
 import atrem.modbus.consoleService.ConsoleInputService;
 import atrem.modbus.consoleService.ConsoleOutputService;
 import atrem.modbus.frameServices.FramePairs;
 import atrem.modbus.frameServices.RequestFrameFactory;
-import atrem.modbus.parsers.ErrorsBox;
 import atrem.modbus.swing.ModbusSwing;
 
 public class Domino {
@@ -15,27 +16,23 @@ public class Domino {
 	static private int port;
 	static private ConsoleInputService consoleInput;
 	static private ConsoleOutputService consoleOutput;
-	private static Controller controller;
+	private Connection connection;
+	private Controller controller;
 	ModbusSwing modbusSwing;
+
 	private static RequestFrameFactory requestFrameFactory = new RequestFrameFactory();
 
 	public static void main(String[] args) {
 
 		Domino domino = new Domino();
-		domino.runModbusGUI();
+
 	}
 
-
+	public Controller getController() {
+		return controller;
+	}
 
 	public Domino() {
-
-		// Controller controller = new Controller();
-		// controller.startConnection("10.7.7.121", 502);
-		// controller.startNewRequestTask(1);
-
-	}
-
-	private void runModbusGUI() {
 		SwingUtilities.invokeLater(new Runnable() {
 
 			@Override
@@ -44,6 +41,11 @@ public class Domino {
 
 			}
 		});
+
+		// Controller controller = new Controller();
+		// controller.startConnection("10.7.7.121", 502);
+		// controller.startNewRequestTask(1);
+
 	}
 
 	Domino(Connection connection, Controller controller) {
@@ -65,34 +67,13 @@ public class Domino {
 
 	}
 
-	public static Connection createConnection() {
-		consoleOutput.askTcpIpAdress();
-		ip = consoleInput.insertTcpIpAdres();
-
-		consoleOutput.askPort();
-		port = consoleInput.insertPort();
-
-		return new Connection(ip, port, controller);
-	}
-
-	public static Connection createConnectionConstant() {
-
-		ip = "10.7.7.121";
-		port = 502;
-		return new Connection(ip, port, controller);
-
-	}
-
-	public void receiveConnectionParameters(String ip, int port) {
+	public void receiveConnectionParameters(String ip, int port)
+			throws IOException {
 
 		controller = new Controller(this);
 		controller.startConnection(ip, port);
 		requestFrameFactory = controller.getRequestFrameFactory();
 
-	}
-
-	public static Connection createConnectionSwing() {
-		return new Connection(ip, port, controller);
 	}
 
 	public static void showRequestAndResponse(FramePairs framePairs) {
@@ -108,12 +89,7 @@ public class Domino {
 		controller.startNewRequestTask(0); // TODO nie wiem o co loto pawel
 	}
 
-	public void showConnextionError() {
-		ErrorsBox error = new ErrorsBox();
-		error.ConnectionError();
-	}
-	
-	public Controller getController() {
-		return controller;
+	public ModbusSwing getModbusSwing() {
+		return modbusSwing;
 	}
 }

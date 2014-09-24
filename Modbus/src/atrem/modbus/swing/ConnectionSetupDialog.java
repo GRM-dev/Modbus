@@ -5,6 +5,7 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -58,8 +59,8 @@ public class ConnectionSetupDialog extends JDialog {
 
 	private Box createQuestionBox() {
 		Box box = Box.createVerticalBox();
-		ipAddressTextField = new JTextField();
-		portTextField = new JTextField();
+		ipAddressTextField = new JTextField("10.7.7.121");
+		portTextField = new JTextField("502");
 		ipAddressPanel = createDialogPanel("IP Address: ", ipAddressTextField);
 		serverPort = createDialogPanel("Server Port: ", portTextField);
 		box.add(ipAddressPanel);
@@ -83,8 +84,15 @@ public class ConnectionSetupDialog extends JDialog {
 	private class OkButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// domino.receiveConnectionParameters(ipAddressTextField.getText(),
-			// Integer.parseInt(portTextField.getText()));
+			try {
+				domino.receiveConnectionParameters(
+						ipAddressTextField.getText(),
+						Integer.parseInt(portTextField.getText()));
+			} catch (NumberFormatException e1) {
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 			// domino.receiveConnectionParameters(ipAddress, port);
 			dispose();
 		}

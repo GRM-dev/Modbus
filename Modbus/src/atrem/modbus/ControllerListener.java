@@ -1,7 +1,7 @@
 package atrem.modbus;
 
-import atrem.modbus.frames.RequestFrame;
+import atrem.modbus.frames.ResponseFrame;
 
 public interface ControllerListener {
-	public abstract void receiverFrame(RequestFrame requestFrame);
+	public abstract void frameReceiver(ResponseFrame responseFrame);
 }

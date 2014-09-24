@@ -48,6 +48,8 @@ public class FrameDecoder {
 		responseFrame.setFunctionCode(readNextByte());
 		byte[] dataBytes = readDataBytes(responseFrame.getDataLength() - 2);
 		responseFrame.setDataBytes(dataBytes);
+		numberBytes = numberBytes - 2;
+		responseFrame.setDataValue(readNextInt());
 		return responseFrame;
 	}
 
