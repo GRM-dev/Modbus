@@ -17,6 +17,7 @@ public class ResponseFrame {
 	private Date date;
 	private SimpleDateFormat timeFormat;
 	private String time;
+	private int dataValue;
 
 	public ResponseFrame() {
 		date = new Date();
@@ -79,6 +80,14 @@ public class ResponseFrame {
 
 	public Date getDate() {
 		return date;
+	}
+
+	public int getDataValue() {
+		return dataValue;
+	}
+
+	public void setDataValue(int dataValue) {
+		this.dataValue = dataValue;
 	}
 
 	@Override

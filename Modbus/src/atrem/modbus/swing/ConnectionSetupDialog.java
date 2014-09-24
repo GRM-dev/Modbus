@@ -89,14 +89,11 @@ public class ConnectionSetupDialog extends JDialog {
 						ipAddressTextField.getText(),
 						Integer.parseInt(portTextField.getText()));
 			} catch (NumberFormatException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			// domino.receiveConnectionParameters(ipAddress, port);
-
 			dispose();
 		}
 	}

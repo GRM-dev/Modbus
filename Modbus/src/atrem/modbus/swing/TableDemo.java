@@ -66,7 +66,7 @@ public class TableDemo extends JPanel {
 
 		public void addRow(Data nextData) {
 			dataList.add(nextData);
-			fireTableCellUpdated(dataList.size() - 1, dataList.size());
+			fireTableRowsInserted(dataList.size() - 1, dataList.size());
 		}
 
 	}
