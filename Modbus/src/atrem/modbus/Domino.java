@@ -4,19 +4,12 @@ import java.io.IOException;
 
 import javax.swing.SwingUtilities;
 
-import atrem.modbus.consoleService.ConsoleInputService;
-import atrem.modbus.consoleService.ConsoleOutputService;
 import atrem.modbus.frameServices.FramePairs;
 import atrem.modbus.frameServices.RequestFrameFactory;
 import atrem.modbus.swing.ModbusSwing;
 
 public class Domino {
 
-	static private String ip;
-	static private int port;
-	static private ConsoleInputService consoleInput;
-	static private ConsoleOutputService consoleOutput;
-	private Connection connection;
 	private Controller controller;
 	ModbusSwing modbusSwing;
 

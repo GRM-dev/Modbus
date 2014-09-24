@@ -31,6 +31,7 @@ public class Connection implements Runnable {
 		socket = new Socket(ipAddress, port);
 		inStream = socket.getInputStream();
 		outStream = socket.getOutputStream();
+		new SoundPlayer("connect_sound.mp3").play();
 
 	}
 
