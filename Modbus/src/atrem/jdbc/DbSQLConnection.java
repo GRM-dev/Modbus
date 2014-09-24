@@ -1,4 +1,4 @@
-package atrem.modbus.database;
+package atrem.jdbc;
 
 public class DbSQLConnection {
 	

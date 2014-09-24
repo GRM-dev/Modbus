@@ -1,21 +1,21 @@
 package atrem.modbus;
 
 import java.io.File;
-import java.net.URL;
+import java.net.MalformedURLException;
 
-import javax.media.Manager;
-import javax.media.MediaLocator;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+
 import javax.media.Player;
 
 public class SoundPlayer extends Thread {
 
-	private String desktopPath = System.getProperty("user.home") + "/Desktop/";
+	private String desktopPath = "Sounds/";
 	private String fileName;
 	Player player;
 
 	public SoundPlayer(String fileName) {
 		this.fileName = fileName;
-		player = createPlayer();
 	}
 
 	public void play() {
@@ -24,23 +24,17 @@ public class SoundPlayer extends Thread {
 
 	@Override
 	public void run() {
+		String bip = fileName;
+		Media hit = null;
 		try {
-			player.realize();
-			player.start();
-		} catch (Exception e) {
+			hit = new Media(new File(desktopPath + fileName).toURI().toURL()
+					.toString());
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-
-	public Player createPlayer() {
-		try {
-			URL url = new File(desktopPath + fileName).toURI().toURL();
-			MediaLocator locator = new MediaLocator(url);
-			return Manager.createPlayer(locator);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
+		MediaPlayer mediaPlayer = new MediaPlayer(hit);
+		mediaPlayer.play();
 	}
 
 	public static void main(String[] args) {
