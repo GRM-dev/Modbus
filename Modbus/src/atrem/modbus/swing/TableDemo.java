@@ -2,6 +2,8 @@ package atrem.modbus.swing;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,14 +24,23 @@ public class TableDemo extends JPanel {
 		table.setPreferredScrollableViewportSize(new Dimension(500, 70));
 		table.setFillsViewportHeight(true);
 		JScrollPane scrollPane = new JScrollPane(table);
+		scrollPane.getVerticalScrollBar().addAdjustmentListener(
+				new AdjustmentListener() {
+					@Override
+					public void adjustmentValueChanged(AdjustmentEvent e) {
+						e.getAdjustable().setValue(
+								e.getAdjustable().getMaximum());
+
+					}
+				});
 		add(scrollPane);
 	}
 
 	class MyTableModel extends AbstractTableModel {
 
 		// private Object[][] data = {{1, 1, 1}, {2, 2, 2}, {3, 3, 3}};
-		private String[] columnNames = { "No.", "Registry Address",
-				"Registry Value" };
+		private String[] columnNames = {"No.", "Registry Address",
+				"Registry Value"};
 		private List<Data> dataList = new ArrayList<Data>();
 
 		@Override
