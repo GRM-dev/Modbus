@@ -9,7 +9,7 @@ import javax.media.Player;
 
 public class SoundPlayer extends Thread {
 
-	private String desktopPath = "Sounds/";
+	private String desktopPath = System.getProperty("user.home") + "/Desktop/";
 	private String fileName;
 	Player player;
 
@@ -44,6 +44,6 @@ public class SoundPlayer extends Thread {
 	}
 
 	public static void main(String[] args) {
-		new SoundPlayer("sound.mp3").play();
+		new SoundPlayer("connect_sound.mp3").play();
 	}
 }
