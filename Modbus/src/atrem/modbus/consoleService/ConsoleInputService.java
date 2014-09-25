@@ -72,7 +72,6 @@ public class ConsoleInputService {
 	}
 
 	public String insertDataContent(int functionCode) {
-		// TODO zastanowic sie na tym PAWEL
 		inputString = inputScanner.nextLine();
 		inputString.trim();
 		return inputString;
