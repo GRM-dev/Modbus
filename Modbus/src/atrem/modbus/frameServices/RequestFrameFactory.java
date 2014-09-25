@@ -2,6 +2,7 @@ package atrem.modbus.frameServices;
 
 import java.util.Random;
 
+import atrem.modbus.Request;
 import atrem.modbus.consoleService.ConsoleInputService;
 import atrem.modbus.consoleService.ConsoleOutputService;
 import atrem.modbus.frames.RequestFrame;
@@ -19,12 +20,20 @@ public class RequestFrameFactory {
 	private final int FUNCTION_CODE = 3, UNIT_IDENTIFER = 5,
 			STARTING_ADRESS = 3027, QUANTITY_OF_REGISTERS = 2;
 
-	private final static int TID_BOUND = 100;
+	private final static int TID_BOUND = 65534;
+	private static int COUNTER = 0;
 
 	public RequestFrameFactory() {
 		consoleInput = new ConsoleInputService();
 		consoleOutput = new ConsoleOutputService();
 		rand = new Random();
+	}
+
+	public RequestFrameFactory(Request request) {
+		setUnitIdentifier(request.getUnitIdentifier());
+		setFunctionCode(request.getFunctionCode());
+		setStartingAdress(request.getFirstRegistryAddress());
+		setQuantityOfRegisters(request.getQuantityOfRegisters());
 	}
 
 	public void loadInformationFromConsole() {
@@ -59,7 +68,9 @@ public class RequestFrameFactory {
 	}
 
 	private int generateTransactionId() {
-		return rand.nextInt(TID_BOUND);
+		int tid = COUNTER % TID_BOUND;
+		COUNTER++;
+		return tid;
 	}
 
 	public int getTransactionIdentifier() {

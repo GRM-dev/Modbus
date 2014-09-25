@@ -2,7 +2,16 @@ language: java
 jdk:
   - openjdk7
 
-script: gradle run
+before_install:
+  - mkdir -p Modbus/src/main
+  - ln -s Modbus/src/atrem/modbus Modbus/src/main/java
+  - ls Modbus
+  - ls Modbus/src
+  - gradle check
+
+script: 
+  - gradle compileJava
+  - gradle jar
     
 branches:
   only:

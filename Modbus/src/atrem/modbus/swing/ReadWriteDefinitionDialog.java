@@ -11,13 +11,14 @@ import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 
-import atrem.modbus.Domino;
+import atrem.modbus.Request;
 
 public class ReadWriteDefinitionDialog extends JDialog {
 	private final Box contentBox = Box.createHorizontalBox();
@@ -28,16 +29,16 @@ public class ReadWriteDefinitionDialog extends JDialog {
 	private JTextField startingAddressTextField;
 	private JTextField quantityTextField;
 	private JTextField scanRateTextField;
-
+	private ModbusSwing modbusSwing;
 	private String[] functionNames = { "01 Read Coils",
 			"02 Read Discrete Inputs", "03 Read Holding Registers",
 			"04 Read Input Registers", "05 Write Single Coil",
 			"06 Write Single Register" };
 
-	private Domino domino;
+	// private Domino domino;
 
-	public ReadWriteDefinitionDialog(Domino domino) {
-		this.domino = domino;
+	public ReadWriteDefinitionDialog(ModbusSwing modbusSwing) {
+		this.modbusSwing = modbusSwing;
 		setTitle("Read/Write Definition");
 		setBounds(300, 300, 332, 261);
 		setResizable(false);
@@ -127,17 +128,16 @@ public class ReadWriteDefinitionDialog extends JDialog {
 	private class OkButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			domino.creatRequestFrameFactory(
-					// TODO tu moze bedzie addRequest
-					Integer.parseInt(slaveIdTextField.getText()),
+			Request request = new Request(Integer.parseInt(slaveIdTextField
+					.getText()), functionCodeComboBox.getSelectedIndex() + 1,
 					Integer.parseInt(startingAddressTextField.getText()),
 					Integer.parseInt(quantityTextField.getText()),
-					functionCodeComboBox.getSelectedIndex() + 1);
+					Integer.parseInt(scanRateTextField.getText()));
 
-			domino.getModbusSwing().initializeNewFrame(
-					startingAddressTextField.getText());
+			JInternalFrame interFrame = modbusSwing
+					.createInterFrame(startingAddressTextField.getText());
+			modbusSwing.initializeInterFrame(interFrame, request);
 			dispose();
-			domino.getModbusSwing().onListener();
 		}
 	}
 

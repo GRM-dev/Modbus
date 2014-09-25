@@ -27,6 +27,15 @@ public class Request {
 
 	}
 
+	public Request(int unitIdentifier, int functionCode,
+			int firstRegistryAddress, int quantityOfRegisters, int scanRate) {
+		this.unitIdentifier = unitIdentifier;
+		this.functionCode = functionCode;
+		this.firstRegistryAddress = firstRegistryAddress;
+		this.quantityOfRegisters = quantityOfRegisters;
+		this.scanRate = scanRate;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

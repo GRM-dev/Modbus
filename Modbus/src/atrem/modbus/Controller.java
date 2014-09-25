@@ -2,7 +2,9 @@ package atrem.modbus;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Timer;
 
 import atrem.modbus.frameServices.FrameStorage;
@@ -18,26 +20,34 @@ public class Controller {
 	private RequestFrameFactory requestFrameFactory;
 	private FrameStorage frameStorage;
 	private static final long PEROID = 2000;
-	private Domino domino; // TODO usunac
-	private List<ControllerListener> controllerListener;
+
+	private List<RequestHandler> controllerListener;
 	private List<DeviceListener> deviceListeners;
+	private Map requestMap;
 
 	public Controller() {
 		requestFrameFactory = new RequestFrameFactory();
 		frameStorage = new FrameStorage();
-		controllerListener = new ArrayList<ControllerListener>();
+		controllerListener = new ArrayList<RequestHandler>();
 		deviceListeners = new ArrayList<DeviceListener>();
+		requestMap = new HashMap<Request, RequestHandler>();
 	}
 
-	public Domino getDomino() {
-		return domino;
+	public void addRequest(Request request, RequestHandler requestHandler) {
+		requestMap.put(request, requestHandler);
+	}
+
+	private void onNewFrame(Request request, ResponseFrame responseFrame) {
+		RequestHandler requestHandler = (RequestHandler) requestMap
+				.get(request);
+		requestHandler.frameReceiver(responseFrame);
 	}
 
 	public void setRequestFrameFactory(RequestFrameFactory requestFrameFactory) {
 		this.requestFrameFactory = requestFrameFactory;
 	}
 
-	public void addListener(ControllerListener listener) {
+	public void addListener(RequestHandler listener) {
 		controllerListener.add(listener);
 	}
 
@@ -46,7 +56,7 @@ public class Controller {
 	}
 
 	private void onFrame(ResponseFrame responseFrame) {
-		for (ControllerListener controllerListener2 : controllerListener) {
+		for (RequestHandler controllerListener2 : controllerListener) {
 			controllerListener2.frameReceiver(responseFrame);
 		}
 	}
@@ -55,11 +65,6 @@ public class Controller {
 		for (DeviceListener deviceListener2 : deviceListeners) {
 			deviceListener2.showConnectionStatus(isConnected);
 		}
-	}
-
-	public Controller(Domino domino) {
-		this();
-		this.domino = domino;
 	}
 
 	public void startConnection(String ipAddress, int port) throws IOException {
@@ -80,11 +85,13 @@ public class Controller {
 		System.out.println(responseFrame);//
 	}
 
-	public void startNewRequestTask(int id) { // TODO tu raczej obiekt Request
-		requestFrameFactory.loadDefinedInformation();
+	public void startNewRequestTask(Request request) {
+		// TODO tu raczej obiekt Request
+		RequestFrameFactory requestFrameFactory = new RequestFrameFactory(
+				request);
 		Timer timer = new Timer();
 		timer.schedule(new Task(connection, requestFrameFactory, frameStorage),
-				0, PEROID);
+				0, request.getScanRate());
 		tasks.add(timer);
 	}
 
