@@ -2,6 +2,7 @@ package atrem.modbus.frameServices;
 
 import java.util.Random;
 
+import atrem.modbus.Request;
 import atrem.modbus.consoleService.ConsoleInputService;
 import atrem.modbus.consoleService.ConsoleOutputService;
 import atrem.modbus.frames.RequestFrame;
@@ -25,6 +26,17 @@ public class RequestFrameFactory {
 		consoleInput = new ConsoleInputService();
 		consoleOutput = new ConsoleOutputService();
 		rand = new Random();
+	}
+
+	public RequestFrameFactory(Request request) {
+
+		setUnitIdentifier(request.getUnitIdentifier());
+
+		setFunctionCode(request.getFunctionCode());
+
+		setStartingAdress(request.getFirstRegistryAddress());
+
+		setQuantityOfRegisters(request.getQuantityOfRegisters());
 	}
 
 	public void loadInformationFromConsole() {
