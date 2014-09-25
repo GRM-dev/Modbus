@@ -2,8 +2,8 @@ package atrem.modbus;
 
 import atrem.modbus.frames.ResponseFrame;
 
-public interface RequestHandler {
-	public abstract void frameReceiver(ResponseFrame responseFrame); // TODO nie
+public interface RequestListener {
+	public abstract void receiveFrame(ResponseFrame responseFrame); // TODO nie
 																		// rzeczownik
 																		// w
 																		// nazwie

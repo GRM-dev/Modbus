@@ -33,7 +33,7 @@ public class Controller {
 		requestFrameFactory = new RequestFrameFactory();
 		frameStorage = new FrameStorage();
 		deviceListeners = new ArrayList<DeviceListener>();
-		requestMap = new HashMap<Request, RequestHandler>();
+		requestMap = new HashMap<Request, RequestListener>();
 		requestList = new ArrayList<Request>();
 		frameStorage.addPairedFrameListener(new PairedFrameListener() {
 			
@@ -49,14 +49,14 @@ public class Controller {
 		});
 	}
 	
-	public void addRequest(Request request, RequestHandler requestHandler) {
+	public void addRequest(Request request, RequestListener requestHandler) {
 		requestList.add(request);
 		requestMap.put(request, requestHandler);
 	}
 	
 	private void onNewFrame(Request request, ResponseFrame responseFrame) {
-		RequestHandler requestHandler = (RequestHandler) requestMap.get(request);
-		requestHandler.frameReceiver(responseFrame);
+		RequestListener requestHandler = (RequestListener) requestMap.get(request);
+		requestHandler.receiveFrame(responseFrame);
 	}
 	
 	public void setRequestFrameFactory(RequestFrameFactory requestFrameFactory) {
