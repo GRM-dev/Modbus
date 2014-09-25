@@ -42,7 +42,7 @@ public class InterFrame extends JInternalFrame {
 				addDataToTable(responseFrame);
 			}
 		});
-		controller.startNewRequestTask(0);
+		controller.startNewRequestTask(request);
 	}
 
 	public TableDemo getTableDemo() {

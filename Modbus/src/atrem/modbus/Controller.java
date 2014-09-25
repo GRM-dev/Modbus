@@ -87,10 +87,12 @@ public class Controller {
 
 	public void startNewRequestTask(Request request) {
 		// TODO tu raczej obiekt Request
-		requestFrameFactory.loadDefinedInformation();
+		RequestFrameFactory requestFrameFactory = new RequestFrameFactory(
+				request);
+		// requestFrameFactory.loadDefinedInformation();
 		Timer timer = new Timer();
 		timer.schedule(new Task(connection, requestFrameFactory, frameStorage),
-				0, PEROID);
+				0, request.getScanRate());
 		tasks.add(timer);
 	}
 
