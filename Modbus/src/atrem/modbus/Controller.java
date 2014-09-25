@@ -2,7 +2,9 @@ package atrem.modbus;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Timer;
 
 import atrem.modbus.frameServices.FrameStorage;
@@ -21,12 +23,24 @@ public class Controller {
 	private Domino domino; // TODO usunac
 	private List<RequestHandler> controllerListener;
 	private List<DeviceListener> deviceListeners;
+	private Map requestMap;
 
 	public Controller() {
 		requestFrameFactory = new RequestFrameFactory();
 		frameStorage = new FrameStorage();
 		controllerListener = new ArrayList<RequestHandler>();
 		deviceListeners = new ArrayList<DeviceListener>();
+		requestMap = new HashMap<Request, RequestHandler>();
+	}
+
+	public void addRequest(Request request, RequestHandler requestHandler) {
+		requestMap.put(request, requestHandler);
+	}
+
+	private void onNewFrame(Request request, ResponseFrame responseFrame) {
+		RequestHandler requestHandler = (RequestHandler) requestMap
+				.get(request);
+		requestHandler.frameReceiver(responseFrame);
 	}
 
 	public Domino getDomino() {
