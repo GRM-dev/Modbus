@@ -5,7 +5,7 @@ import java.awt.BorderLayout;
 import javax.swing.JInternalFrame;
 import javax.swing.SwingUtilities;
 
-import atrem.modbus.ControllerListener;
+import atrem.modbus.RequestHandler;
 import atrem.modbus.Domino;
 import atrem.modbus.frames.ResponseFrame;
 
@@ -40,7 +40,7 @@ public class InterFrame extends JInternalFrame {
 	}
 
 	public void function() {
-		domino.getController().addListener(new ControllerListener() {
+		domino.getController().addListener(new RequestHandler() {
 
 			@Override
 			public void frameReceiver(ResponseFrame responseFrame) {
