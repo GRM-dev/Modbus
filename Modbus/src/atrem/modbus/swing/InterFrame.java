@@ -2,9 +2,13 @@ package atrem.modbus.swing;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
 
+import javax.swing.JButton;
 import javax.swing.JInternalFrame;
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import atrem.modbus.Controller;
@@ -17,6 +21,9 @@ public class InterFrame extends JInternalFrame {
 
 	private TableDemo tableDemo;
 	public Domino domino;
+	private boolean pauseButton = true;
+	private JButton btnPause = new JButton("Pause");
+	private JButton btnStart = new JButton("Start");
 
 	public InterFrame(String title, Domino domino) {
 		this.domino = domino;
@@ -27,6 +34,34 @@ public class InterFrame extends JInternalFrame {
 		setTitle(title);
 		setLocation(10, 10);
 		getContentPane().setLayout(new BorderLayout());
+
+		JPanel panel = new JPanel();
+		getContentPane().add(panel, BorderLayout.SOUTH);
+		// TODO te action listenery wygladaja poprostu zle
+
+		btnPause.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO akcja do napisania dla Pause button
+				System.out.println("stan klikniêcia +" + pauseButton);
+				pauseButton = !pauseButton;
+				btnPause.setEnabled(pauseButton);
+				btnStart.setEnabled(!pauseButton);
+			}
+		});
+
+		panel.add(btnPause);
+		btnStart.setEnabled(!pauseButton);
+		btnStart.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				pauseButton = !pauseButton;
+				btnPause.setEnabled(pauseButton);
+				btnStart.setEnabled(!pauseButton);
+			}
+		});
+
+		panel.add(btnStart);
 		tableDemo = new TableDemo();
 		getContentPane().add(tableDemo);
 		try {
@@ -77,4 +112,9 @@ public class InterFrame extends JInternalFrame {
 			}
 		});
 	}
+
+	public boolean getPauseButtonState() {
+		return pauseButton;
+	}
+
 }
