@@ -7,8 +7,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 
+import atrem.modbus.frameServices.FramePairs;
 import atrem.modbus.frameServices.FrameStorage;
 import atrem.modbus.frameServices.RequestFrameFactory;
+import atrem.modbus.frames.RequestFrame;
 import atrem.modbus.frames.ResponseFrame;
 import atrem.modbus.parsers.FrameDecoder;
 
@@ -22,15 +24,30 @@ public class Controller {
 	private static final long PEROID = 2000;
 	private List<DeviceListener> deviceListeners;
 	private Map requestMap;
+	private List<Request> requestList;
 
 	public Controller() {
 		requestFrameFactory = new RequestFrameFactory();
 		frameStorage = new FrameStorage();
 		deviceListeners = new ArrayList<DeviceListener>();
 		requestMap = new HashMap<Request, RequestHandler>();
+		requestList = new ArrayList<Request>();
+		frameStorage.addPairedFrameListener(new PairedFrameListener() {
+
+			@Override
+			public void onPairFrame(FramePairs framePairs) {
+				RequestFrame requestFrame = framePairs.getRequestFrame();
+				for (Request requestTmp : requestList) {
+					if (requestTmp.compareFrames(requestFrame)) {
+						onNewFrame(requestTmp, framePairs.getResponseFrame());
+					}
+				}
+			}
+		});
 	}
 
 	public void addRequest(Request request, RequestHandler requestHandler) {
+		requestList.add(request);
 		requestMap.put(request, requestHandler);
 	}
 
