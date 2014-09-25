@@ -130,4 +130,8 @@ public class Connection implements Runnable {
 	public void setController(Controller controller) {
 		this.controller = controller;
 	}
+
+	public String getIpAddress() {
+		return ipAddress;
+	}
 }
