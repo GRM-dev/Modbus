@@ -11,6 +11,7 @@ import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -133,9 +134,10 @@ public class ReadWriteDefinitionDialog extends JDialog {
 					Integer.parseInt(quantityTextField.getText()),
 					Integer.parseInt(scanRateTextField.getText()));
 
-			modbusSwing.initializeNewFrame(startingAddressTextField.getText());
+			JInternalFrame interFrame = modbusSwing
+					.createInterFrame(startingAddressTextField.getText());
+			modbusSwing.initializeInterFrame(interFrame, request);
 			dispose();
-			modbusSwing.onListener(request); // TODO mzoe usunac paweligala
 		}
 	}
 
