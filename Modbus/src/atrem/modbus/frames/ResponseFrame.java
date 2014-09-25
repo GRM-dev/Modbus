@@ -1,6 +1,5 @@
 package atrem.modbus.frames;
 
-import java.nio.ByteBuffer;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -60,11 +59,6 @@ public class ResponseFrame {
 
 	public byte[] getDataBytes() {
 		return dataBytes;
-	}
-
-	private double zmiana() {
-		ByteBuffer byteBuffer = ByteBuffer.wrap(dataBytes, 1, 4);
-		return byteBuffer.getInt();
 	}
 
 	public void setDataBytes(byte[] dataBytes) {

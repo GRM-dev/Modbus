@@ -18,7 +18,7 @@ public class Controller {
 	private RequestFrameFactory requestFrameFactory;
 	private FrameStorage frameStorage;
 	private static final long PEROID = 2000;
-	private Domino domino; // TODO usunac
+
 	private List<ControllerListener> controllerListener;
 	private List<DeviceListener> deviceListeners;
 
@@ -27,10 +27,6 @@ public class Controller {
 		frameStorage = new FrameStorage();
 		controllerListener = new ArrayList<ControllerListener>();
 		deviceListeners = new ArrayList<DeviceListener>();
-	}
-
-	public Domino getDomino() {
-		return domino;
 	}
 
 	public void setRequestFrameFactory(RequestFrameFactory requestFrameFactory) {
@@ -55,11 +51,6 @@ public class Controller {
 		for (DeviceListener deviceListener2 : deviceListeners) {
 			deviceListener2.showConnectionStatus(isConnected);
 		}
-	}
-
-	public Controller(Domino domino) {
-		this();
-		this.domino = domino;
 	}
 
 	public void startConnection(String ipAddress, int port) throws IOException {

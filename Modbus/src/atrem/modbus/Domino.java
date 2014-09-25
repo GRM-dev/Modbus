@@ -68,7 +68,7 @@ public class Domino {
 												// prezenterze
 			throws IOException {
 
-		controller = new Controller(this);
+		controller = new Controller();
 		controller.addDeviceListener(new DeviceListener() {
 
 			@Override
