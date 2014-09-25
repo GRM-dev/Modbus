@@ -78,14 +78,12 @@ public class ModbusSwing extends JFrame {
 		return contentPanel;
 	}
 
-	public void initializeInterFrame(JInternalFrame jInternalFrame,
-			Request request) {
-		InterFrame interFrame = (InterFrame) jInternalFrame;
+	public void initializeInterFrame(InterFrame interFrame, Request request) {
 		interFrame.initializeNewRequest(request);
 	}
 
-	public JInternalFrame createInterFrame(String name) {
-		JInternalFrame iFrame = new InterFrame(name, domino);
+	public InterFrame createInterFrame(String name) {
+		InterFrame iFrame = new InterFrame(name, domino);
 		internalFramesList.add(iFrame);
 		desk.add(iFrame);
 		return iFrame;
