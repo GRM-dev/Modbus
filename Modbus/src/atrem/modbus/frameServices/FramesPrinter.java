@@ -39,12 +39,13 @@ public class FramesPrinter {
 			e.printStackTrace();
 		}
 		printWriter.println("" + new Date());
+		printWriter.flush();
 		return printWriter;
 	}
 
 	private void writeToLog(PrintWriter printWriter, String arg) {
-		noResponselogWriter.println(arg);
-		noResponselogWriter.flush();
+		printWriter.println(arg);
+		printWriter.flush();
 	}
 
 	public void saveNoResponseFrame(String frame) {
