@@ -19,6 +19,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 
 import atrem.modbus.Domino;
+import atrem.modbus.SoundPlayer;
+import atrem.modbus.swing.exceptionhandlers.ConnectionErrorDialog;
 
 public class ConnectionSetupDialog extends JDialog {
 	private final Box			contentBox		= Box.createHorizontalBox();
@@ -41,6 +43,7 @@ public class ConnectionSetupDialog extends JDialog {
 		setTitle("Connection Setup");
 		setBounds(300, 300, 350, 220);
 		setResizable(false);
+		setModal(true);
 		contentPane = getContentPane();
 		contentPane.setLayout(new BorderLayout());
 		contentPane.add(contentBox, BorderLayout.CENTER);
@@ -53,7 +56,7 @@ public class ConnectionSetupDialog extends JDialog {
 	private JPanel createButtonPanel() {
 		buttonPanel = new JPanel();
 		buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
-		okButton = new JButton("OK");
+		okButton = new JButton("Connect");
 		okButton.setDefaultCapable(true);
 		okButton.setMnemonic('o');
 		cancelButton = new JButton("Cancel");
@@ -98,11 +101,18 @@ public class ConnectionSetupDialog extends JDialog {
 		public void actionPerformed(ActionEvent e) {
 			Integer port = Integer.parseInt(portTextField.getText());
 			String ip = ipAddressTextField.getText();
-			try {
-				domino.connect(ip, port);
-			}
-			catch (IOException e1) {
-				e1.printStackTrace();
+			boolean connected = false;
+			while (!connected) {
+				try {
+					domino.connect(ip, port);
+					SoundPlayer.play("connect_sound.mp3");
+					connected = true;
+				}
+				catch (IOException e1) {
+					ConnectionErrorDialog.show(e1);
+					e1.printStackTrace();
+					connected = false;
+				}
 			}
 			dispose();
 		}

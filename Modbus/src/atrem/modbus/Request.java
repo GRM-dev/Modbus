@@ -10,20 +10,20 @@ public class Request {
 	private int quantityOfRegisters;
 	private int scanRate;
 
-	public int compareFrames(Request r, RequestFrame rf) {
+	public boolean compareFrames(RequestFrame rf) {
 
-		if (!(r != null && rf != null))
-			return -1;
+		if (rf == null)
+			return false;
 		if (starttingAdress != rf.getStartingAdress())
-			return -1;
+			return false;
 		if (functionCode != rf.getFunctionCode())
-			return -1;
+			return false;
 		if (quantityOfRegisters != rf.getQuantityOfRegisters())
-			return -1;
+			return false;
 		if (unitIdentifier != rf.getUnitIdentifier())
-			return -1;
+			return false;
 
-		return 1;
+		return true;
 
 	}
 

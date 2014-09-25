@@ -3,7 +3,7 @@ package atrem.modbus.frames;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import atrem.modbus.frameServices.FramesPrinter;
+import atrem.modbus.frames.services.FramesPrinter;
 
 public class RequestFrame {
 
