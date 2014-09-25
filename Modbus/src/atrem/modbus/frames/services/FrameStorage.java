@@ -29,6 +29,7 @@ public class FrameStorage {
 		framePairsList = new LinkedList<FramePairs>();
 		framesPrinter = new FramesPrinter();
 		pairedFrameListenerList = new ArrayList<PairedFrameListener>();
+
 	}
 
 	public void addPairedFrameListener(PairedFrameListener pairedFrameListener) {
