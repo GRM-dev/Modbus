@@ -7,11 +7,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 
+<<<<<<< HEAD
 import atrem.modbus.frameServices.FramePairs;
 import atrem.modbus.frameServices.FrameStorage;
 import atrem.modbus.frameServices.RequestFrameFactory;
 import atrem.modbus.frames.RequestFrame;
+=======
+>>>>>>> branch 'master' of https://github.com/PatrykGala/Modbus.git
 import atrem.modbus.frames.ResponseFrame;
+import atrem.modbus.frames.services.FrameStorage;
+import atrem.modbus.frames.services.RequestFrameFactory;
 import atrem.modbus.parsers.FrameDecoder;
 
 public class Controller {

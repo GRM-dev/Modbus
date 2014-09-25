@@ -5,7 +5,7 @@ import java.io.IOException;
 
 import javax.swing.SwingUtilities;
 
-import atrem.modbus.frameServices.FramePairs;
+import atrem.modbus.frames.services.FramePairs;
 import atrem.modbus.swing.ModbusSwing;
 
 public class Domino {
