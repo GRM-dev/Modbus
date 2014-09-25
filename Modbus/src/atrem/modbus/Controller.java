@@ -19,13 +19,13 @@ public class Controller {
 	private FrameStorage frameStorage;
 	private static final long PEROID = 2000;
 
-	private List<ControllerListener> controllerListener;
+	private List<RequestHandler> controllerListener;
 	private List<DeviceListener> deviceListeners;
 
 	public Controller() {
 		requestFrameFactory = new RequestFrameFactory();
 		frameStorage = new FrameStorage();
-		controllerListener = new ArrayList<ControllerListener>();
+		controllerListener = new ArrayList<RequestHandler>();
 		deviceListeners = new ArrayList<DeviceListener>();
 	}
 
@@ -33,7 +33,7 @@ public class Controller {
 		this.requestFrameFactory = requestFrameFactory;
 	}
 
-	public void addListener(ControllerListener listener) {
+	public void addListener(RequestHandler listener) {
 		controllerListener.add(listener);
 	}
 
@@ -42,7 +42,7 @@ public class Controller {
 	}
 
 	private void onFrame(ResponseFrame responseFrame) {
-		for (ControllerListener controllerListener2 : controllerListener) {
+		for (RequestHandler controllerListener2 : controllerListener) {
 			controllerListener2.frameReceiver(responseFrame);
 		}
 	}

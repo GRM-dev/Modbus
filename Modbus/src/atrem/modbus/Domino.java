@@ -88,7 +88,7 @@ public class Domino {
 		System.out.println(framePairs);
 	}
 
-	public void creatRequestFrameFactory(int unitIdentifier, // TODO to tez nie
+	public void createRequestFrameFactory(int unitIdentifier, // TODO to tez nie
 																// bardzo
 			int startingAdress, int quantityOfRegisters, int functionCode) {
 		RequestFrameFactory requestFrameFactory = new RequestFrameFactory();

@@ -2,6 +2,6 @@ package atrem.modbus;
 
 import atrem.modbus.frames.ResponseFrame;
 
-public interface ControllerListener {
+public interface RequestHandler {
 	public abstract void frameReceiver(ResponseFrame responseFrame);
 }

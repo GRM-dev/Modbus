@@ -17,8 +17,6 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 
-import atrem.modbus.Domino;
-
 public class ReadWriteDefinitionDialog extends JDialog {
 	private final Box contentBox = Box.createHorizontalBox();
 	private JButton cancelButton;
@@ -28,16 +26,16 @@ public class ReadWriteDefinitionDialog extends JDialog {
 	private JTextField startingAddressTextField;
 	private JTextField quantityTextField;
 	private JTextField scanRateTextField;
-
+	private ModbusSwing modbusSwing;
 	private String[] functionNames = { "01 Read Coils",
 			"02 Read Discrete Inputs", "03 Read Holding Registers",
 			"04 Read Input Registers", "05 Write Single Coil",
 			"06 Write Single Register" };
 
-	private Domino domino;
+	// private Domino domino;
 
-	public ReadWriteDefinitionDialog(Domino domino) {
-		this.domino = domino;
+	public ReadWriteDefinitionDialog(ModbusSwing modbusSwing) {
+		this.modbusSwing = modbusSwing;
 		setTitle("Read/Write Definition");
 		setBounds(300, 300, 332, 261);
 		setResizable(false);
@@ -127,17 +125,16 @@ public class ReadWriteDefinitionDialog extends JDialog {
 	private class OkButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			domino.creatRequestFrameFactory(
+			domino.createRequestFrameFactory(
 					// TODO tu moze bedzie addRequest
 					Integer.parseInt(slaveIdTextField.getText()),
 					Integer.parseInt(startingAddressTextField.getText()),
 					Integer.parseInt(quantityTextField.getText()),
 					functionCodeComboBox.getSelectedIndex() + 1);
 
-			domino.getModbusSwing().initializeNewFrame(
-					startingAddressTextField.getText());
+			modbusSwing.initializeNewFrame(startingAddressTextField.getText());
 			dispose();
-			domino.getModbusSwing().onListener();
+			modbusSwing.onListener();
 		}
 	}
 
