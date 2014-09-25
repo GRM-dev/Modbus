@@ -127,7 +127,7 @@ public class ReadWriteDefinitionDialog extends JDialog {
 	private class OkButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			domino.creatRequestFrameFactory(
+			domino.createRequestFrameFactory(
 					// TODO tu moze bedzie addRequest
 					Integer.parseInt(slaveIdTextField.getText()),
 					Integer.parseInt(startingAddressTextField.getText()),
