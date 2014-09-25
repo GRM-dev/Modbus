@@ -1,4 +1,4 @@
-package atrem.modbus.consoleService;
+package atrem.modbus.console;
 
 import java.util.Scanner;
 

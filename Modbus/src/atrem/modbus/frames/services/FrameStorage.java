@@ -1,4 +1,4 @@
-package atrem.modbus.frameServices;
+package atrem.modbus.frames.services;
 
 import java.util.Date;
 import java.util.LinkedList;

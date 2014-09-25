@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 
-import atrem.modbus.frameServices.FramesPrinter;
+import atrem.modbus.frames.services.FramesPrinter;
 
 public class ResponseFrame {
 	private int transactionIdentifier;

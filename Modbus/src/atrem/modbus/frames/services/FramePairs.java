@@ -1,4 +1,4 @@
-package atrem.modbus.frameServices;
+package atrem.modbus.frames.services;
 
 import atrem.modbus.frames.RequestFrame;
 import atrem.modbus.frames.ResponseFrame;

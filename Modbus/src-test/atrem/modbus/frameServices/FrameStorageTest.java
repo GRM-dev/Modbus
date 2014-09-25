@@ -7,8 +7,8 @@ import java.util.List;
 
 import org.junit.Test;
 
-import atrem.modbus.frameServices.FrameStorage;
 import atrem.modbus.frames.RequestFrame;
+import atrem.modbus.frames.services.FrameStorage;
 
 public class FrameStorageTest {
 	@Test
