@@ -20,15 +20,12 @@ public class Controller {
 	private RequestFrameFactory requestFrameFactory;
 	private FrameStorage frameStorage;
 	private static final long PEROID = 2000;
-
-	private List<RequestHandler> controllerListener;
 	private List<DeviceListener> deviceListeners;
 	private Map requestMap;
 
 	public Controller() {
 		requestFrameFactory = new RequestFrameFactory();
 		frameStorage = new FrameStorage();
-		controllerListener = new ArrayList<RequestHandler>();
 		deviceListeners = new ArrayList<DeviceListener>();
 		requestMap = new HashMap<Request, RequestHandler>();
 	}
@@ -47,18 +44,8 @@ public class Controller {
 		this.requestFrameFactory = requestFrameFactory;
 	}
 
-	public void addListener(RequestHandler listener) {
-		controllerListener.add(listener);
-	}
-
 	public void addDeviceListener(DeviceListener listener) {
 		deviceListeners.add(listener);
-	}
-
-	private void onFrame(ResponseFrame responseFrame) {
-		for (RequestHandler controllerListener2 : controllerListener) {
-			controllerListener2.frameReceiver(responseFrame);
-		}
 	}
 
 	private void onDevice(boolean isConnected) {
@@ -81,12 +68,10 @@ public class Controller {
 		ResponseFrame responseFrame = frameDecoder.decodeBytes(bytes);
 		frameStorage.addReceivedFrame(responseFrame);
 		frameStorage.makePairsOfFrames();
-		onFrame(frameStorage.getLastResponseFrame());
 		System.out.println(responseFrame);//
 	}
 
 	public void startNewRequestTask(Request request) {
-		// TODO tu raczej obiekt Request
 		RequestFrameFactory requestFrameFactory = new RequestFrameFactory(
 				request);
 		Timer timer = new Timer();

@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
 
 import atrem.modbus.Domino;
 import atrem.modbus.frames.RequestFrame;
@@ -20,7 +21,14 @@ public class FrameStorage {
 	private ResponseFrame lastResponseFrame;
 
 	public FrameStorage() {
-		executor = Executors.newSingleThreadScheduledExecutor();
+		executor = Executors
+				.newSingleThreadScheduledExecutor(new ThreadFactory() {
+
+					@Override
+					public Thread newThread(Runnable r) {
+						return new Thread("watek executora");
+					}
+				});
 		sentFrames = new LinkedList<RequestFrame>();
 		receivedFrames = new LinkedList<ResponseFrame>();
 		framePairsList = new LinkedList<FramePairs>();
@@ -60,7 +68,7 @@ public class FrameStorage {
 		});
 	}
 
-	void compare() {
+	synchronized void compare() {
 		for (RequestFrame sentFramesTmp : sentFrames) {
 			compareWithResponseFrame(sentFramesTmp);
 			if (hasNoResponse(sentFramesTmp)) {
