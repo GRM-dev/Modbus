@@ -3,9 +3,10 @@ jdk:
   - openjdk7
 
 before_install:
-  - ls
-  - mkdir -p src/main
-  - ln -s Modbus/src/atrem/modbus/ src/main/java
+  - mkdir -p Modbus/src/main
+  - ln -s Modbus/src/atrem/modbus Modbus/src/main/java
+  - ls Modbus
+  - ls Modbus/src
   - gradle check
 
 script: 
