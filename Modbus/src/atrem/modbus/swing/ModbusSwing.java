@@ -3,6 +3,7 @@ package atrem.modbus.swing;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -17,6 +18,7 @@ import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
@@ -49,7 +51,7 @@ public class ModbusSwing extends JFrame {
 		setBounds(screenWidth - screenWidth / 4 - frameWidth, screenHeight / 2
 				- frameHeight / 2, frameWidth, frameHeight);
 		getContentPane().setLayout(new BorderLayout());
-		add(createContentPanel(), BorderLayout.CENTER);
+		getContentPane().add(createContentPanel(), BorderLayout.CENTER);
 		setJMenuBar(createMenuBar());
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setVisible(true);
@@ -78,10 +80,10 @@ public class ModbusSwing extends JFrame {
 	
 	private JMenuBar createMenuBar() {
 		connectionStatus = new JLabel(" DISCONNECTED ");
+		connectionStatus.setFont(new Font("Tahoma", Font.PLAIN, 26));
 		connectionStatus.setBorder(BorderFactory.createLineBorder(Color.black));
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.add(createFileMenu());
-		menuBar.add(createConnectionMenu());
 		menuBar.add(createSetupMenu());
 		menuBar.add(connectionStatus);
 		return menuBar;
@@ -89,20 +91,22 @@ public class ModbusSwing extends JFrame {
 	
 	private JMenu createFileMenu() {
 		JMenu menu = new JMenu("File");
+		menu.setFont(new Font("Segoe UI", Font.PLAIN, 22));
 		menu.setMnemonic('f');
-		menu.add(new AbstractAction("Exit") {
+		JMenuItem exit = new JMenuItem("Exit");
+		exit.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+		exit.setMnemonic('f');
+		exit.addActionListener(new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
 			}
 		});
-		return menu;
-	}
-	
-	private JMenu createConnectionMenu() {
-		JMenu menu = new JMenu("Connection");
-		menu.setMnemonic('c');
-		menu.add(new AbstractAction("Connect") {
+		
+		JMenuItem connect = new JMenuItem("Connect");
+		connect.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+		connect.setMnemonic('c');
+		connect.addActionListener(new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -114,13 +118,16 @@ public class ModbusSwing extends JFrame {
 			}
 		});
 		
+		menu.add(connect);
+		menu.add(exit);
 		return menu;
 	}
 	
 	private JMenu createSetupMenu() {
 		JMenu menu = new JMenu("Setup");
+		menu.setFont(new Font("Segoe UI", Font.PLAIN, 22));
 		menu.setMnemonic('s');
-		menu.add(new AbstractAction("Read/Write Definition...") {
+		JMenuItem menuItem = menu.add(new AbstractAction("Read/Write Definition...") {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -131,6 +138,7 @@ public class ModbusSwing extends JFrame {
 				}
 			}
 		});
+		menuItem.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 		return menu;
 	}
 	
