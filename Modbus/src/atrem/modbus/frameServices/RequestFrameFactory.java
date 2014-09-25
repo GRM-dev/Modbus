@@ -20,7 +20,8 @@ public class RequestFrameFactory {
 	private final int FUNCTION_CODE = 3, UNIT_IDENTIFER = 5,
 			STARTING_ADRESS = 3027, QUANTITY_OF_REGISTERS = 2;
 
-	private final static int TID_BOUND = 100;
+	private final static int TID_BOUND = 65534;
+	private static int COUNTER = 0;
 
 	public RequestFrameFactory() {
 		consoleInput = new ConsoleInputService();
@@ -29,13 +30,9 @@ public class RequestFrameFactory {
 	}
 
 	public RequestFrameFactory(Request request) {
-
 		setUnitIdentifier(request.getUnitIdentifier());
-
 		setFunctionCode(request.getFunctionCode());
-
 		setStartingAdress(request.getFirstRegistryAddress());
-
 		setQuantityOfRegisters(request.getQuantityOfRegisters());
 	}
 
@@ -71,7 +68,9 @@ public class RequestFrameFactory {
 	}
 
 	private int generateTransactionId() {
-		return rand.nextInt(TID_BOUND);
+		int tid = COUNTER % TID_BOUND;
+		COUNTER++;
+		return tid;
 	}
 
 	public int getTransactionIdentifier() {

@@ -19,7 +19,6 @@ public class Task extends TimerTask {
 		this.connection = connection;
 		this.frameStorage = frameStorage;
 		this.requestFrameFactory = requestFrameFactory;
-
 	}
 
 	@Override
