@@ -1,6 +1,7 @@
 package atrem.modbus.swing;
 
 import java.awt.BorderLayout;
+import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -20,47 +21,54 @@ import javax.swing.border.EtchedBorder;
 import atrem.modbus.Domino;
 
 public class ConnectionSetupDialog extends JDialog {
-	private final Box contentBox = Box.createHorizontalBox();
-	private JButton cancelButton;
-	private JButton okButton;
-	private JTextField ipAddressTextField;
-	private JTextField portTextField;
-	private String ipAddress = "10.7.7.121";
-	private int port = 502;
-	private JPanel ipAddressPanel, serverPort;
-
-	private Domino domino;
-
+	private final Box			contentBox		= Box.createHorizontalBox();
+	private JButton				cancelButton;
+	private JButton				okButton;
+	private JTextField			ipAddressTextField;
+	private JTextField			portTextField;
+	private static final String	DEFAULTIPADRESS	= "10.7.7.121";
+	private static final int	DEFAULTPORT		= 502;
+	private JPanel				ipAddressPanel, serverPort;
+	private Domino				domino;
+	private JPanel				buttonPanel;
+	private Box					box;
+	private JPanel				panel;
+	private Container			contentPane;
+	
 	public ConnectionSetupDialog(Domino domino) {
-
 		this.domino = domino;
+		
 		setTitle("Connection Setup");
 		setBounds(300, 300, 350, 220);
 		setResizable(false);
-		getContentPane().setLayout(new BorderLayout());
-		getContentPane().add(contentBox, BorderLayout.CENTER);
+		contentPane = getContentPane();
+		contentPane.setLayout(new BorderLayout());
+		contentPane.add(contentBox, BorderLayout.CENTER);
 		contentBox.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentBox.add(createQuestionBox());
-		getContentPane().add(createButtonPanel(), BorderLayout.SOUTH);
+		contentPane.add(createButtonPanel(), BorderLayout.SOUTH);
 		pack();
 	}
-
+	
 	private JPanel createButtonPanel() {
-		JPanel buttonPanel = new JPanel();
+		buttonPanel = new JPanel();
 		buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		okButton = new JButton("OK");
+		okButton.setDefaultCapable(true);
+		okButton.setMnemonic('o');
 		cancelButton = new JButton("Cancel");
 		okButton.addActionListener(new OkButtonListener());
 		cancelButton.addActionListener(new CancelButtonListener());
+		cancelButton.setMnemonic('c');
 		buttonPanel.add(okButton);
 		buttonPanel.add(cancelButton);
 		return buttonPanel;
 	}
-
+	
 	private Box createQuestionBox() {
-		Box box = Box.createVerticalBox();
-		ipAddressTextField = new JTextField("10.7.7.121");
-		portTextField = new JTextField("502");
+		box = Box.createVerticalBox();
+		ipAddressTextField = new JTextField(DEFAULTIPADRESS);
+		portTextField = new JTextField(String.valueOf(DEFAULTPORT));
 		ipAddressPanel = createDialogPanel("IP Address: ", ipAddressTextField);
 		serverPort = createDialogPanel("Server Port: ", portTextField);
 		box.add(ipAddressPanel);
@@ -68,24 +76,23 @@ public class ConnectionSetupDialog extends JDialog {
 		box.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
 		return box;
 	}
-
+	
 	private JPanel createDialogPanel(String labelName, JTextField textField) {
 		JLabel label = new JLabel(labelName);
-		textField.setBorder(BorderFactory
-				.createEtchedBorder(EtchedBorder.LOWERED));
-		JPanel panel = createEmptyPanel();
+		textField.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
+		panel = createEmptyPanel();
 		panel.add(label);
 		panel.add(textField);
 		return panel;
 	}
-
+	
 	private JPanel createEmptyPanel() {
-		JPanel panel = new JPanel();
+		panel = new JPanel();
 		panel.setLayout(new GridLayout(0, 2));
 		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		return panel;
 	}
-
+	
 	private class OkButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -93,13 +100,14 @@ public class ConnectionSetupDialog extends JDialog {
 			String ip = ipAddressTextField.getText();
 			try {
 				domino.connect(ip, port);
-			} catch (IOException e1) {
+			}
+			catch (IOException e1) {
 				e1.printStackTrace();
 			}
 			dispose();
 		}
 	}
-
+	
 	private class CancelButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {

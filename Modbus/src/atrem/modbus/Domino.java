@@ -58,8 +58,10 @@ public class Domino {
 
 	private void showConnectionStatus1(boolean isConnected) {
 		if (isConnected)
-			modbusSwing.setStatus("CONNECTED!", new Color(0, 255, 0));
+			modbusSwing.setStatus("CONNECTED TO "
+					+ controller.getConnection().getIpAddress(), new Color(0,
+					255, 0));
 		else
-			modbusSwing.setStatus("NOT CONNECTED", new Color(255, 0, 0));
+			modbusSwing.setStatus("DISCONNECTED", new Color(255, 0, 0));
 	}
 }
