@@ -14,13 +14,9 @@ public class Task extends TimerTask {
 	private RequestFrameFactory requestFrameFactory;
 	private Coder coder = new Coder();
 
-	public Task(Connection connection, RequestFrameFactory requestFrameFactory, // TODO
-																				// tu
-																				// gdzies
-																				// new
-																				// factory
+	public Task(Connection connection, RequestFrameFactory requestFrameFactory,
 
-			FrameStorage frameStorage) {
+	FrameStorage frameStorage) {
 		this.connection = connection;
 		this.frameStorage = frameStorage;
 		this.requestFrameFactory = requestFrameFactory;
