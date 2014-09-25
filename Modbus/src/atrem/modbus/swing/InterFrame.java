@@ -5,8 +5,9 @@ import java.awt.BorderLayout;
 import javax.swing.JInternalFrame;
 import javax.swing.SwingUtilities;
 
-import atrem.modbus.RequestHandler;
 import atrem.modbus.Domino;
+import atrem.modbus.Request;
+import atrem.modbus.RequestHandler;
 import atrem.modbus.frames.ResponseFrame;
 
 public class InterFrame extends JInternalFrame {
@@ -31,6 +32,16 @@ public class InterFrame extends JInternalFrame {
 
 	}
 
+	public void initializeNewRequest(Request request) {
+		domino.getController().addRequest(request, new RequestHandler() {
+
+			@Override
+			public void frameReceiver(ResponseFrame responseFrame) {
+				addDataToTable(responseFrame);
+			}
+		});
+	}
+
 	public TableDemo getTableDemo() {
 		return tableDemo;
 	}
@@ -39,26 +50,13 @@ public class InterFrame extends JInternalFrame {
 		this.tableDemo = tableDemo;
 	}
 
-	public void function() {
-		domino.getController().addListener(new RequestHandler() {
-
-			@Override
-			public void frameReceiver(ResponseFrame responseFrame) {
-				addDataToTable(responseFrame);
-
-			}
-
-		});
-
-	}
-
-	private void addDataToTable(final ResponseFrame responseFrame1) {
+	private void addDataToTable(final ResponseFrame responseFrame) {
 		SwingUtilities.invokeLater(new Runnable() {
 
 			@Override
 			public void run() {
-				Data nextData = new Data(responseFrame1.getRegistryValue(),
-						responseFrame1.getDataValue());
+				Data nextData = new Data(responseFrame.getRegistryValue(),
+						responseFrame.getDataValue());
 				tableDemo.getMyTableModel().addRow(nextData);
 
 			}
