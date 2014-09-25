@@ -1,18 +1,37 @@
 package atrem.modbus;
 
+import atrem.modbus.frames.RequestFrame;
+
 public class Request {
 
 	private int unitIdentifier;
 	private int functionCode;
-	private int firstRegistryAddress;
+	private int starttingAdress;
 	private int quantityOfRegisters;
 	private int scanRate;
+
+	public int compareFrames(Request r, RequestFrame rf) {
+
+		if (!(r != null && rf != null))
+			return -1;
+		if (starttingAdress != rf.getStartingAdress())
+			return -1;
+		if (functionCode != rf.getFunctionCode())
+			return -1;
+		if (quantityOfRegisters != rf.getQuantityOfRegisters())
+			return -1;
+		if (unitIdentifier != rf.getUnitIdentifier())
+			return -1;
+
+		return 1;
+
+	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + firstRegistryAddress;
+		result = prime * result + starttingAdress;
 		result = prime * result + functionCode;
 		result = prime * result + quantityOfRegisters;
 		result = prime * result + scanRate;
@@ -29,7 +48,7 @@ public class Request {
 		if (getClass() != obj.getClass())
 			return false;
 		Request other = (Request) obj;
-		if (firstRegistryAddress != other.firstRegistryAddress)
+		if (starttingAdress != other.starttingAdress)
 			return false;
 		if (functionCode != other.functionCode)
 			return false;
@@ -57,11 +76,11 @@ public class Request {
 	}
 
 	public int getFirstRegistryAddress() {
-		return firstRegistryAddress;
+		return starttingAdress;
 	}
 
 	public void setFirstRegistryAddress(int firstRegistryAddress) {
-		this.firstRegistryAddress = firstRegistryAddress;
+		this.starttingAdress = firstRegistryAddress;
 	}
 
 	public int getQuantityOfRegisters() {
