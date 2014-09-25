@@ -27,10 +27,6 @@ public class FrameStorage {
 		framesPrinter = new FramesPrinter();
 	}
 
-	public FrameStorage(List<RequestFrame> sentFrames) {
-		this.sentFrames = sentFrames;
-	}
-
 	public void addSentFrame(final RequestFrame requestFrame) {
 		executor.execute(new Runnable() {
 

@@ -15,12 +15,10 @@ public class Task extends TimerTask {
 	private Coder coder = new Coder();
 
 	public Task(Connection connection, RequestFrameFactory requestFrameFactory,
-
-	FrameStorage frameStorage) {
+			FrameStorage frameStorage) {
 		this.connection = connection;
 		this.frameStorage = frameStorage;
 		this.requestFrameFactory = requestFrameFactory;
-
 	}
 
 	@Override
@@ -30,7 +28,6 @@ public class Task extends TimerTask {
 		coder.codeFrame(requestFrame);
 		bytes = coder.getFrameAsBytes();
 		connection.send(bytes);
-
 		frameStorage.addSentFrame(requestFrame);
 		System.out.println("wyslalem "
 				+ requestFrame.getTransactionIdentifier());
