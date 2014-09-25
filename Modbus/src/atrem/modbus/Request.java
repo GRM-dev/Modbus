@@ -31,7 +31,7 @@ public class Request {
 			int firstRegistryAddress, int quantityOfRegisters, int scanRate) {
 		this.unitIdentifier = unitIdentifier;
 		this.functionCode = functionCode;
-		this.firstRegistryAddress = firstRegistryAddress;
+		this.starttingAdress = firstRegistryAddress;
 		this.quantityOfRegisters = quantityOfRegisters;
 		this.scanRate = scanRate;
 	}
