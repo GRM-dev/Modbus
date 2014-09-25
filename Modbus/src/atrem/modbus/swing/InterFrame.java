@@ -14,10 +14,10 @@ import atrem.modbus.RequestHandler;
 import atrem.modbus.frames.ResponseFrame;
 
 public class InterFrame extends JInternalFrame {
-	
-	private TableDemo	tableDemo;
-	public Domino		domino;
-	
+
+	private TableDemo tableDemo;
+	public Domino domino;
+
 	public InterFrame(String title, Domino domino) {
 		this.domino = domino;
 		setResizable(true);
@@ -31,47 +31,49 @@ public class InterFrame extends JInternalFrame {
 		getContentPane().add(tableDemo);
 		try {
 			setSelected(true);
-		}
-		catch (PropertyVetoException e) {
+		} catch (PropertyVetoException e) {
 			e.printStackTrace();
 		}
 		setMaximizable(true);
-		
+
 		setVisible(true);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		pack();
-		
+
 	}
-	
+
 	public void initializeNewRequest(Request request) {
 		Controller controller = domino.getController();
-		controller.addRequest(request, new RequestHandler() {
-			
-			@Override
-			public void frameReceiver(ResponseFrame responseFrame) {
-				addDataToTable(responseFrame);
-			}
-		});
+		controller.addRequest(request, new RequestHandler() { // TODO mzoe inna
+																// nazwa u nas
+																// bardziej
+																// listener
+
+					@Override
+					public void frameReceiver(ResponseFrame responseFrame) {
+						addDataToTable(responseFrame);
+					}
+				});
 		controller.startNewRequestTask(request);
 	}
-	
+
 	public TableDemo getTableDemo() {
 		return tableDemo;
 	}
-	
+
 	public void setTableDemo(TableDemo tableDemo) {
 		this.tableDemo = tableDemo;
 	}
-	
+
 	private void addDataToTable(final ResponseFrame responseFrame) {
 		SwingUtilities.invokeLater(new Runnable() {
-			
+
 			@Override
 			public void run() {
-				Data nextData = new Data(responseFrame.getRegistryValue(), responseFrame
-						.getDataValue());
+				Data nextData = new Data(responseFrame.getRegistryValue(),
+						responseFrame.getDataValue());
 				tableDemo.getMyTableModel().addRow(nextData);
-				
+
 			}
 		});
 	}
