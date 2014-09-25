@@ -57,11 +57,11 @@ public class ConnectionSetupDialog extends JDialog {
 		buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		okButton = new JButton("Connect");
 		okButton.setDefaultCapable(true);
-		okButton.setMnemonic('o');
+		okButton.setMnemonic('c');
 		cancelButton = new JButton("Cancel");
 		okButton.addActionListener(new OkButtonListener());
 		cancelButton.addActionListener(new CancelButtonListener());
-		cancelButton.setMnemonic('c');
+		cancelButton.setMnemonic('a');
 		buttonPanel.add(okButton);
 		buttonPanel.add(cancelButton);
 		return buttonPanel;

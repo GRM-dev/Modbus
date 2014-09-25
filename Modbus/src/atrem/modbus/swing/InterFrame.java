@@ -14,7 +14,7 @@ import javax.swing.SwingUtilities;
 import atrem.modbus.Controller;
 import atrem.modbus.Domino;
 import atrem.modbus.Request;
-import atrem.modbus.RequestHandler;
+import atrem.modbus.RequestListener;
 import atrem.modbus.frames.ResponseFrame;
 
 public class InterFrame extends JInternalFrame {
@@ -79,16 +79,12 @@ public class InterFrame extends JInternalFrame {
 
 	public void initializeNewRequest(Request request) {
 		Controller controller = domino.getController();
-		controller.addRequest(request, new RequestHandler() { // TODO mzoe inna
-																// nazwa u nas
-																// bardziej
-																// listener
-
-					@Override
-					public void frameReceiver(ResponseFrame responseFrame) {
-						addDataToTable(responseFrame);
-					}
-				});
+		controller.addRequest(request, new RequestListener() {
+			@Override
+			public void receiveFrame(ResponseFrame responseFrame) {
+				addDataToTable(responseFrame);
+			}
+		});
 		controller.startNewRequestTask(request);
 	}
 
