@@ -4,8 +4,9 @@ jdk:
 
 before_install:
   - mkdir -p Modbus/src/main
-  - ln -s Modbus/src/atrem/modbus/ Modbus/src/main/java
-  - ls
+  - ln -s Modbus/src/atrem/modbus Modbus/src/main/java
+  - ls Modbus
+  - ls Modbus/src
   - gradle check
 
 script: 
