@@ -78,7 +78,7 @@ public class ModbusSwing extends JFrame {
 	}
 
 	private JMenuBar createMenuBar() {
-		connectionStatus = new JLabel(" CONNECTION STATUS ");
+		connectionStatus = new JLabel(" DISCONNECTED ");
 		connectionStatus.setBorder(BorderFactory.createLineBorder(Color.black));
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.add(createFileMenu());
