@@ -30,15 +30,17 @@ public class ReadWriteDefinitionDialog extends JDialog {
 	private JTextField quantityTextField;
 	private JTextField scanRateTextField;
 	private ModbusSwing modbusSwing;
-	private String[] functionNames = { "01 Read Coils",
+	private String[] functionNames = {"01 Read Coils",
 			"02 Read Discrete Inputs", "03 Read Holding Registers",
 			"04 Read Input Registers", "05 Write Single Coil",
-			"06 Write Single Register" };
+			"06 Write Single Register"};
 
 	// private Domino domino;
 
 	public ReadWriteDefinitionDialog(ModbusSwing modbusSwing) {
 		this.modbusSwing = modbusSwing;
+
+		setModal(true);
 		setTitle("Read/Write Definition");
 		setBounds(300, 300, 332, 261);
 		setResizable(false);
@@ -54,7 +56,9 @@ public class ReadWriteDefinitionDialog extends JDialog {
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		okButton = new JButton("OK");
+		okButton.setMnemonic('o');
 		cancelButton = new JButton("Cancel");
+		cancelButton.setMnemonic('c');
 		okButton.addActionListener(new OkButtonListener());
 		cancelButton.addActionListener(new CancelButtonListener());
 		buttonPanel.add(okButton);
@@ -75,7 +79,6 @@ public class ReadWriteDefinitionDialog extends JDialog {
 				startingAddressTextField));
 		box.add(createDialogPanel("Quantity Of Registries:", quantityTextField));
 		box.add(createDialogPanel("Scan Rate", "[ms]", scanRateTextField));
-
 		box.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
 		return box;
 	}
@@ -106,7 +109,6 @@ public class ReadWriteDefinitionDialog extends JDialog {
 		textField.setBorder(BorderFactory
 				.createEtchedBorder(EtchedBorder.LOWERED));
 		JLabel label2 = new JLabel(labelName2);
-
 		JPanel smallPanel = new JPanel();
 		smallPanel.setLayout(new GridLayout(0, 2));
 		smallPanel.add(textField);
@@ -147,5 +149,4 @@ public class ReadWriteDefinitionDialog extends JDialog {
 			dispose();
 		}
 	}
-
 }
