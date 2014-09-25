@@ -89,6 +89,7 @@ public class ModbusSwing extends JFrame {
 	
 	private JMenu createFileMenu() {
 		JMenu menu = new JMenu("File");
+		menu.setMnemonic('f');
 		menu.add(new AbstractAction("Exit") {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -100,6 +101,7 @@ public class ModbusSwing extends JFrame {
 	
 	private JMenu createConnectionMenu() {
 		JMenu menu = new JMenu("Connection");
+		menu.setMnemonic('c');
 		menu.add(new AbstractAction("Connect") {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -117,6 +119,7 @@ public class ModbusSwing extends JFrame {
 	
 	private JMenu createSetupMenu() {
 		JMenu menu = new JMenu("Setup");
+		menu.setMnemonic('s');
 		menu.add(new AbstractAction("Read/Write Definition...") {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -137,7 +140,7 @@ public class ModbusSwing extends JFrame {
 		connectionSetupDialog.setVisible(true);
 	}
 	
-	private int test() {
+	private static int test() {
 		return WindowConstants.DISPOSE_ON_CLOSE;
 	}
 	
