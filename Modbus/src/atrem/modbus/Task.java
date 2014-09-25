@@ -14,12 +14,7 @@ public class Task extends TimerTask {
 	private RequestFrameFactory requestFrameFactory;
 	private Coder coder = new Coder();
 
-	public Task(Connection connection, RequestFrameFactory requestFrameFactory, // TODO
-																				// tu
-																				// gdzies
-																				// new
-																				// factory
-
+	public Task(Connection connection, RequestFrameFactory requestFrameFactory,
 			FrameStorage frameStorage) {
 		this.connection = connection;
 		this.frameStorage = frameStorage;
@@ -34,7 +29,6 @@ public class Task extends TimerTask {
 		coder.codeFrame(requestFrame);
 		bytes = coder.getFrameAsBytes();
 		connection.send(bytes);
-
 		frameStorage.addSentFrame(requestFrame);
 		System.out.println("wyslalem "
 				+ requestFrame.getTransactionIdentifier());
