@@ -85,7 +85,8 @@ public class Controller {
 		System.out.println(responseFrame);//
 	}
 
-	public void startNewRequestTask(int id) { // TODO tu raczej obiekt Request
+	public void startNewRequestTask(Request request) {
+		// TODO tu raczej obiekt Request
 		requestFrameFactory.loadDefinedInformation();
 		Timer timer = new Timer();
 		timer.schedule(new Task(connection, requestFrameFactory, frameStorage),

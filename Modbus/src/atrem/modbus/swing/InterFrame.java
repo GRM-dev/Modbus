@@ -5,6 +5,7 @@ import java.awt.BorderLayout;
 import javax.swing.JInternalFrame;
 import javax.swing.SwingUtilities;
 
+import atrem.modbus.Controller;
 import atrem.modbus.Domino;
 import atrem.modbus.Request;
 import atrem.modbus.RequestHandler;
@@ -33,13 +34,15 @@ public class InterFrame extends JInternalFrame {
 	}
 
 	public void initializeNewRequest(Request request) {
-		domino.getController().addRequest(request, new RequestHandler() {
+		Controller controller = domino.getController();
+		controller.addRequest(request, new RequestHandler() {
 
 			@Override
 			public void frameReceiver(ResponseFrame responseFrame) {
 				addDataToTable(responseFrame);
 			}
 		});
+		controller.startNewRequestTask(0);
 	}
 
 	public TableDemo getTableDemo() {

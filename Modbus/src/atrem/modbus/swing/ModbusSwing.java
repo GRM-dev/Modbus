@@ -31,7 +31,7 @@ public class ModbusSwing extends JFrame {
 
 	public static void main(String[] args) {
 		Domino domino = new Domino();
-		// ModbusSwing modbusSwing = new ModbusSwing(domino);
+
 	}
 
 	public ModbusSwing(Domino domino) {
@@ -39,14 +39,6 @@ public class ModbusSwing extends JFrame {
 		this.domino = domino;
 		initialize();
 
-	}
-
-	public void onListener(Request request) {
-		for (JInternalFrame jInternalFrame : internalFramesList) {
-			InterFrame interFrame = (InterFrame) jInternalFrame;
-			interFrame.initializeNewRequest(request);
-
-		}
 	}
 
 	private void initialize() {
@@ -72,11 +64,17 @@ public class ModbusSwing extends JFrame {
 
 	}
 
-	public void initializeNewFrame(String name) {
-		JInternalFrame iFrame = new InterFrame(name, domino);
+	public void initializeInterFrame(JInternalFrame jInternalFrame,
+			Request request) {
+		InterFrame interFrame = (InterFrame) jInternalFrame;
+		interFrame.initializeNewRequest(request);
+	}
 
+	public JInternalFrame createInterFrame(String name) {
+		JInternalFrame iFrame = new InterFrame(name, domino);
 		internalFramesList.add(iFrame);
 		desk.add(iFrame);
+		return iFrame;
 	}
 
 	private JMenuBar createMenuBar() {
