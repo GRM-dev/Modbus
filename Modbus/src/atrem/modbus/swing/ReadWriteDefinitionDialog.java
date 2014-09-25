@@ -17,6 +17,8 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 
+import atrem.modbus.Request;
+
 public class ReadWriteDefinitionDialog extends JDialog {
 	private final Box contentBox = Box.createHorizontalBox();
 	private JButton cancelButton;
@@ -125,16 +127,15 @@ public class ReadWriteDefinitionDialog extends JDialog {
 	private class OkButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			domino.createRequestFrameFactory(
-					// TODO tu moze bedzie addRequest
-					Integer.parseInt(slaveIdTextField.getText()),
+			Request request = new Request(Integer.parseInt(slaveIdTextField
+					.getText()), functionCodeComboBox.getSelectedIndex() + 1,
 					Integer.parseInt(startingAddressTextField.getText()),
 					Integer.parseInt(quantityTextField.getText()),
-					functionCodeComboBox.getSelectedIndex() + 1);
+					Integer.parseInt(scanRateTextField.getText()));
 
 			modbusSwing.initializeNewFrame(startingAddressTextField.getText());
 			dispose();
-			modbusSwing.onListener();
+			modbusSwing.onListener(request);
 		}
 	}
 

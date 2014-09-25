@@ -20,6 +20,7 @@ import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
 import atrem.modbus.Domino;
+import atrem.modbus.Request;
 
 public class ModbusSwing extends JFrame {
 
@@ -40,11 +41,11 @@ public class ModbusSwing extends JFrame {
 
 	}
 
-	public void onListener() {
+	public void onListener(Request request) {
 		for (JInternalFrame jInternalFrame : internalFramesList) {
 			InterFrame interFrame = (InterFrame) jInternalFrame;
-			System.out.println("pusta?");
-			interFrame.function();
+			interFrame.initializeNewRequest(request);
+
 		}
 	}
 
@@ -73,6 +74,7 @@ public class ModbusSwing extends JFrame {
 
 	public void initializeNewFrame(String name) {
 		JInternalFrame iFrame = new InterFrame(name, domino);
+
 		internalFramesList.add(iFrame);
 		desk.add(iFrame);
 	}
@@ -148,7 +150,7 @@ public class ModbusSwing extends JFrame {
 	private void setupDefinition() {
 		try {
 			ReadWriteDefinitionDialog readWriteDefinitionDialog = new ReadWriteDefinitionDialog(
-					domino);
+					this);
 			readWriteDefinitionDialog.setDefaultCloseOperation(test());
 			readWriteDefinitionDialog.setVisible(true);
 		} catch (Exception exception) {
