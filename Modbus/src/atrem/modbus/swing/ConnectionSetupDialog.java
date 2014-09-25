@@ -19,27 +19,26 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 
 import atrem.modbus.Domino;
-import atrem.modbus.SoundPlayer;
 import atrem.modbus.swing.exceptionhandlers.ConnectionErrorDialog;
 
 public class ConnectionSetupDialog extends JDialog {
-	private final Box			contentBox		= Box.createHorizontalBox();
-	private JButton				cancelButton;
-	private JButton				okButton;
-	private JTextField			ipAddressTextField;
-	private JTextField			portTextField;
-	private static final String	DEFAULTIPADRESS	= "10.7.7.121";
-	private static final int	DEFAULTPORT		= 502;
-	private JPanel				ipAddressPanel, serverPort;
-	private Domino				domino;
-	private JPanel				buttonPanel;
-	private Box					box;
-	private JPanel				panel;
-	private Container			contentPane;
-	
+	private final Box contentBox = Box.createHorizontalBox();
+	private JButton cancelButton;
+	private JButton okButton;
+	private JTextField ipAddressTextField;
+	private JTextField portTextField;
+	private static final String DEFAULTIPADRESS = "10.7.7.121";
+	private static final int DEFAULTPORT = 502;
+	private JPanel ipAddressPanel, serverPort;
+	private Domino domino;
+	private JPanel buttonPanel;
+	private Box box;
+	private JPanel panel;
+	private Container contentPane;
+
 	public ConnectionSetupDialog(Domino domino) {
 		this.domino = domino;
-		
+
 		setTitle("Connection Setup");
 		setBounds(300, 300, 350, 220);
 		setResizable(false);
@@ -52,7 +51,7 @@ public class ConnectionSetupDialog extends JDialog {
 		contentPane.add(createButtonPanel(), BorderLayout.SOUTH);
 		pack();
 	}
-	
+
 	private JPanel createButtonPanel() {
 		buttonPanel = new JPanel();
 		buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -67,7 +66,7 @@ public class ConnectionSetupDialog extends JDialog {
 		buttonPanel.add(cancelButton);
 		return buttonPanel;
 	}
-	
+
 	private Box createQuestionBox() {
 		box = Box.createVerticalBox();
 		ipAddressTextField = new JTextField(DEFAULTIPADRESS);
@@ -79,23 +78,24 @@ public class ConnectionSetupDialog extends JDialog {
 		box.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
 		return box;
 	}
-	
+
 	private JPanel createDialogPanel(String labelName, JTextField textField) {
 		JLabel label = new JLabel(labelName);
-		textField.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
+		textField.setBorder(BorderFactory
+				.createEtchedBorder(EtchedBorder.LOWERED));
 		panel = createEmptyPanel();
 		panel.add(label);
 		panel.add(textField);
 		return panel;
 	}
-	
+
 	private JPanel createEmptyPanel() {
 		panel = new JPanel();
 		panel.setLayout(new GridLayout(0, 2));
 		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		return panel;
 	}
-	
+
 	private class OkButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -105,10 +105,9 @@ public class ConnectionSetupDialog extends JDialog {
 			while (!connected) {
 				try {
 					domino.connect(ip, port);
-					SoundPlayer.play("connect_sound.mp3");
+					// SoundPlayer.play("connect_sound.mp3");
 					connected = true;
-				}
-				catch (IOException e1) {
+				} catch (IOException e1) {
 					ConnectionErrorDialog.show(e1);
 					e1.printStackTrace();
 					connected = false;
@@ -117,7 +116,7 @@ public class ConnectionSetupDialog extends JDialog {
 			dispose();
 		}
 	}
-	
+
 	private class CancelButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {

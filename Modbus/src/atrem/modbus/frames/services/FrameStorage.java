@@ -1,5 +1,6 @@
 package atrem.modbus.frames.services;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import atrem.modbus.Domino;
+import atrem.modbus.PairedFrameListener;
 import atrem.modbus.frames.RequestFrame;
 import atrem.modbus.frames.ResponseFrame;
 
@@ -18,6 +20,7 @@ public class FrameStorage {
 	private List<FramePairs> framePairsList;
 	private ExecutorService executor;
 	private ResponseFrame lastResponseFrame;
+	private List<PairedFrameListener> pairedFrameListenerList;
 
 	public FrameStorage() {
 		executor = Executors.newSingleThreadScheduledExecutor();
@@ -25,6 +28,18 @@ public class FrameStorage {
 		receivedFrames = new LinkedList<ResponseFrame>();
 		framePairsList = new LinkedList<FramePairs>();
 		framesPrinter = new FramesPrinter();
+		pairedFrameListenerList = new ArrayList<PairedFrameListener>();
+	}
+
+	public void addPairedFrameListener(PairedFrameListener pairedFrameListener) {
+		pairedFrameListenerList.add(pairedFrameListener);
+	}
+
+	private void onPairedFrame(FramePairs framePairs) {
+		for (PairedFrameListener pairedFrameListener : pairedFrameListenerList) {
+			pairedFrameListener.onPairFrame(framePairs);
+		}
+
 	}
 
 	public void addSentFrame(final RequestFrame requestFrame) {
@@ -60,7 +75,7 @@ public class FrameStorage {
 		});
 	}
 
-	void compare() {
+	synchronized void compare() {
 		for (RequestFrame sentFramesTmp : sentFrames) {
 			compareWithResponseFrame(sentFramesTmp);
 			if (hasNoResponse(sentFramesTmp)) {
@@ -72,7 +87,7 @@ public class FrameStorage {
 
 	private void compareWithResponseFrame(RequestFrame requestFrame) {
 		for (ResponseFrame receivedFramesTmp : receivedFrames) {
-			if (requestFrame.match(receivedFramesTmp)) {// TODO zmiana nazwy
+			if (requestFrame.match(receivedFramesTmp)) {
 				addToListPairedFrame(requestFrame, receivedFramesTmp);
 				// TODO wyswietlanie testowe parowanych ramek
 				SysOutPairFrame(requestFrame, receivedFramesTmp);
@@ -92,6 +107,7 @@ public class FrameStorage {
 	private void addToListPairedFrame(RequestFrame requestFrame,
 			ResponseFrame responseFrame) {
 		FramePairs framePairs = new FramePairs(requestFrame, responseFrame);
+		onPairedFrame(framePairs);
 		framePairsList.add(framePairs);
 		lastResponseFrame = responseFrame;
 		lastResponseFrame.setRegistryValue(requestFrame.getStartingAdress());

@@ -11,12 +11,12 @@ import atrem.modbus.parsers.Coder;
  * Task executing by the time shedule.
  */
 public class Task extends TimerTask {
-	
-	private Connection			connection;
-	private FrameStorage		frameStorage;
-	private RequestFrameFactory	requestFrameFactory;
-	private Coder				coder;
-	
+
+	private Connection connection;
+	private FrameStorage frameStorage;
+	private RequestFrameFactory requestFrameFactory;
+	private Coder coder;
+
 	public Task(Connection connection, RequestFrameFactory requestFrameFactory,
 			FrameStorage frameStorage) {
 		this.connection = connection;
@@ -24,7 +24,7 @@ public class Task extends TimerTask {
 		this.requestFrameFactory = requestFrameFactory;
 		coder = new Coder();
 	}
-	
+
 	@Override
 	public void run() {
 		byte[] bytes;
@@ -33,7 +33,8 @@ public class Task extends TimerTask {
 		bytes = coder.getFrameAsBytes();
 		connection.send(bytes);
 		frameStorage.addSentFrame(requestFrame);
-		System.out.println("wyslalem " + requestFrame.getTransactionIdentifier());
-		
+		System.out.println("wyslalem "
+				+ requestFrame.getTransactionIdentifier());
+
 	}
 }
