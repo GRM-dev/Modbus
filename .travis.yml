@@ -2,7 +2,12 @@ language: java
 jdk:
   - openjdk7
 
-script: gradle run
+before_install:
+  - gradle check
+
+script: 
+  - gradle compileJava
+  - gradle jar
     
 branches:
   only:
