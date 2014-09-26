@@ -68,9 +68,11 @@ public class ReadWriteDefinitionDialog extends JDialog {
 		logOptionsButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				LogOptionWindow logOptionWindow = new LogOptionWindow();
+				LogOptionWindow logOptionWindow = new LogOptionWindow(
+						ReadWriteDefinitionDialog.this);
+				// setVisible(false); // TODO zapytac lukaszas
 				logOptionWindow.setEnabled(true);
-				set
+
 				logOptionWindow.setVisible(true);
 
 			}
