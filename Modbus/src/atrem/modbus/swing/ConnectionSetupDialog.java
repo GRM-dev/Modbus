@@ -30,11 +30,11 @@ public class ConnectionSetupDialog extends JDialog {
 	private static final String DEFAULTIPADRESS = "10.7.7.121";
 	private static final int DEFAULTPORT = 502;
 	private JPanel ipAddressPanel, serverPort;
-	private Domino domino;
 	private JPanel buttonPanel;
 	private Box box;
 	private JPanel panel;
 	private Container contentPane;
+	private Domino domino;
 
 	public ConnectionSetupDialog(Domino domino) {
 		this.domino = domino;
@@ -105,7 +105,6 @@ public class ConnectionSetupDialog extends JDialog {
 			while (!connected) {
 				try {
 					domino.connect(ip, port);
-					// SoundPlayer.play("connect_sound.mp3");
 					connected = true;
 				} catch (IOException e1) {
 					ConnectionErrorDialog.show(e1);

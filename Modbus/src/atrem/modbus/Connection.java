@@ -17,6 +17,7 @@ public class Connection implements Runnable {
 	private OutputStream outStream;
 	private String ipAddress;
 	private int port;
+	Thread thread;
 
 	public Connection(String ipAddress, int port, ControllerImpl controller)
 			throws IOException {
@@ -70,7 +71,9 @@ public class Connection implements Runnable {
 
 	}
 
+	@SuppressWarnings("deprecation")
 	public void closeConnection() {
+		thread.stop();
 		try {
 			socket.close();
 		} catch (IOException e) {
@@ -84,7 +87,7 @@ public class Connection implements Runnable {
 	}
 
 	Thread innerStartReceiveFrames() {
-		Thread thread = new Thread(this, "watek odbierajacy ramki");
+		thread = new Thread(this, "watek odbierajacy ramki");
 		thread.start();
 		return thread;
 

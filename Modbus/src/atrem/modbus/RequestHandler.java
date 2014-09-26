@@ -3,9 +3,9 @@ package atrem.modbus;
 import atrem.modbus.frames.ResponseFrame;
 import atrem.modbus.swing.InterFrame;
 
-public class RequestHandler implements RequestService {
+public class RequestHandler implements RequestService, InterFrameService {
 	private Request request;
-	private InterFrame interFrame;
+	private InterFrameService interFrame;
 	private Controller controller;
 
 	public RequestHandler(Request request, Controller controller,
@@ -13,6 +13,7 @@ public class RequestHandler implements RequestService {
 		this.request = request;
 		this.controller = controller;
 		this.interFrame = interFrame;
+		controller.addRequestHandler(request, this);
 	}
 
 	@Override
@@ -29,18 +30,14 @@ public class RequestHandler implements RequestService {
 
 	@Override
 	public void startRequest() {
-		addRequest();
-		controller.startNewRequestTask(request);
+
+		controller.startRequest(request);
 
 	}
 
-	private void addRequest() {
-		controller.addRequest(request, new RequestListener() {
+	@Override
+	public void addResponseFrame(ResponseFrame responseFrame) {
+		interFrame.addResponseFrame(responseFrame);
 
-			@Override
-			public void receiveFrame(ResponseFrame responseFrame) {
-				interFrame.addDataToTable(responseFrame);
-			}
-		});
 	}
 }
