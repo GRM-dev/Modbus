@@ -37,7 +37,7 @@ import atrem.modbus.Request;
  */
 public class ModbusSwing extends JFrame {
 
-	public static final int FONTSIZE = 12;
+	public static final int FONT_SIZE = 12;
 	public static final String FONT = "ARIAL";
 	private JDesktopPane desk;
 	private List<JInternalFrame> internalFramesList = new ArrayList<JInternalFrame>();
@@ -105,7 +105,7 @@ public class ModbusSwing extends JFrame {
 
 	private JMenuBar createMenuBar() {
 		connectionStatus = new JLabel(" DISCONNECTED ");
-		connectionStatus.setFont(new Font(FONT, Font.PLAIN, FONTSIZE));
+		connectionStatus.setFont(new Font(FONT, Font.PLAIN, FONT_SIZE));
 		// connectionStatus.setBorder(BorderFactory.createLineBorder(Color.black));
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.add(createFileMenu());
@@ -135,11 +135,16 @@ public class ModbusSwing extends JFrame {
 	private JMenu createFileMenu() {
 		JMenu menu = new JMenu("File");
 		menu.setMnemonic('f');
-		menu.setFont(new Font(FONT, Font.PLAIN, FONTSIZE));
+
 		JMenuItem exitItem = new JMenuItem("Exit");
 		exitItem.setMnemonic('e');
-		exitItem.setFont(new Font(FONT, Font.PLAIN, FONTSIZE));
-		exitItem.addActionListener(new AbstractAction() {
+
+		menu.setFont(new Font("Segoe UI", Font.PLAIN, FONT_SIZE));
+		JMenuItem menuItem = new JMenuItem("Exit");
+		menuItem.setMnemonic('e');
+		menuItem.setFont(new Font(FONT, Font.PLAIN, FONT_SIZE));
+		menuItem.addActionListener(new AbstractAction() {
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				dispose();
@@ -152,10 +157,10 @@ public class ModbusSwing extends JFrame {
 	private JMenu createConnectionMenu() {
 		JMenu menu = new JMenu("Connection");
 		menu.setMnemonic('c');
-		menu.setFont(new Font(FONT, Font.PLAIN, FONTSIZE));
+		menu.setFont(new Font(FONT, Font.PLAIN, FONT_SIZE));
 		JMenuItem newConnItem = new JMenuItem("New Connection");
 		newConnItem.setMnemonic('n');
-		newConnItem.setFont(new Font(FONT, Font.PLAIN, FONTSIZE));
+		newConnItem.setFont(new Font(FONT, Font.PLAIN, FONT_SIZE));
 		newConnItem.addActionListener(new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -170,7 +175,7 @@ public class ModbusSwing extends JFrame {
 
 		JMenuItem existConnItem = new JMenuItem("Existing Connection");
 		existConnItem.setMnemonic('e');
-		existConnItem.setFont(new Font(FONT, Font.PLAIN, FONTSIZE));
+		existConnItem.setFont(new Font(FONT, Font.PLAIN, FONT_SIZE));
 		existConnItem.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -181,7 +186,7 @@ public class ModbusSwing extends JFrame {
 
 		JMenuItem closeAllConnMenuItem = new JMenuItem("Close All Connections");
 		closeAllConnMenuItem.setMnemonic('c');
-		closeAllConnMenuItem.setFont(new Font(FONT, Font.PLAIN, FONTSIZE));
+		closeAllConnMenuItem.setFont(new Font(FONT, Font.PLAIN, FONT_SIZE));
 		closeAllConnMenuItem.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -196,10 +201,10 @@ public class ModbusSwing extends JFrame {
 	private JMenu createSetupMenu() {
 		JMenu menu = new JMenu("Setup");
 		menu.setMnemonic('s');
-		menu.setFont(new Font(FONT, Font.PLAIN, FONTSIZE));
+		menu.setFont(new Font(FONT, Font.PLAIN, FONT_SIZE));
 		JMenuItem rwDefMenuItem = new JMenuItem("Read/Write Definition...");
 		rwDefMenuItem.setMnemonic('r');
-		rwDefMenuItem.setFont(new Font(FONT, Font.PLAIN, FONTSIZE));
+		rwDefMenuItem.setFont(new Font(FONT, Font.PLAIN, FONT_SIZE));
 		rwDefMenuItem.addActionListener(new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -213,7 +218,7 @@ public class ModbusSwing extends JFrame {
 		menu.add(rwDefMenuItem);
 
 		JMenuItem optionsMenuItem = new JMenuItem("Options");
-		optionsMenuItem.setFont(new Font(FONT, Font.PLAIN, FONTSIZE));
+		optionsMenuItem.setFont(new Font(FONT, Font.PLAIN, FONT_SIZE));
 		optionsMenuItem.setMnemonic('o');
 		menu.add(optionsMenuItem);
 		optionsMenuItem.addActionListener(new AbstractAction() {
