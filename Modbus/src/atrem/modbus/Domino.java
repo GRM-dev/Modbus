@@ -39,7 +39,7 @@ public class Domino {
 	public void connect(String ip, int port) // TODO wyjatek obslugiwany w
 												// prezenterze
 			throws IOException {
-
+		modbusSwing.getProgressBar().setValue(50);
 		controller = new ControllerImpl();
 		controller.addDeviceListener(new DeviceListener() {
 
