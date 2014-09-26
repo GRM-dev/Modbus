@@ -135,7 +135,8 @@ public class InterFrame extends JInternalFrame implements InterFrameService {
 				Data nextData = new Data(responseFrame.getRegistryValue(),
 						responseFrame.getDataValue());
 				tableDemo.getMyTableModel().addRow(nextData);
-				framePrinter.writeToLog("" + nextData);
+				if (framePrinter != null)
+					framePrinter.writeToLog("" + nextData);
 
 			}
 		});
