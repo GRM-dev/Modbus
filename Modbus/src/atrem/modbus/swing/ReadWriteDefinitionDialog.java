@@ -22,11 +22,11 @@ import atrem.modbus.Request;
 
 public class ReadWriteDefinitionDialog extends JDialog {
 
-	public static final String DEFAULTSLAVEID = "5";
-	public static final int DEFAULTFUNCTIONNUBER = 2;
-	public static final String DEFAULTSTARTINGADDRESS = "3027";
-	public static final String DEFAULTQUANTITY = "2";
-	public static final String DEFAULTSCANRATE = "1000";
+	public static final String DEFAULT_SLAVE_ID = "5";
+	public static final int DEFAULT_FUNCTION_NUMBER = 2;
+	public static final String DEFAULT_STARTING_ADDRESS = "3027";
+	public static final String DEFAULT_QUANTITY = "2";
+	public static final String DEFAULT_SCAN_RATE = "1000";
 
 	private final Box contentBox = Box.createHorizontalBox();
 	private JButton cancelButton;
@@ -38,7 +38,7 @@ public class ReadWriteDefinitionDialog extends JDialog {
 	private JTextField scanRateTextField;
 
 	private ModbusSwing modbusSwing;
-	private static final String[] FUNCTIONNAMES = { "01 Read Coils",
+	private static final String[] FUNCTION_NAMES = { "01 Read Coils",
 			"02 Read Discrete Inputs", "03 Read Holding Registers",
 			"04 Read Input Registers", "05 Write Single Coil",
 			"06 Write Single Register" };
@@ -89,6 +89,7 @@ public class ReadWriteDefinitionDialog extends JDialog {
 		okButton = new JButton("OK");
 		okButton.setMnemonic('o');
 		okButton.addActionListener(new OkButtonListener());
+		cancelButton.addActionListener(new CancelButtonListener());
 		buttonPanel.add(okButton);
 		buttonPanel.add(cancelButton);
 		return buttonPanel;
@@ -96,11 +97,11 @@ public class ReadWriteDefinitionDialog extends JDialog {
 
 	private Box createQuestionBox() {
 		Box box = Box.createVerticalBox();
-		slaveIdTextField = new JTextField(DEFAULTSLAVEID);
-		functionCodeComboBox = new JComboBox(FUNCTIONNAMES);
-		startingAddressTextField = new JTextField(DEFAULTSTARTINGADDRESS);
-		quantityTextField = new JTextField(DEFAULTQUANTITY);
-		scanRateTextField = new JTextField(DEFAULTSCANRATE);
+		slaveIdTextField = new JTextField(DEFAULT_SLAVE_ID);
+		functionCodeComboBox = new JComboBox(FUNCTION_NAMES);
+		startingAddressTextField = new JTextField(DEFAULT_STARTING_ADDRESS);
+		quantityTextField = new JTextField(DEFAULT_QUANTITY);
+		scanRateTextField = new JTextField(DEFAULT_SCAN_RATE);
 		box.add(createDialogPanel("Slave ID", slaveIdTextField));
 		box.add(createFunctionPanel(functionCodeComboBox));
 		box.add(createDialogPanel("First Registry Address:",
@@ -113,7 +114,7 @@ public class ReadWriteDefinitionDialog extends JDialog {
 
 	private JPanel createFunctionPanel(JComboBox comboBox) {
 		JLabel label = new JLabel("Function:");
-		comboBox.setSelectedIndex(DEFAULTFUNCTIONNUBER);
+		comboBox.setSelectedIndex(DEFAULT_FUNCTION_NUMBER);
 		comboBox.setEditable(false);
 		JPanel panel = createEmptyPanel();
 		panel.add(label);

@@ -9,7 +9,6 @@ public interface Controller {
 
 	public void addDeviceListener(DeviceListener listener);
 
-	public void addRequest(Request request, RequestListener requestHandler);
+	public void addRequestHandler(Request request, InterFrameService interFrameService);
 
-	public abstract void startNewRequestTask(Request request);
 }

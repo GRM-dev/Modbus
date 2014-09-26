@@ -16,11 +16,7 @@ import atrem.modbus.parsers.FrameDecoder;
 
 public class ControllerImpl implements Controller {
 
-	private List<Timer> tasks = new ArrayList<Timer>(); // TODO
-														// moze
-														// inna
-														// nazwa
-
+	private Map tasks;
 	private Connection connection;
 	private RequestFrameFactory requestFrameFactory;
 	private FrameStorage frameStorage;
@@ -33,8 +29,13 @@ public class ControllerImpl implements Controller {
 		requestFrameFactory = new RequestFrameFactory();
 		frameStorage = new FrameStorage();
 		deviceListeners = new ArrayList<DeviceListener>();
-		requestMap = new HashMap<Request, RequestListener>();
+		requestMap = new HashMap<Request, InterFrameService>();
+		tasks = new HashMap<Request, Timer>();
 		requestList = new ArrayList<Request>();
+		addToframeStorage();
+	}
+
+	private void addToframeStorage() {
 		frameStorage.addPairedFrameListener(new PairedFrameListener() {
 
 			@Override
@@ -49,16 +50,10 @@ public class ControllerImpl implements Controller {
 		});
 	}
 
-	@Override
-	public void addRequest(Request request, RequestListener requestHandler) {
-		requestList.add(request);
-		requestMap.put(request, requestHandler);
-	}
-
 	private void onNewFrame(Request request, ResponseFrame responseFrame) {
-		RequestListener requestHandler = (RequestListener) requestMap
+		InterFrameService interFrameService = (InterFrameService) requestMap
 				.get(request);
-		requestHandler.receiveFrame(responseFrame);
+		interFrameService.addResponseFrame(responseFrame);
 	}
 
 	public void setRequestFrameFactory(RequestFrameFactory requestFrameFactory) {
@@ -78,10 +73,8 @@ public class ControllerImpl implements Controller {
 
 	public void startConnection(String ipAddress, int port) throws IOException {
 		connection = new Connection(ipAddress, port, this);
-		onDevice(connection.checkConnection()); // TODO
-												// usunac,
-												// dodac
-												// listenera
+		onDevice(connection.checkConnection());
+		// TODO usunac, dodac listenera
 		connection.startReceiveFrames(); //
 	}
 
@@ -93,13 +86,14 @@ public class ControllerImpl implements Controller {
 		System.out.println(responseFrame);//
 	}
 
-	public void startNewRequestTask(Request request) {
+	@SuppressWarnings("unchecked")
+	private void startNewRequestTask(Request request) {
 		RequestFrameFactory requestFrameFactory = new RequestFrameFactory(
 				request);
 		Timer timer = new Timer();
 		timer.schedule(new Task(connection, requestFrameFactory, frameStorage),
 				0, request.getScanRate());
-		tasks.add(timer);
+		tasks.put(request, timer);
 	}
 
 	public void setConnection(Connection connection) {
@@ -119,23 +113,37 @@ public class ControllerImpl implements Controller {
 	}
 
 	@Override
+	public void addRequestHandler(Request request,
+			InterFrameService interFrameService) {
+		requestMap.put(request, interFrameService);
+	}
+
+	@Override
 	public void removeRequest(Request request) {
-		// TODO Auto-generated method stub
+		requestDelete(request);
 
 	}
 
 	@Override
 	public void pauseRequest(Request request) {
-		// TODO Auto-generated method stub
-		System.out.println("pauza");
-
+		requestDelete(request);
 	}
 
 	@Override
 	public void startRequest(Request request) {
-		// TODO Auto-generated method stub
-		System.out.println("start");
+		requestList.add(request);
+		startNewRequestTask(request);
+	}
 
+	private Timer getTask(Request request) {
+		return (Timer) tasks.get(request);
+	}
+
+	private void requestDelete(Request request) {
+		Timer timer = getTask(request);
+		timer.cancel();
+		tasks.remove(request);
+		requestList.remove(request);
 	}
 
 }
