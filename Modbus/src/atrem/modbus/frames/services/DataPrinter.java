@@ -6,12 +6,12 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
 
-public class FramesPrinter {
+public class DataPrinter {
 
 	public static final String NEW_LINE = System.lineSeparator();
 	private PrintWriter printWriter;
 
-	public FramesPrinter(File file) {
+	public DataPrinter(File file) {
 		printWriter = createPrintWriter(file);
 	}
 

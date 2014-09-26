@@ -49,8 +49,8 @@ public class ModbusSwing extends JFrame {
 	private JMenu existConnItem;
 	private JMenu winMenu;
 
-	public ModbusSwing(Domino domino) {
-		this.domino = domino;
+	public ModbusSwing() {
+
 		initialize();
 	}
 
@@ -266,9 +266,10 @@ public class ModbusSwing extends JFrame {
 
 	private void newConnection() {
 		ConnectionSetupDialog connectionSetupDialog = new ConnectionSetupDialog(
-				domino);
+				this);
 		connectionSetupDialog.setDefaultCloseOperation(closeOper());
 		connectionSetupDialog.setVisible(true);
+		domino = connectionSetupDialog.getDomino();
 	}
 
 	private static int closeOper() {
@@ -299,7 +300,7 @@ public class ModbusSwing extends JFrame {
 
 	private void closeConnection() {
 		try {
-			domino.getController().getConnection().closeConnection();
+			domino.getController().closeConnection();
 			JOptionPane.showMessageDialog(null, "Po³¹czenie zakoñczone.");
 		} catch (Exception exc) {
 			dispose();

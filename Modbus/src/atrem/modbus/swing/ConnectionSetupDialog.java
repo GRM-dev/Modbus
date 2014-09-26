@@ -35,10 +35,14 @@ public class ConnectionSetupDialog extends JDialog {
 	private JPanel panel;
 	private Container contentPane;
 	private Domino domino;
+	private ModbusSwing modbusSwing;
 
-	public ConnectionSetupDialog(Domino domino) {
-		this.domino = domino;
+	public Domino getDomino() {
+		return domino;
+	}
 
+	public ConnectionSetupDialog(ModbusSwing modbusSwing) {
+		this.modbusSwing = modbusSwing;
 		setTitle("Connection Setup");
 		setBounds(300, 300, 350, 220);
 		setResizable(false);
@@ -102,6 +106,7 @@ public class ConnectionSetupDialog extends JDialog {
 			Integer port = Integer.parseInt(portTextField.getText());
 			String ip = ipAddressTextField.getText();
 			boolean connected = false;
+			domino = new Domino(modbusSwing);
 			while (!connected) {
 				try {
 					domino.connect(ip, port);

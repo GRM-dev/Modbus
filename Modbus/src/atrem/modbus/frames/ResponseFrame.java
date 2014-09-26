@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 
-import atrem.modbus.frames.services.FramesPrinter;
+import atrem.modbus.frames.services.DataPrinter;
 
 public class ResponseFrame {
 	private int transactionIdentifier;
@@ -17,7 +17,7 @@ public class ResponseFrame {
 	private SimpleDateFormat timeFormat;
 	private String time;
 	private int dataValue;
-	private int registryValue;
+	private int registryAddress;
 
 	public ResponseFrame() {
 		date = new Date();
@@ -85,18 +85,18 @@ public class ResponseFrame {
 		this.dataValue = dataValue;
 	}
 
-	public int getRegistryValue() {
-		return registryValue;
+	public int getRegistryAddress() {
+		return registryAddress;
 	}
 
-	public void setRegistryValue(int registryValue) {
-		this.registryValue = registryValue;
+	public void setRegistryValue(int registryAddress) {
+		this.registryAddress = registryAddress;
 	}
 
 	@Override
 	public String toString() {
 
-		return "*ResponseFrame* " + time + FramesPrinter.NEW_LINE
+		return "*ResponseFrame* " + time + DataPrinter.NEW_LINE
 				+ " [transactionIdentifier=" + transactionIdentifier
 				+ ", protocolIdentifier=" + protocolIdentifier
 				+ ", unitIdentifier=" + unitIdentifier + ", dataLength="
