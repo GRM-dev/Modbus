@@ -27,8 +27,8 @@ public class ConnectionSetupDialog extends JDialog {
 	private JButton okButton;
 	private JTextField ipAddressTextField;
 	private JTextField portTextField;
-	private static final String DEFAULTIPADRESS = "10.7.7.121";
-	private static final int DEFAULTPORT = 502;
+	private static final String DEFAULT_IP_ADRESS = "10.7.7.121";
+	private static final int DEFAULT_PORT = 502;
 	private JPanel ipAddressPanel, serverPort;
 	private JPanel buttonPanel;
 	private Box box;
@@ -73,8 +73,8 @@ public class ConnectionSetupDialog extends JDialog {
 
 	private Box createQuestionBox() {
 		box = Box.createVerticalBox();
-		ipAddressTextField = new JTextField(DEFAULTIPADRESS);
-		portTextField = new JTextField(String.valueOf(DEFAULTPORT));
+		ipAddressTextField = new JTextField(DEFAULT_IP_ADRESS);
+		portTextField = new JTextField(String.valueOf(DEFAULT_PORT));
 		ipAddressPanel = createDialogPanel("IP Address: ", ipAddressTextField);
 		serverPort = createDialogPanel("Server Port: ", portTextField);
 		box.add(ipAddressPanel);
