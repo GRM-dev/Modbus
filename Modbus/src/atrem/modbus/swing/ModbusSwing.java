@@ -47,8 +47,7 @@ public class ModbusSwing extends JFrame {
 
 	private void initialize() {
 		try {
-			UIManager
-					.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+			UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -58,8 +57,8 @@ public class ModbusSwing extends JFrame {
 		int screenWidth = (int) screenSize.getWidth();
 		int frameWidth = screenWidth / 2 + screenWidth / 8;
 		int frameHeight = frameWidth * 3 / 4;
-		setBounds(screenWidth - screenWidth / 4 - frameWidth, screenHeight / 2
-				- frameHeight / 2, frameWidth, frameHeight);
+		setBounds(screenWidth - screenWidth / 4 - frameWidth, screenHeight / 2 - frameHeight / 2, frameWidth,
+				frameHeight);
 		getContentPane().setLayout(new BorderLayout());
 		getContentPane().add(createContentPanel(), BorderLayout.CENTER);
 		setJMenuBar(createMenuBar());
@@ -91,7 +90,7 @@ public class ModbusSwing extends JFrame {
 
 	private JMenuBar createMenuBar() {
 		connectionStatus = new JLabel(" DISCONNECTED ");
-		connectionStatus.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		connectionStatus.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		connectionStatus.setBorder(BorderFactory.createLineBorder(Color.black));
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.add(createFileMenu());
@@ -104,10 +103,10 @@ public class ModbusSwing extends JFrame {
 	private JMenu createFileMenu() {
 		JMenu menu = new JMenu("File");
 		menu.setMnemonic('f');
-		menu.setFont(new Font("Segoe UI", Font.PLAIN, 22));
+		menu.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		JMenuItem menuItem = new JMenuItem("Exit");
 		menuItem.setMnemonic('e');
-		menuItem.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+		menuItem.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		menuItem.addActionListener(new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -121,10 +120,10 @@ public class ModbusSwing extends JFrame {
 	private JMenu createConnectionMenu() {
 		JMenu menu = new JMenu("Connection");
 		menu.setMnemonic('c');
-		menu.setFont(new Font("Segoe UI", Font.PLAIN, 22));
+		menu.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		JMenuItem menuItem = new JMenuItem("Connect");
 		menuItem.setMnemonic('c');
-		menuItem.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+		menuItem.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		menuItem.addActionListener(new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -139,7 +138,7 @@ public class ModbusSwing extends JFrame {
 
 		JMenuItem closeAllConnMenuItem = new JMenuItem("Close All Connections");
 		closeAllConnMenuItem.setMnemonic('a');
-		closeAllConnMenuItem.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+		closeAllConnMenuItem.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		menu.add(closeAllConnMenuItem);
 
 		return menu;
@@ -148,10 +147,10 @@ public class ModbusSwing extends JFrame {
 	private JMenu createSetupMenu() {
 		JMenu menu = new JMenu("Setup");
 		menu.setMnemonic('s');
-		menu.setFont(new Font("Segoe UI", Font.PLAIN, 22));
+		menu.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		JMenuItem rwDefMenuItem = new JMenuItem("Read/Write Definition...");
 		rwDefMenuItem.setMnemonic('r');
-		rwDefMenuItem.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+		rwDefMenuItem.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		rwDefMenuItem.addActionListener(new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -165,7 +164,7 @@ public class ModbusSwing extends JFrame {
 		menu.add(rwDefMenuItem);
 
 		JMenuItem optionsMenuItem = new JMenuItem("Options");
-		optionsMenuItem.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+		optionsMenuItem.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		optionsMenuItem.setMnemonic('o');
 		menu.add(optionsMenuItem);
 		optionsMenuItem.addActionListener(new AbstractAction() {
@@ -178,8 +177,7 @@ public class ModbusSwing extends JFrame {
 	}
 
 	private void newConnection() {
-		ConnectionSetupDialog connectionSetupDialog = new ConnectionSetupDialog(
-				domino);
+		ConnectionSetupDialog connectionSetupDialog = new ConnectionSetupDialog(domino);
 		connectionSetupDialog.setDefaultCloseOperation(test());
 		connectionSetupDialog.setVisible(true);
 	}
@@ -190,8 +188,7 @@ public class ModbusSwing extends JFrame {
 
 	private void setupDefinition() {
 		try {
-			ReadWriteDefinitionDialog readWriteDefinitionDialog = new ReadWriteDefinitionDialog(
-					this);
+			ReadWriteDefinitionDialog readWriteDefinitionDialog = new ReadWriteDefinitionDialog(this);
 			readWriteDefinitionDialog.setDefaultCloseOperation(test());
 			readWriteDefinitionDialog.setVisible(true);
 		} catch (Exception exception) {
@@ -200,8 +197,7 @@ public class ModbusSwing extends JFrame {
 	}
 
 	private String createName() {
-		return "Modbus"
-				+ ((Integer) (internalFramesList.size() + 1)).toString();
+		return "Modbus" + ((Integer) (internalFramesList.size() + 1)).toString();
 	}
 
 	public List<JInternalFrame> getFramesList() {
