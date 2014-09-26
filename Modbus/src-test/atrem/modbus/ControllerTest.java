@@ -14,7 +14,7 @@ public class ControllerTest {
 	@Test
 	public void DominoTest() throws InterruptedException {
 		Connection connection = createConnection();
-		Controller controller = new Controller();
+		ControllerImpl controller = new ControllerImpl();
 		connection.setController(controller);
 
 		@SuppressWarnings("unused")

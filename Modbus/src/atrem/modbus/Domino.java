@@ -10,7 +10,7 @@ import atrem.modbus.swing.ModbusSwing;
 
 public class Domino {
 
-	private Controller controller;
+	private ControllerImpl controller;
 	ModbusSwing modbusSwing;
 
 	public static void main(String[] args) {
@@ -22,7 +22,7 @@ public class Domino {
 	public Domino() {
 	}
 
-	public Controller getController() {
+	public ControllerImpl getController() {
 		return controller;
 	}
 
@@ -39,8 +39,8 @@ public class Domino {
 	public void connect(String ip, int port) // TODO wyjatek obslugiwany w
 												// prezenterze
 			throws IOException {
-
-		controller = new Controller();
+		modbusSwing.getProgressBar().setValue(50);
+		controller = new ControllerImpl();
 		controller.addDeviceListener(new DeviceListener() {
 
 			@Override

@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -20,6 +21,13 @@ import javax.swing.border.EtchedBorder;
 import atrem.modbus.Request;
 
 public class ReadWriteDefinitionDialog extends JDialog {
+
+	public static final String DEFAULTSLAVEID = "5";
+	public static final int DEFAULTFUNCTIONNUBER = 2;
+	public static final String DEFAULTSTARTINGADDRESS = "3027";
+	public static final String DEFAULTQUANTITY = "2";
+	public static final String DEFAULTSCANRATE = "1000";
+
 	private final Box contentBox = Box.createHorizontalBox();
 	private JButton cancelButton;
 	private JButton okButton;
@@ -28,13 +36,13 @@ public class ReadWriteDefinitionDialog extends JDialog {
 	private JTextField startingAddressTextField;
 	private JTextField quantityTextField;
 	private JTextField scanRateTextField;
+
 	private ModbusSwing modbusSwing;
-	private String[] functionNames = {"01 Read Coils",
+	private static final String[] FUNCTIONNAMES = { "01 Read Coils",
 			"02 Read Discrete Inputs", "03 Read Holding Registers",
 			"04 Read Input Registers", "05 Write Single Coil",
-			"06 Write Single Register"};
-
-	// private Domino domino;
+			"06 Write Single Register" };
+	private final JButton logOptionsButton = new JButton("Log Options");
 
 	public ReadWriteDefinitionDialog(ModbusSwing modbusSwing) {
 		this.modbusSwing = modbusSwing;
@@ -54,12 +62,27 @@ public class ReadWriteDefinitionDialog extends JDialog {
 	private JPanel createButtonPanel() {
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
-		okButton = new JButton("OK");
-		okButton.setMnemonic('o');
 		cancelButton = new JButton("Cancel");
 		cancelButton.setMnemonic('c');
-		okButton.addActionListener(new OkButtonListener());
 		cancelButton.addActionListener(new CancelButtonListener());
+		logOptionsButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO dodac kod pawel
+			}
+		});
+
+		JCheckBox chckbxNewCheckBox = new JCheckBox("Save to Log");
+		chckbxNewCheckBox.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		buttonPanel.add(chckbxNewCheckBox);
+		buttonPanel.add(logOptionsButton);
+		okButton = new JButton("OK");
+		okButton.setMnemonic('o');
+		okButton.addActionListener(new OkButtonListener());
 		buttonPanel.add(okButton);
 		buttonPanel.add(cancelButton);
 		return buttonPanel;
@@ -67,11 +90,11 @@ public class ReadWriteDefinitionDialog extends JDialog {
 
 	private Box createQuestionBox() {
 		Box box = Box.createVerticalBox();
-		slaveIdTextField = new JTextField("5");
-		functionCodeComboBox = new JComboBox(functionNames);
-		startingAddressTextField = new JTextField("3027");
-		quantityTextField = new JTextField("2");
-		scanRateTextField = new JTextField("10000");
+		slaveIdTextField = new JTextField(DEFAULTSLAVEID);
+		functionCodeComboBox = new JComboBox(FUNCTIONNAMES);
+		startingAddressTextField = new JTextField(DEFAULTSTARTINGADDRESS);
+		quantityTextField = new JTextField(DEFAULTQUANTITY);
+		scanRateTextField = new JTextField(DEFAULTSCANRATE);
 		box.add(createDialogPanel("Slave ID", slaveIdTextField));
 		box.add(createFunctionPanel(functionCodeComboBox));
 		box.add(createDialogPanel("First Registry Address:",
@@ -84,7 +107,7 @@ public class ReadWriteDefinitionDialog extends JDialog {
 
 	private JPanel createFunctionPanel(JComboBox comboBox) {
 		JLabel label = new JLabel("Function:");
-		comboBox.setSelectedIndex(2);
+		comboBox.setSelectedIndex(DEFAULTFUNCTIONNUBER);
 		comboBox.setEditable(false);
 		JPanel panel = createEmptyPanel();
 		panel.add(label);
@@ -138,6 +161,7 @@ public class ReadWriteDefinitionDialog extends JDialog {
 			InterFrame interFrame = modbusSwing
 					.createInterFrame(startingAddressTextField.getText());
 			modbusSwing.initializeInterFrame(interFrame, request);
+			modbusSwing.getProgressBar().setValue(100);
 			dispose();
 		}
 	}

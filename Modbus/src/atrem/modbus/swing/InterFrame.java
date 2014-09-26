@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -14,7 +15,8 @@ import javax.swing.SwingUtilities;
 import atrem.modbus.Controller;
 import atrem.modbus.Domino;
 import atrem.modbus.Request;
-import atrem.modbus.RequestListener;
+import atrem.modbus.RequestHandler;
+import atrem.modbus.RequestService;
 import atrem.modbus.frames.ResponseFrame;
 
 public class InterFrame extends JInternalFrame {
@@ -22,11 +24,38 @@ public class InterFrame extends JInternalFrame {
 	private TableDemo tableDemo;
 	public Domino domino;
 	private boolean pauseButton = true;
-	private JButton btnPause = new JButton("Pause");
-	private JButton btnStart = new JButton("Start");
+	private JButton btnStart;
+	private JButton btnPause;
+	private JComboBox<String> byteOrderComboBox;
+	private static final String[] BYTEORDER = {"long ABCD", "long CDAB",
+			"long BADC", "long DCBA", "float ABCD", "float CDAB", "float BADC",
+			"float DCBA"};
+	RequestService requestService;
 
 	public InterFrame(String title, Domino domino) {
 		this.domino = domino;
+		initialize();
+		tableDemo = new TableDemo();
+		getContentPane().add(tableDemo);
+		getContentPane().add(createPanel(), BorderLayout.SOUTH);
+		pack();
+
+	}
+
+	private JPanel createPanel() {
+
+		JPanel panel = new JPanel();
+		btnStart = createStartButton();
+		panel.add(btnStart);
+		btnPause = createPauseButton();
+		panel.add(btnPause);
+		byteOrderComboBox = new JComboBox(BYTEORDER);
+		panel.add(byteOrderComboBox);
+
+		return panel;
+	}
+
+	private void initialize() {
 		setResizable(true);
 		setMinimumSize(new Dimension(100, 60));
 		setClosable(true);
@@ -34,58 +63,50 @@ public class InterFrame extends JInternalFrame {
 		setTitle(title);
 		setLocation(10, 10);
 		getContentPane().setLayout(new BorderLayout());
-
-		JPanel panel = new JPanel();
-		getContentPane().add(panel, BorderLayout.SOUTH);
-		// TODO te action listenery wygladaja poprostu zle
-
-		btnPause.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO akcja do napisania dla Pause button
-				System.out.println("stan klikniêcia +" + pauseButton);
-				pauseButton = !pauseButton;
-				btnPause.setEnabled(pauseButton);
-				btnStart.setEnabled(!pauseButton);
-			}
-		});
-
-		panel.add(btnPause);
-		btnStart.setEnabled(!pauseButton);
-		btnStart.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				pauseButton = !pauseButton;
-				btnPause.setEnabled(pauseButton);
-				btnStart.setEnabled(!pauseButton);
-			}
-		});
-
-		panel.add(btnStart);
-		tableDemo = new TableDemo();
-		getContentPane().add(tableDemo);
+		setMaximizable(true);
+		setVisible(true);
 		try {
 			setSelected(true);
 		} catch (PropertyVetoException e) {
 			e.printStackTrace();
 		}
-		setMaximizable(true);
-
-		setVisible(true);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		pack();
+	}
 
+	private JButton createStartButton() {
+		JButton button = new JButton("Start");
+		button.setEnabled(!pauseButton);
+		button.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				requestService.pauseRequest();
+				pauseButton = !pauseButton;
+				btnPause.setEnabled(pauseButton);
+				button.setEnabled(!pauseButton);
+			}
+		});
+		return button;
+	}
+
+	private JButton createPauseButton() {
+		JButton button = new JButton("Pause");
+		button.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				requestService.startRequest();
+				pauseButton = !pauseButton;
+				button.setEnabled(pauseButton);
+				btnStart.setEnabled(!pauseButton);
+			}
+		});
+		return button;
 	}
 
 	public void initializeNewRequest(Request request) {
 		Controller controller = domino.getController();
-		controller.addRequest(request, new RequestListener() {
-			@Override
-			public void receiveFrame(ResponseFrame responseFrame) {
-				addDataToTable(responseFrame);
-			}
-		});
-		controller.startNewRequestTask(request);
+		requestService = new RequestHandler(request, controller, this);
+		requestService.startRequest();
+
 	}
 
 	public TableDemo getTableDemo() {
@@ -96,7 +117,7 @@ public class InterFrame extends JInternalFrame {
 		this.tableDemo = tableDemo;
 	}
 
-	private void addDataToTable(final ResponseFrame responseFrame) {
+	public void addDataToTable(final ResponseFrame responseFrame) {
 		SwingUtilities.invokeLater(new Runnable() {
 
 			@Override
