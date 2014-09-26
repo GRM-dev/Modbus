@@ -27,7 +27,7 @@ public class FrameStorage {
 		sentFrames = new LinkedList<RequestFrame>();
 		receivedFrames = new LinkedList<ResponseFrame>();
 		framePairsList = new LinkedList<FramePairs>();
-		framesPrinter = new FramesPrinter();
+
 		pairedFrameListenerList = new ArrayList<PairedFrameListener>();
 
 	}
@@ -80,7 +80,7 @@ public class FrameStorage {
 		for (RequestFrame sentFramesTmp : sentFrames) {
 			compareWithResponseFrame(sentFramesTmp);
 			if (hasNoResponse(sentFramesTmp)) {
-				framesPrinter.saveNoResponseFrame("" + sentFramesTmp);
+
 				sentFrames.remove(sentFramesTmp);
 			}
 		}
@@ -112,7 +112,7 @@ public class FrameStorage {
 		framePairsList.add(framePairs);
 		lastResponseFrame = responseFrame;
 		lastResponseFrame.setRegistryValue(requestFrame.getStartingAdress());
-		framesPrinter.savePairedFrame("" + framePairs);
+
 		Domino.showRequestAndResponse(framePairs);
 
 	}

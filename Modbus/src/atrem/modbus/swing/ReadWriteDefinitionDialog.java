@@ -36,7 +36,7 @@ public class ReadWriteDefinitionDialog extends JDialog {
 	private JTextField startingAddressTextField;
 	private JTextField quantityTextField;
 	private JTextField scanRateTextField;
-
+	private LogOptionWindow logOptionWindow;
 	private ModbusSwing modbusSwing;
 	private static final String[] FUNCTION_NAMES = { "01 Read Coils",
 			"02 Read Discrete Inputs", "03 Read Holding Registers",
@@ -68,11 +68,9 @@ public class ReadWriteDefinitionDialog extends JDialog {
 		logOptionsButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				LogOptionWindow logOptionWindow = new LogOptionWindow(
+				logOptionWindow = new LogOptionWindow(
 						ReadWriteDefinitionDialog.this);
-				// setVisible(false); // TODO zapytac lukaszas
 				logOptionWindow.setEnabled(true);
-
 				logOptionWindow.setVisible(true);
 
 			}
@@ -167,8 +165,10 @@ public class ReadWriteDefinitionDialog extends JDialog {
 
 			InterFrame interFrame = modbusSwing
 					.createInterFrame(startingAddressTextField.getText());
+			interFrame.createDataPrinter(logOptionWindow.getLogFile());
 			modbusSwing.initializeInterFrame(interFrame, request);
 			modbusSwing.getProgressBar().setValue(100);
+
 			dispose();
 		}
 	}

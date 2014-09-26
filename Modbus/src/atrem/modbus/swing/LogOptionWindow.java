@@ -13,6 +13,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextPane;
 
 public class LogOptionWindow extends JDialog {
+	private File logFile;
+
 	public LogOptionWindow(Window parentWindow) {
 		super(parentWindow);
 		setModal(true);
@@ -33,7 +35,11 @@ public class LogOptionWindow extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser fileChooser = new JFileChooser();
 				fileChooser.setCurrentDirectory(new File("."));
-				fileChooser.showSaveDialog(null);
+				fileChooser.showOpenDialog(null);
+
+				System.out.println();
+				setLogFile(fileChooser.getSelectedFile());
+				dispose();
 
 			}
 		});
@@ -53,4 +59,13 @@ public class LogOptionWindow extends JDialog {
 		filters.setBounds(0, 0, 434, 128);
 		getContentPane().add(filters);
 	}
+
+	public File getLogFile() {
+		return logFile;
+	}
+
+	public void setLogFile(File logFile) {
+		this.logFile = logFile;
+	}
+
 }
