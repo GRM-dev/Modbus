@@ -20,6 +20,7 @@ public class StatusBar extends JPanel {
 	private JPanel rightPanel;
 	private JPanel leftPanel;
 	private JProgressBar progressBar;
+	private JLabel connectionStatus;
 
 	/**
 	 * @param contentPane
@@ -36,9 +37,14 @@ public class StatusBar extends JPanel {
 		leftPanel.setLayout(fl_leftPanel);
 
 		statusLabel = new JLabel("status");
-		statusLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		statusLabel.setFont(new Font(ModbusSwing.FONT, Font.PLAIN, 20));
 		statusLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		leftPanel.add(statusLabel);
+
+		setConnectionStatus(new JLabel(" DISCONNECTED "));
+		getConnectionStatus().setFont(
+				new Font(ModbusSwing.FONT, Font.PLAIN, ModbusSwing.FONT_SIZE));
+		leftPanel.add(getConnectionStatus());
 
 		progressBar = new JProgressBar();
 		progressBar.setStringPainted(true);
@@ -86,5 +92,13 @@ public class StatusBar extends JPanel {
 		y = getHeight() - 1;
 		g.setColor(new Color(221, 221, 220));
 		g.drawLine(0, y, getWidth(), y);
+	}
+
+	public JLabel getConnectionStatus() {
+		return connectionStatus;
+	}
+
+	public void setConnectionStatus(JLabel connectionStatus) {
+		this.connectionStatus = connectionStatus;
 	}
 }
