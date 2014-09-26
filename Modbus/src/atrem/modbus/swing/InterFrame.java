@@ -23,7 +23,7 @@ import atrem.modbus.Request;
 import atrem.modbus.RequestHandler;
 import atrem.modbus.RequestService;
 import atrem.modbus.frames.ResponseFrame;
-import atrem.modbus.frames.services.FramesPrinter;
+import atrem.modbus.frames.services.DataPrinter;
 
 public class InterFrame extends JInternalFrame implements InterFrameService {
 	private TableDemo tableDemo;
@@ -36,7 +36,7 @@ public class InterFrame extends JInternalFrame implements InterFrameService {
 			"long BADC", "long DCBA", "float ABCD", "float CDAB", "float BADC",
 			"float DCBA" };
 	RequestService requestService;
-	private FramesPrinter framePrinter;
+	private DataPrinter framePrinter;
 
 	public InterFrame(String title, Domino domino) {
 		this.domino = domino;
@@ -50,8 +50,7 @@ public class InterFrame extends JInternalFrame implements InterFrameService {
 	}
 
 	public void createDataPrinter(File file) {
-		framePrinter = new FramesPrinter(file);
-		JOptionPane.showMessageDialog(null, "ok");
+		framePrinter = new DataPrinter(file);
 
 	}
 
@@ -135,7 +134,8 @@ public class InterFrame extends JInternalFrame implements InterFrameService {
 				Data nextData = new Data(responseFrame.getRegistryValue(),
 						responseFrame.getDataValue());
 				tableDemo.getMyTableModel().addRow(nextData);
-				framePrinter.writeToLog("" + nextData);
+				if (framePrinter != null)
+					framePrinter.writeToLog("" + nextData);
 
 			}
 		});
