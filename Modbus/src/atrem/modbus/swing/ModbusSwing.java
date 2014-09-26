@@ -9,6 +9,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.ArrayList;
@@ -38,7 +39,7 @@ import atrem.modbus.Request;
  */
 public class ModbusSwing extends JFrame {
 
-	public static final int FONTSIZE = 12;
+	public static final int FONT_SIZE = 12;
 	public static final String FONT = "ARIAL";
 	private JDesktopPane desk;
 	private List<JInternalFrame> internalFramesList = new ArrayList<JInternalFrame>();
@@ -106,29 +107,40 @@ public class ModbusSwing extends JFrame {
 
 	private JMenuBar createMenuBar() {
 		connectionStatus = new JLabel(" DISCONNECTED ");
-		connectionStatus.setFont(new Font(FONT, Font.PLAIN, FONTSIZE));
+		connectionStatus.setFont(new Font(FONT, Font.PLAIN, FONT_SIZE));
 		// connectionStatus.setBorder(BorderFactory.createLineBorder(Color.black));
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.add(createFileMenu());
 		menuBar.add(createConnectionMenu());
 		menuBar.add(createSetupMenu());
-
-		JMenu helpMenu = new JMenu("Help");
-		menuBar.add(helpMenu);
-
-		JMenuItem aboutMenuItem = new JMenuItem("About ...");
-		helpMenu.add(aboutMenuItem);
+		menuBar.add(createHelpMenu());
+		createHelpMenu();
 		menuBar.add(connectionStatus);
 		return menuBar;
+	}
+
+	private JMenu createHelpMenu() {
+		JMenu helpMenu = new JMenu("Help");
+		helpMenu.setMnemonic('h');
+		JMenuItem aboutMenuItem = new JMenuItem("About ...");
+		aboutMenuItem.setMnemonic('a');
+		aboutMenuItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				AboutDialog.open();
+			}
+		});
+		helpMenu.add(aboutMenuItem);
+		return helpMenu;
 	}
 
 	private JMenu createFileMenu() {
 		JMenu menu = new JMenu("File");
 		menu.setMnemonic('f');
-		menu.setFont(new Font("Segoe UI", Font.PLAIN, FONTSIZE));
+		menu.setFont(new Font("Segoe UI", Font.PLAIN, FONT_SIZE));
 		JMenuItem menuItem = new JMenuItem("Exit");
 		menuItem.setMnemonic('e');
-		menuItem.setFont(new Font(FONT, Font.PLAIN, FONTSIZE));
+		menuItem.setFont(new Font(FONT, Font.PLAIN, FONT_SIZE));
 		menuItem.addActionListener(new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -142,10 +154,10 @@ public class ModbusSwing extends JFrame {
 	private JMenu createConnectionMenu() {
 		JMenu menu = new JMenu("Connection");
 		menu.setMnemonic('c');
-		menu.setFont(new Font(FONT, Font.PLAIN, FONTSIZE));
+		menu.setFont(new Font(FONT, Font.PLAIN, FONT_SIZE));
 		JMenuItem menuItem = new JMenuItem("Connect");
 		menuItem.setMnemonic('c');
-		menuItem.setFont(new Font(FONT, Font.PLAIN, FONTSIZE));
+		menuItem.setFont(new Font(FONT, Font.PLAIN, FONT_SIZE));
 		menuItem.addActionListener(new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -160,7 +172,7 @@ public class ModbusSwing extends JFrame {
 
 		JMenuItem closeAllConnMenuItem = new JMenuItem("Close All Connections");
 		closeAllConnMenuItem.setMnemonic('a');
-		closeAllConnMenuItem.setFont(new Font(FONT, Font.PLAIN, FONTSIZE));
+		closeAllConnMenuItem.setFont(new Font(FONT, Font.PLAIN, FONT_SIZE));
 		menu.add(closeAllConnMenuItem);
 
 		return menu;
@@ -169,10 +181,10 @@ public class ModbusSwing extends JFrame {
 	private JMenu createSetupMenu() {
 		JMenu menu = new JMenu("Setup");
 		menu.setMnemonic('s');
-		menu.setFont(new Font(FONT, Font.PLAIN, FONTSIZE));
+		menu.setFont(new Font(FONT, Font.PLAIN, FONT_SIZE));
 		JMenuItem rwDefMenuItem = new JMenuItem("Read/Write Definition...");
 		rwDefMenuItem.setMnemonic('r');
-		rwDefMenuItem.setFont(new Font(FONT, Font.PLAIN, FONTSIZE));
+		rwDefMenuItem.setFont(new Font(FONT, Font.PLAIN, FONT_SIZE));
 		rwDefMenuItem.addActionListener(new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -186,7 +198,7 @@ public class ModbusSwing extends JFrame {
 		menu.add(rwDefMenuItem);
 
 		JMenuItem optionsMenuItem = new JMenuItem("Options");
-		optionsMenuItem.setFont(new Font(FONT, Font.PLAIN, FONTSIZE));
+		optionsMenuItem.setFont(new Font(FONT, Font.PLAIN, FONT_SIZE));
 		optionsMenuItem.setMnemonic('o');
 		menu.add(optionsMenuItem);
 		optionsMenuItem.addActionListener(new AbstractAction() {
