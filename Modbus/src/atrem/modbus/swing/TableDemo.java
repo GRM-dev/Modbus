@@ -39,8 +39,8 @@ public class TableDemo extends JPanel {
 	class MyTableModel extends AbstractTableModel {
 
 		// private Object[][] data = {{1, 1, 1}, {2, 2, 2}, {3, 3, 3}};
-		private String[] columnNames = {"No.", "Registry Address",
-				"Registry Value"};
+		private String[] columnNames = { "No.", "Registry Address",
+				"Registry Value" };
 		private List<Data> dataList = new ArrayList<Data>();
 
 		@Override
@@ -75,6 +75,7 @@ public class TableDemo extends JPanel {
 			return getValueAt(0, c).getClass();
 		}
 
+		// TODO zapis do pliku
 		public void addRow(Data nextData) {
 			dataList.add(nextData);
 			fireTableRowsInserted(dataList.size() - 1, dataList.size());
