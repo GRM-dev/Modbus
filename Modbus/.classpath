@@ -9,5 +9,6 @@
 	<classpathentry kind="lib" path="lib/ojdbc6-93163.jar"/>
 	<classpathentry kind="lib" path="lib/jmf.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.7.0_51"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

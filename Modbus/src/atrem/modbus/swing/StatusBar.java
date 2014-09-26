@@ -36,8 +36,9 @@ public class StatusBar extends JPanel {
 		FlowLayout fl_leftPanel = new FlowLayout(FlowLayout.LEFT, 0, 0);
 		leftPanel.setLayout(fl_leftPanel);
 
-		statusLabel = new JLabel("status");
-		statusLabel.setFont(new Font(ModbusSwing.FONT, Font.PLAIN, 20));
+		statusLabel = new JLabel("Request Status:");
+		statusLabel.setFont(new Font(ModbusSwing.FONT, Font.PLAIN,
+				ModbusSwing.FONT_SIZE));
 		statusLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		leftPanel.add(statusLabel);
 
@@ -69,7 +70,6 @@ public class StatusBar extends JPanel {
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-
 		int y = 0;
 		g.setColor(new Color(156, 154, 140));
 		g.drawLine(0, y, getWidth(), y);

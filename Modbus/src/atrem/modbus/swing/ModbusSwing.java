@@ -27,6 +27,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.MenuEvent;
+import javax.swing.event.MenuListener;
 
 import atrem.modbus.Domino;
 import atrem.modbus.Request;
@@ -44,6 +46,8 @@ public class ModbusSwing extends JFrame {
 	private Container contentPane;
 	private JProgressBar progressBar;
 	private StatusBar statusPanel;
+	private JMenu existConnItem;
+	private JMenu winMenu;
 
 	public ModbusSwing(Domino domino) {
 		this.domino = domino;
@@ -107,8 +111,38 @@ public class ModbusSwing extends JFrame {
 		menuBar.add(createFileMenu());
 		menuBar.add(createConnectionMenu());
 		menuBar.add(createSetupMenu());
+		menuBar.add(createWindowMenu());
 		menuBar.add(createHelpMenu());
 		return menuBar;
+	}
+
+	private JMenu createWindowMenu() {
+		winMenu = new JMenu("Window");
+		winMenu.setMnemonic('w');
+		winMenu.setFont(new Font(FONT, Font.PLAIN, FONT_SIZE));
+		JMenuItem framesListMenuItem = new JMenuItem("List of Requests:");
+		framesListMenuItem.setFont(new Font(FONT, Font.PLAIN, FONT_SIZE));
+		winMenu.addMenuListener(new MenuListener() {
+			@Override
+			public void menuSelected(MenuEvent e) {
+				for (JInternalFrame frame : internalFramesList) {
+					winMenu.add(new JMenuItem("Request: " + frame.getTitle()));
+				}
+				winMenu.repaint();
+			}
+
+			@Override
+			public void menuDeselected(MenuEvent e) {
+				winMenu.removeAll();
+			}
+
+			@Override
+			public void menuCanceled(MenuEvent e) {
+				winMenu.removeAll();
+			}
+		});
+		winMenu.add(framesListMenuItem);
+		return winMenu;
 	}
 
 	private JMenu createHelpMenu() {
@@ -129,16 +163,15 @@ public class ModbusSwing extends JFrame {
 	private JMenu createFileMenu() {
 		JMenu menu = new JMenu("File");
 		menu.setMnemonic('f');
+		menu.setFont(new Font("Segoe UI", Font.PLAIN, FONT_SIZE));
 
 		JMenuItem exitItem = new JMenuItem("Exit");
 		exitItem.setMnemonic('e');
 
-		menu.setFont(new Font("Segoe UI", Font.PLAIN, FONT_SIZE));
 		JMenuItem menuItem = new JMenuItem("Exit");
 		menuItem.setMnemonic('e');
 		menuItem.setFont(new Font(FONT, Font.PLAIN, FONT_SIZE));
 		menuItem.addActionListener(new AbstractAction() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				dispose();
@@ -167,13 +200,21 @@ public class ModbusSwing extends JFrame {
 		});
 		menu.add(newConnItem);
 
-		JMenuItem existConnItem = new JMenuItem("Existing Connections");
+		existConnItem = new JMenu("Existing Connections");
 		existConnItem.setMnemonic('e');
 		existConnItem.setFont(new Font(FONT, Font.PLAIN, FONT_SIZE));
-		existConnItem.addActionListener(new ActionListener() {
+		existConnItem.addMenuListener(new MenuListener() {
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Stworzenie listy polaczen.
+			public void menuSelected(MenuEvent e) {
+			}
+
+			@Override
+			public void menuDeselected(MenuEvent e) {
+			}
+
+			@Override
+			public void menuCanceled(MenuEvent e) {
+				existConnItem.removeAll();
 			}
 		});
 		menu.add(existConnItem);
@@ -191,7 +232,6 @@ public class ModbusSwing extends JFrame {
 
 		return menu;
 	}
-
 	private JMenu createSetupMenu() {
 		JMenu menu = new JMenu("Setup");
 		menu.setMnemonic('s');
