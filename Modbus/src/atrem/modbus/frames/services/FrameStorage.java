@@ -15,7 +15,7 @@ import atrem.modbus.frames.ResponseFrame;
 public class FrameStorage {
 
 	private List<RequestFrame> sentFrames;
-	private FramesPrinter framesPrinter;
+	private DataPrinter framesPrinter;
 	private List<ResponseFrame> receivedFrames;
 	private List<FramePairs> framePairsList;
 	private ExecutorService executor;
