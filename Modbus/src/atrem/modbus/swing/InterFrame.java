@@ -162,6 +162,8 @@ public class InterFrame extends JInternalFrame implements InterFrameService {
 		@Override
 		public void componentMoved(ComponentEvent e) {
 			// TODO Auto-generated method stub
+			JOptionPane.showMessageDialog(null, "zostaw!", TITLE_PROPERTY,
+					JOptionPane.ERROR_MESSAGE);// (null, "zostaw!");
 
 		}
 
