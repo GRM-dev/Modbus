@@ -2,6 +2,8 @@ package atrem.modbus.swing;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -13,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.AbstractAction;
-import javax.swing.BorderFactory;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
@@ -23,6 +24,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
@@ -35,10 +37,15 @@ import atrem.modbus.Request;
  * Main Frame - JFrame - of program
  */
 public class ModbusSwing extends JFrame {
+
+	public static final int FONTSIZE = 12;
+	public static final String FONT = "ARIAL";
 	private JDesktopPane desk;
 	private List<JInternalFrame> internalFramesList = new ArrayList<JInternalFrame>();
 	private Domino domino;
 	private JLabel connectionStatus;
+	private Container contentPane;
+	private JProgressBar progressBar;
 
 	public ModbusSwing(Domino domino) {
 		this.domino = domino;
@@ -47,25 +54,34 @@ public class ModbusSwing extends JFrame {
 
 	private void initialize() {
 		try {
-			UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+			UIManager
+					.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		contentPane = getContentPane();
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		setTitle("ModbusExplorer");
 		int screenHeight = (int) screenSize.getHeight();
 		int screenWidth = (int) screenSize.getWidth();
 		int frameWidth = screenWidth / 2 + screenWidth / 8;
 		int frameHeight = frameWidth * 3 / 4;
-		setBounds(screenWidth - screenWidth / 4 - frameWidth, screenHeight / 2 - frameHeight / 2, frameWidth,
-				frameHeight);
-		getContentPane().setLayout(new BorderLayout());
-		getContentPane().add(createContentPanel(), BorderLayout.CENTER);
+		setBounds(screenWidth - screenWidth / 4 - frameWidth, screenHeight / 2
+				- frameHeight / 2, frameWidth, frameHeight);
+		contentPane.setLayout(new BorderLayout());
+		contentPane.add(createContentPanel(), BorderLayout.CENTER);
+		contentPane.add(createStatusPanel(), BorderLayout.SOUTH);
 		setJMenuBar(createMenuBar());
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setVisible(true);
 		addWindowListener(new ModbusFrameListener());
 		SwingUtilities.updateComponentTreeUI(this);
+	}
+
+	private Component createStatusPanel() {
+		StatusBar statusPanel = new StatusBar();
+		progressBar = statusPanel.getProgressBar();
+		return statusPanel;
 	}
 
 	private JPanel createContentPanel() {
@@ -90,12 +106,18 @@ public class ModbusSwing extends JFrame {
 
 	private JMenuBar createMenuBar() {
 		connectionStatus = new JLabel(" DISCONNECTED ");
-		connectionStatus.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		connectionStatus.setBorder(BorderFactory.createLineBorder(Color.black));
+		connectionStatus.setFont(new Font(FONT, Font.PLAIN, FONTSIZE));
+		// connectionStatus.setBorder(BorderFactory.createLineBorder(Color.black));
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.add(createFileMenu());
 		menuBar.add(createConnectionMenu());
 		menuBar.add(createSetupMenu());
+
+		JMenu helpMenu = new JMenu("Help");
+		menuBar.add(helpMenu);
+
+		JMenuItem aboutMenuItem = new JMenuItem("About ...");
+		helpMenu.add(aboutMenuItem);
 		menuBar.add(connectionStatus);
 		return menuBar;
 	}
@@ -103,10 +125,10 @@ public class ModbusSwing extends JFrame {
 	private JMenu createFileMenu() {
 		JMenu menu = new JMenu("File");
 		menu.setMnemonic('f');
-		menu.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		menu.setFont(new Font("Segoe UI", Font.PLAIN, FONTSIZE));
 		JMenuItem menuItem = new JMenuItem("Exit");
 		menuItem.setMnemonic('e');
-		menuItem.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		menuItem.setFont(new Font(FONT, Font.PLAIN, FONTSIZE));
 		menuItem.addActionListener(new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -120,10 +142,10 @@ public class ModbusSwing extends JFrame {
 	private JMenu createConnectionMenu() {
 		JMenu menu = new JMenu("Connection");
 		menu.setMnemonic('c');
-		menu.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		menu.setFont(new Font(FONT, Font.PLAIN, FONTSIZE));
 		JMenuItem menuItem = new JMenuItem("Connect");
 		menuItem.setMnemonic('c');
-		menuItem.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		menuItem.setFont(new Font(FONT, Font.PLAIN, FONTSIZE));
 		menuItem.addActionListener(new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -138,7 +160,7 @@ public class ModbusSwing extends JFrame {
 
 		JMenuItem closeAllConnMenuItem = new JMenuItem("Close All Connections");
 		closeAllConnMenuItem.setMnemonic('a');
-		closeAllConnMenuItem.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		closeAllConnMenuItem.setFont(new Font(FONT, Font.PLAIN, FONTSIZE));
 		menu.add(closeAllConnMenuItem);
 
 		return menu;
@@ -147,10 +169,10 @@ public class ModbusSwing extends JFrame {
 	private JMenu createSetupMenu() {
 		JMenu menu = new JMenu("Setup");
 		menu.setMnemonic('s');
-		menu.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		menu.setFont(new Font(FONT, Font.PLAIN, FONTSIZE));
 		JMenuItem rwDefMenuItem = new JMenuItem("Read/Write Definition...");
 		rwDefMenuItem.setMnemonic('r');
-		rwDefMenuItem.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		rwDefMenuItem.setFont(new Font(FONT, Font.PLAIN, FONTSIZE));
 		rwDefMenuItem.addActionListener(new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -164,7 +186,7 @@ public class ModbusSwing extends JFrame {
 		menu.add(rwDefMenuItem);
 
 		JMenuItem optionsMenuItem = new JMenuItem("Options");
-		optionsMenuItem.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		optionsMenuItem.setFont(new Font(FONT, Font.PLAIN, FONTSIZE));
 		optionsMenuItem.setMnemonic('o');
 		menu.add(optionsMenuItem);
 		optionsMenuItem.addActionListener(new AbstractAction() {
@@ -177,7 +199,8 @@ public class ModbusSwing extends JFrame {
 	}
 
 	private void newConnection() {
-		ConnectionSetupDialog connectionSetupDialog = new ConnectionSetupDialog(domino);
+		ConnectionSetupDialog connectionSetupDialog = new ConnectionSetupDialog(
+				domino);
 		connectionSetupDialog.setDefaultCloseOperation(test());
 		connectionSetupDialog.setVisible(true);
 	}
@@ -188,7 +211,8 @@ public class ModbusSwing extends JFrame {
 
 	private void setupDefinition() {
 		try {
-			ReadWriteDefinitionDialog readWriteDefinitionDialog = new ReadWriteDefinitionDialog(this);
+			ReadWriteDefinitionDialog readWriteDefinitionDialog = new ReadWriteDefinitionDialog(
+					this);
 			readWriteDefinitionDialog.setDefaultCloseOperation(test());
 			readWriteDefinitionDialog.setVisible(true);
 		} catch (Exception exception) {
@@ -197,7 +221,8 @@ public class ModbusSwing extends JFrame {
 	}
 
 	private String createName() {
-		return "Modbus" + ((Integer) (internalFramesList.size() + 1)).toString();
+		return "Modbus"
+				+ ((Integer) (internalFramesList.size() + 1)).toString();
 	}
 
 	public List<JInternalFrame> getFramesList() {
@@ -206,6 +231,14 @@ public class ModbusSwing extends JFrame {
 
 	public void setFramesList(List<JInternalFrame> framesList) {
 		this.internalFramesList = framesList;
+	}
+
+	public JProgressBar getProgressBar() {
+		return this.progressBar;
+	}
+
+	public void setProgressBar(JProgressBar progressBar) {
+		this.progressBar = progressBar;
 	}
 
 	public void setStatus(String status, Color color) {
