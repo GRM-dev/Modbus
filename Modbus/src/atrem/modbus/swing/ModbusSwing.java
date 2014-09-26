@@ -17,7 +17,6 @@ import javax.swing.AbstractAction;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -42,9 +41,9 @@ public class ModbusSwing extends JFrame {
 	private JDesktopPane desk;
 	private List<JInternalFrame> internalFramesList = new ArrayList<JInternalFrame>();
 	private Domino domino;
-	private JLabel connectionStatus;
 	private Container contentPane;
 	private JProgressBar progressBar;
+	private StatusBar statusPanel;
 
 	public ModbusSwing(Domino domino) {
 		this.domino = domino;
@@ -78,7 +77,7 @@ public class ModbusSwing extends JFrame {
 	}
 
 	private Component createStatusPanel() {
-		StatusBar statusPanel = new StatusBar();
+		statusPanel = new StatusBar();
 		progressBar = statusPanel.getProgressBar();
 		return statusPanel;
 	}
@@ -104,16 +103,11 @@ public class ModbusSwing extends JFrame {
 	}
 
 	private JMenuBar createMenuBar() {
-		connectionStatus = new JLabel(" DISCONNECTED ");
-		connectionStatus.setFont(new Font(FONT, Font.PLAIN, FONT_SIZE));
-		// connectionStatus.setBorder(BorderFactory.createLineBorder(Color.black));
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.add(createFileMenu());
 		menuBar.add(createConnectionMenu());
 		menuBar.add(createSetupMenu());
 		menuBar.add(createHelpMenu());
-		createHelpMenu();
-		menuBar.add(connectionStatus);
 		return menuBar;
 	}
 
@@ -173,7 +167,7 @@ public class ModbusSwing extends JFrame {
 		});
 		menu.add(newConnItem);
 
-		JMenuItem existConnItem = new JMenuItem("Existing Connection");
+		JMenuItem existConnItem = new JMenuItem("Existing Connections");
 		existConnItem.setMnemonic('e');
 		existConnItem.setFont(new Font(FONT, Font.PLAIN, FONT_SIZE));
 		existConnItem.addActionListener(new ActionListener() {
@@ -259,6 +253,8 @@ public class ModbusSwing extends JFrame {
 
 	void closingOperations() {
 		closeConnection();
+		progressBar.setValue(0);
+		setStatus("DISCONNECTED", new Color(250, 0, 0));
 	}
 
 	private void closeConnection() {
@@ -287,7 +283,7 @@ public class ModbusSwing extends JFrame {
 	}
 
 	public void setStatus(String status, Color color) {
-		connectionStatus.setText("  " + status + "  ");
-		connectionStatus.setForeground(color);
+		statusPanel.getConnectionStatus().setText("  " + status + "  ");
+		statusPanel.getConnectionStatus().setForeground(color);
 	}
 }
