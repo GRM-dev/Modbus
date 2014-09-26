@@ -20,7 +20,6 @@ import atrem.modbus.RequestService;
 import atrem.modbus.frames.ResponseFrame;
 
 public class InterFrame extends JInternalFrame {
-
 	private TableDemo tableDemo;
 	public Domino domino;
 	private boolean pauseButton = true;
@@ -39,11 +38,9 @@ public class InterFrame extends JInternalFrame {
 		getContentPane().add(tableDemo);
 		getContentPane().add(createPanel(), BorderLayout.SOUTH);
 		pack();
-
 	}
 
 	private JPanel createPanel() {
-
 		JPanel panel = new JPanel();
 		btnStart = createStartButton();
 		panel.add(btnStart);
@@ -51,13 +48,13 @@ public class InterFrame extends JInternalFrame {
 		panel.add(btnPause);
 		byteOrderComboBox = new JComboBox(BYTEORDER);
 		panel.add(byteOrderComboBox);
-
 		return panel;
 	}
 
 	private void initialize() {
 		setResizable(true);
-		setMinimumSize(new Dimension(100, 60));
+		setMinimumSize(new Dimension(100, 90));
+		setPreferredSize(new Dimension(200, 500));
 		setClosable(true);
 		setIconifiable(true);
 		setTitle(title);
@@ -106,7 +103,6 @@ public class InterFrame extends JInternalFrame {
 		Controller controller = domino.getController();
 		requestService = new RequestHandler(request, controller, this);
 		requestService.startRequest();
-
 	}
 
 	public TableDemo getTableDemo() {
@@ -119,7 +115,6 @@ public class InterFrame extends JInternalFrame {
 
 	public void addDataToTable(final ResponseFrame responseFrame) {
 		SwingUtilities.invokeLater(new Runnable() {
-
 			@Override
 			public void run() {
 				Data nextData = new Data(responseFrame.getRegistryValue(),
@@ -133,5 +128,4 @@ public class InterFrame extends JInternalFrame {
 	public boolean getPauseButtonState() {
 		return pauseButton;
 	}
-
 }

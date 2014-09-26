@@ -10,19 +10,17 @@ import oracle.jdbc.pool.OracleDataSource;
 /**
  *
  */
-public class DbQueryInt extends AbstractDbSQuery {
+public class DbQueryInt {
 
 	/**
 	 * @param ds
 	 * @throws SQLException
 	 */
 	public DbQueryInt(OracleDataSource ds) throws SQLException {
-		super(ds);
 
 	}
 
-	@Override
 	public void query() throws SQLException {
-		this.rs = stmt.executeQuery("SELECT * FROM Pracownicy");
+		// this.rs = stmt.executeQuery("SELECT * FROM Pracownicy");
 	}
 }

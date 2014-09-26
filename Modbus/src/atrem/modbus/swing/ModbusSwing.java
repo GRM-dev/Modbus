@@ -10,8 +10,6 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,7 +73,7 @@ public class ModbusSwing extends JFrame {
 		setJMenuBar(createMenuBar());
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setVisible(true);
-		addWindowListener(new ModbusFrameListener());
+		addWindowListener(new ModbusFrameListener(this));
 		SwingUtilities.updateComponentTreeUI(this);
 	}
 
@@ -137,17 +135,17 @@ public class ModbusSwing extends JFrame {
 	private JMenu createFileMenu() {
 		JMenu menu = new JMenu("File");
 		menu.setMnemonic('f');
-		menu.setFont(new Font("Segoe UI", Font.PLAIN, FONTSIZE));
-		JMenuItem menuItem = new JMenuItem("Exit");
-		menuItem.setMnemonic('e');
-		menuItem.setFont(new Font(FONT, Font.PLAIN, FONTSIZE));
-		menuItem.addActionListener(new AbstractAction() {
+		menu.setFont(new Font(FONT, Font.PLAIN, FONTSIZE));
+		JMenuItem exitItem = new JMenuItem("Exit");
+		exitItem.setMnemonic('e');
+		exitItem.setFont(new Font(FONT, Font.PLAIN, FONTSIZE));
+		exitItem.addActionListener(new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 			}
 		});
-		menu.add(menuItem);
+		menu.add(exitItem);
 		return menu;
 	}
 
@@ -155,10 +153,10 @@ public class ModbusSwing extends JFrame {
 		JMenu menu = new JMenu("Connection");
 		menu.setMnemonic('c');
 		menu.setFont(new Font(FONT, Font.PLAIN, FONTSIZE));
-		JMenuItem menuItem = new JMenuItem("Connect");
-		menuItem.setMnemonic('c');
-		menuItem.setFont(new Font(FONT, Font.PLAIN, FONTSIZE));
-		menuItem.addActionListener(new AbstractAction() {
+		JMenuItem newConnItem = new JMenuItem("New Connection");
+		newConnItem.setMnemonic('n');
+		newConnItem.setFont(new Font(FONT, Font.PLAIN, FONTSIZE));
+		newConnItem.addActionListener(new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -168,11 +166,28 @@ public class ModbusSwing extends JFrame {
 				}
 			}
 		});
-		menu.add(menuItem);
+		menu.add(newConnItem);
+
+		JMenuItem existConnItem = new JMenuItem("Existing Connection");
+		existConnItem.setMnemonic('e');
+		existConnItem.setFont(new Font(FONT, Font.PLAIN, FONTSIZE));
+		existConnItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Stworzenie listy polaczen.
+			}
+		});
+		menu.add(existConnItem);
 
 		JMenuItem closeAllConnMenuItem = new JMenuItem("Close All Connections");
-		closeAllConnMenuItem.setMnemonic('a');
+		closeAllConnMenuItem.setMnemonic('c');
 		closeAllConnMenuItem.setFont(new Font(FONT, Font.PLAIN, FONTSIZE));
+		closeAllConnMenuItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				closingOperations();
+			}
+		});
 		menu.add(closeAllConnMenuItem);
 
 		return menu;
@@ -213,11 +228,11 @@ public class ModbusSwing extends JFrame {
 	private void newConnection() {
 		ConnectionSetupDialog connectionSetupDialog = new ConnectionSetupDialog(
 				domino);
-		connectionSetupDialog.setDefaultCloseOperation(test());
+		connectionSetupDialog.setDefaultCloseOperation(closeOper());
 		connectionSetupDialog.setVisible(true);
 	}
 
-	private static int test() {
+	private static int closeOper() {
 		return WindowConstants.DISPOSE_ON_CLOSE;
 	}
 
@@ -225,7 +240,7 @@ public class ModbusSwing extends JFrame {
 		try {
 			ReadWriteDefinitionDialog readWriteDefinitionDialog = new ReadWriteDefinitionDialog(
 					this);
-			readWriteDefinitionDialog.setDefaultCloseOperation(test());
+			readWriteDefinitionDialog.setDefaultCloseOperation(closeOper());
 			readWriteDefinitionDialog.setVisible(true);
 		} catch (Exception exception) {
 			exception.printStackTrace();
@@ -235,6 +250,19 @@ public class ModbusSwing extends JFrame {
 	private String createName() {
 		return "Modbus"
 				+ ((Integer) (internalFramesList.size() + 1)).toString();
+	}
+
+	void closingOperations() {
+		closeConnection();
+	}
+
+	private void closeConnection() {
+		try {
+			domino.getController().getConnection().closeConnection();
+			JOptionPane.showMessageDialog(null, "Po³¹czenie zakoñczone.");
+		} catch (Exception exc) {
+			dispose();
+		}
 	}
 
 	public List<JInternalFrame> getFramesList() {
@@ -256,61 +284,5 @@ public class ModbusSwing extends JFrame {
 	public void setStatus(String status, Color color) {
 		connectionStatus.setText("  " + status + "  ");
 		connectionStatus.setForeground(color);
-	}
-
-	private void closingOperations() {
-		closeConnection();
-	}
-
-	private void closeConnection() {
-		try {
-			domino.getController().getConnection().closeConnection();
-			JOptionPane.showMessageDialog(null, "Po³¹czenie zakoñczone.");
-		} catch (Exception exc) {
-			dispose();
-		}
-	}
-
-	private class ModbusFrameListener implements WindowListener {
-
-		@Override
-		public void windowActivated(WindowEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void windowClosed(WindowEvent e) {
-			closingOperations();
-		}
-
-		@Override
-		public void windowClosing(WindowEvent e) {
-			closingOperations();
-		}
-
-		@Override
-		public void windowDeactivated(WindowEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void windowDeiconified(WindowEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void windowIconified(WindowEvent e) {
-
-		}
-
-		@Override
-		public void windowOpened(WindowEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
 	}
 }
