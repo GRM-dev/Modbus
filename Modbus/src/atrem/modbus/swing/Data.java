@@ -1,13 +1,20 @@
 package atrem.modbus.swing;
 
+import java.text.SimpleDateFormat;
+
+import atrem.modbus.frames.ResponseFrame;
+
 public class Data {
 
 	private int registryAddress;
 	private int registryValue;
+	private SimpleDateFormat dataFormat;
+	private String time;
 
-	public Data(int registryAddress, int registryValue) {
-		this.registryAddress = registryAddress;
-		this.registryValue = registryValue;
+	public Data(ResponseFrame responseFrame) {
+		dataFormat = new SimpleDateFormat("HH-mm-ss");
+		time = this.registryAddress = responseFrame.getRegistryValue();
+		this.registryValue = responseFrame.getDataValue();
 	}
 
 	public int getRegistryAddress() {
