@@ -17,7 +17,6 @@ public class Connection implements Runnable {
 	private OutputStream outStream;
 	private String ipAddress;
 	private int port;
-	Thread thread;
 
 	public Connection(String ipAddress, int port, ControllerImpl controller)
 			throws IOException {
@@ -33,6 +32,7 @@ public class Connection implements Runnable {
 		socket = new Socket(ipAddress, port);
 		inStream = socket.getInputStream();
 		outStream = socket.getOutputStream();
+
 		// new SoundPlayer("connect_sound.mp3").play();
 	}
 
@@ -51,10 +51,7 @@ public class Connection implements Runnable {
 	}
 
 	public boolean checkConnection() {
-		if (socket.isConnected())
-			return true;
-		else
-			return false;
+		return socket.isConnected();
 
 	}
 
@@ -71,14 +68,11 @@ public class Connection implements Runnable {
 
 	}
 
-	@SuppressWarnings("deprecation")
 	public void closeConnection() {
-		thread.stop();
 		try {
 			socket.close();
 		} catch (IOException e) {
 			e.printStackTrace();
-
 		}
 	}
 
@@ -87,7 +81,7 @@ public class Connection implements Runnable {
 	}
 
 	Thread innerStartReceiveFrames() {
-		thread = new Thread(this, "watek odbierajacy ramki");
+		Thread thread = new Thread(this, "watek odbierajacy ramki");
 		thread.start();
 		return thread;
 
@@ -108,11 +102,11 @@ public class Connection implements Runnable {
 
 			byte[] data = new byte[length];
 			readBytes(data, length);
-
 			byte[] buff = new byte[RequestFrame.HEADER_SIZE + length];
 			System.arraycopy(header, 0, buff, 0, RequestFrame.HEADER_SIZE);
 			System.arraycopy(data, 0, buff, RequestFrame.HEADER_SIZE, length);
-
+			if (socket.isClosed())
+				return;
 			controller.loadBytes(buff);
 		}
 	}

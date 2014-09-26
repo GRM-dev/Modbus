@@ -127,11 +127,11 @@ public class InterFrame extends JInternalFrame implements InterFrameService {
 		this.tableDemo = tableDemo;
 	}
 
-	private void addDataToTable(final ResponseFrame responseFrame) {
+	private synchronized void addDataToTable(final ResponseFrame responseFrame) {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
-				Data nextData = new Data(responseFrame.getRegistryValue(),
+				Data nextData = new Data(responseFrame.getRegistryAddress(),
 						responseFrame.getDataValue());
 				tableDemo.getMyTableModel().addRow(nextData);
 				if (framePrinter != null)

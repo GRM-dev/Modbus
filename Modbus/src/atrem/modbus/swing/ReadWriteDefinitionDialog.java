@@ -38,10 +38,10 @@ public class ReadWriteDefinitionDialog extends JDialog {
 	private JTextField scanRateTextField;
 	private LogOptionWindow logOptionWindow;
 	private ModbusSwing modbusSwing;
-	private static final String[] FUNCTION_NAMES = { "01 Read Coils",
+	private static final String[] FUNCTION_NAMES = {"01 Read Coils",
 			"02 Read Discrete Inputs", "03 Read Holding Registers",
 			"04 Read Input Registers", "05 Write Single Coil",
-			"06 Write Single Register" };
+			"06 Write Single Register"};
 	private JButton logOptionsButton = new JButton("Log Options");
 
 	public ReadWriteDefinitionDialog(ModbusSwing modbusSwing) {

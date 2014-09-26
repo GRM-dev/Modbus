@@ -15,11 +15,17 @@ public class Domino {
 
 	public static void main(String[] args) {
 
-		Domino domino = new Domino();
-		domino.init();
+		SwingUtilities.invokeLater(new Runnable() {
+
+			@Override
+			public void run() {
+				ModbusSwing modbusSwing = new ModbusSwing();
+			}
+		});
 	}
 
-	public Domino() {
+	public Domino(ModbusSwing modbusSwing) {
+		this.modbusSwing = modbusSwing;
 	}
 
 	public ControllerImpl getController() {
@@ -31,7 +37,7 @@ public class Domino {
 
 			@Override
 			public void run() {
-				modbusSwing = new ModbusSwing(Domino.this);
+				// modbusSwing = new ModbusSwing(Domino.this);
 			}
 		});
 	}
@@ -39,7 +45,6 @@ public class Domino {
 	public void connect(String ip, int port) // TODO wyjatek obslugiwany w
 												// prezenterze
 			throws IOException {
-		modbusSwing.getProgressBar().setValue(50);
 		controller = new ControllerImpl();
 		controller.addDeviceListener(new DeviceListener() {
 
