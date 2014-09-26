@@ -10,7 +10,7 @@ import atrem.modbus.swing.ModbusSwing;
 
 public class Domino {
 
-	private Controller controller;
+	private ControllerImpl controller;
 	ModbusSwing modbusSwing;
 
 	public static void main(String[] args) {
@@ -22,7 +22,7 @@ public class Domino {
 	public Domino() {
 	}
 
-	public Controller getController() {
+	public ControllerImpl getController() {
 		return controller;
 	}
 
@@ -40,7 +40,7 @@ public class Domino {
 												// prezenterze
 			throws IOException {
 
-		controller = new Controller();
+		controller = new ControllerImpl();
 		controller.addDeviceListener(new DeviceListener() {
 
 			@Override

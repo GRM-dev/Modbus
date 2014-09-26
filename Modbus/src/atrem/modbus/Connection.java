@@ -13,12 +13,12 @@ public class Connection implements Runnable {
 
 	private Socket socket;
 	private InputStream inStream;
-	private Controller controller;
+	private ControllerImpl controller;
 	private OutputStream outStream;
 	private String ipAddress;
 	private int port;
 
-	public Connection(String ipAddress, int port, Controller controller)
+	public Connection(String ipAddress, int port, ControllerImpl controller)
 			throws IOException {
 		this.ipAddress = ipAddress;
 		this.port = port;
@@ -127,7 +127,7 @@ public class Connection implements Runnable {
 		}
 	}
 
-	public void setController(Controller controller) {
+	public void setController(ControllerImpl controller) {
 		this.controller = controller;
 	}
 

@@ -12,7 +12,7 @@ import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-import atrem.modbus.Controller;
+import atrem.modbus.ControllerImpl;
 import atrem.modbus.Domino;
 import atrem.modbus.Request;
 import atrem.modbus.RequestListener;
@@ -99,7 +99,7 @@ public class InterFrame extends JInternalFrame {
 	}
 
 	public void initializeNewRequest(Request request) {
-		Controller controller = domino.getController();
+		ControllerImpl controller = domino.getController();
 		controller.addRequest(request, new RequestListener() {
 			@Override
 			public void receiveFrame(ResponseFrame responseFrame) {
@@ -117,7 +117,7 @@ public class InterFrame extends JInternalFrame {
 		this.tableDemo = tableDemo;
 	}
 
-	private void addDataToTable(final ResponseFrame responseFrame) {
+	public void addDataToTable(final ResponseFrame responseFrame) {
 		SwingUtilities.invokeLater(new Runnable() {
 
 			@Override
