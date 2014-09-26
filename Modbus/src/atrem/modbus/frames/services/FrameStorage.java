@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import atrem.modbus.Domino;
 import atrem.modbus.PairedFrameListener;
@@ -18,15 +16,14 @@ public class FrameStorage {
 	private FramesPrinter framesPrinter;
 	private List<ResponseFrame> receivedFrames;
 	private List<FramePairs> framePairsList;
-	private ExecutorService executor;
 	private ResponseFrame lastResponseFrame;
 	private List<PairedFrameListener> pairedFrameListenerList;
 
 	public FrameStorage() {
-		executor = Executors.newSingleThreadScheduledExecutor();
 		sentFrames = new LinkedList<RequestFrame>();
 		receivedFrames = new LinkedList<ResponseFrame>();
 		framePairsList = new LinkedList<FramePairs>();
+
 		framesPrinter = new FramesPrinter();
 		pairedFrameListenerList = new ArrayList<PairedFrameListener>();
 
@@ -43,40 +40,24 @@ public class FrameStorage {
 
 	}
 
-	public void addSentFrame(final RequestFrame requestFrame) {
-		executor.execute(new Runnable() {
-
-			@Override
-			public void run() {
-				sentFrames.add(requestFrame);
-
-			}
-		});
+	public void addSentFrame(RequestFrame requestFrame) {
+		sentFrames.add(requestFrame);
 
 	}
 
-	public void addReceivedFrame(final ResponseFrame frameIncoming) {
-		executor.execute(new Runnable() {
-
-			@Override
-			public void run() {
-				receivedFrames.add(frameIncoming);
-
-			}
-		});
+	public void addReceivedFrame(ResponseFrame frameIncoming) {
+		receivedFrames.add(frameIncoming);
+		if (receivedFrames.size() == 100) {
+			receivedFrames.remove(0);
+		}
 
 	}
 
 	public void makePairsOfFrames() {
-		executor.execute(new Runnable() { // wywalic executor
-			@Override
-			public void run() {
-				compare();
-			}
-		});
+		compare();
 	}
 
-	synchronized void compare() {
+	void compare() {
 		for (RequestFrame sentFramesTmp : sentFrames) {
 			compareWithResponseFrame(sentFramesTmp);
 			if (hasNoResponse(sentFramesTmp)) {
@@ -110,6 +91,9 @@ public class FrameStorage {
 		FramePairs framePairs = new FramePairs(requestFrame, responseFrame);
 		onPairedFrame(framePairs);
 		framePairsList.add(framePairs);
+		if (framePairsList.size() == 100) {
+			framePairsList.remove(0);
+		}
 		lastResponseFrame = responseFrame;
 		lastResponseFrame.setRegistryValue(requestFrame.getStartingAdress());
 		framesPrinter.savePairedFrame("" + framePairs);

@@ -45,8 +45,8 @@ public class ModbusSwing extends JFrame {
 	private JProgressBar progressBar;
 	private StatusBar statusPanel;
 
-	public ModbusSwing(Domino domino) {
-		this.domino = domino;
+	public ModbusSwing() {
+
 		initialize();
 	}
 
@@ -226,9 +226,10 @@ public class ModbusSwing extends JFrame {
 
 	private void newConnection() {
 		ConnectionSetupDialog connectionSetupDialog = new ConnectionSetupDialog(
-				domino);
+				this);
 		connectionSetupDialog.setDefaultCloseOperation(closeOper());
 		connectionSetupDialog.setVisible(true);
+		domino = connectionSetupDialog.getDomino();
 	}
 
 	private static int closeOper() {

@@ -148,7 +148,7 @@ public class ControllerImpl implements Controller {
 
 	public void closeConnection() {
 		connection.closeConnection();
-		onDevice(connection.checkConnection());
+		// onDevice(connection.checkConnection());
 
 	}
 
