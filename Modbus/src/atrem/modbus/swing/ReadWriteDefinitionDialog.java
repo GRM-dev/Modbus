@@ -138,6 +138,7 @@ public class ReadWriteDefinitionDialog extends JDialog {
 			InterFrame interFrame = modbusSwing
 					.createInterFrame(startingAddressTextField.getText());
 			modbusSwing.initializeInterFrame(interFrame, request);
+			modbusSwing.getProgressBar().setValue(100);
 			dispose();
 		}
 	}

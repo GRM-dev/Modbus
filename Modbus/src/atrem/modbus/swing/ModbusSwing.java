@@ -2,6 +2,8 @@ package atrem.modbus.swing;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -23,6 +25,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
@@ -39,6 +42,8 @@ public class ModbusSwing extends JFrame {
 	private List<JInternalFrame> internalFramesList = new ArrayList<JInternalFrame>();
 	private Domino domino;
 	private JLabel connectionStatus;
+	private Container contentPane;
+	private JProgressBar progressBar;
 
 	public ModbusSwing(Domino domino) {
 		this.domino = domino;
@@ -52,6 +57,7 @@ public class ModbusSwing extends JFrame {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		contentPane = getContentPane();
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		setTitle("ModbusExplorer");
 		int screenHeight = (int) screenSize.getHeight();
@@ -60,13 +66,20 @@ public class ModbusSwing extends JFrame {
 		int frameHeight = frameWidth * 3 / 4;
 		setBounds(screenWidth - screenWidth / 4 - frameWidth, screenHeight / 2
 				- frameHeight / 2, frameWidth, frameHeight);
-		getContentPane().setLayout(new BorderLayout());
-		getContentPane().add(createContentPanel(), BorderLayout.CENTER);
+		contentPane.setLayout(new BorderLayout());
+		contentPane.add(createContentPanel(), BorderLayout.CENTER);
+		contentPane.add(createStatusPanel(), BorderLayout.SOUTH);
 		setJMenuBar(createMenuBar());
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setVisible(true);
 		addWindowListener(new ModbusFrameListener());
 		SwingUtilities.updateComponentTreeUI(this);
+	}
+
+	private Component createStatusPanel() {
+		StatusBar statusPanel = new StatusBar();
+		progressBar = statusPanel.getProgressBar();
+		return statusPanel;
 	}
 
 	private JPanel createContentPanel() {
@@ -97,6 +110,12 @@ public class ModbusSwing extends JFrame {
 		menuBar.add(createFileMenu());
 		menuBar.add(createConnectionMenu());
 		menuBar.add(createSetupMenu());
+
+		JMenu helpMenu = new JMenu("Help");
+		menuBar.add(helpMenu);
+
+		JMenuItem aboutMenuItem = new JMenuItem("About ...");
+		helpMenu.add(aboutMenuItem);
 		menuBar.add(connectionStatus);
 		return menuBar;
 	}
@@ -210,6 +229,14 @@ public class ModbusSwing extends JFrame {
 
 	public void setFramesList(List<JInternalFrame> framesList) {
 		this.internalFramesList = framesList;
+	}
+
+	public JProgressBar getProgressBar() {
+		return this.progressBar;
+	}
+
+	public void setProgressBar(JProgressBar progressBar) {
+		this.progressBar = progressBar;
 	}
 
 	public void setStatus(String status, Color color) {
