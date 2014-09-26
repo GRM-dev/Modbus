@@ -192,7 +192,7 @@ public class ModbusSwing extends JFrame {
 		optionsMenuItem.addActionListener(new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+
 			}
 		});
 		return menu;
