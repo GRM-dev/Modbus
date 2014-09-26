@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -40,7 +41,7 @@ public class ReadWriteDefinitionDialog extends JDialog {
 	private static final String[] FUNCTION_NAMES = {"01 Read Coils",
 			"02 Read Discrete Inputs", "03 Read Holding Registers",
 			"04 Read Input Registers", "05 Write Single Coil",
-			"06 Write Single Register" };
+			"06 Write Single Register"};
 	private final JButton logOptionsButton = new JButton("Log Options");
 
 	public ReadWriteDefinitionDialog(ModbusSwing modbusSwing) {
@@ -69,7 +70,6 @@ public class ReadWriteDefinitionDialog extends JDialog {
 			public void actionPerformed(ActionEvent arg0) {
 				LogOptionWindow logOptionWindow = new LogOptionWindow();
 				logOptionWindow.setEnabled(true);
-				set
 				logOptionWindow.setVisible(true);
 
 			}
