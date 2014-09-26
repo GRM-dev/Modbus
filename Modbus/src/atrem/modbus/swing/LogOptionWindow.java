@@ -27,43 +27,12 @@ public class LogOptionWindow extends JDialog {
 		setResizable(false);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		getContentPane().setLayout(null);
-		setBounds(300, 300, 456, 299);
+		setBounds(300, 300, 405, 157);
 		;
-		JPanel pathOptions = new JPanel();
-		pathOptions.setBounds(0, 128, 434, 134);
-		getContentPane().add(pathOptions);
-		pathOptions.setLayout(null);
-
-		JButton btnBrowse = new JButton("Browse");
-		btnBrowse.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				JFileChooser fileChooser = new JFileChooser();
-				fileChooser.setCurrentDirectory(new File("."));
-				fileChooser.showOpenDialog(null);
-
-				setLogFile(fileChooser.getSelectedFile());
-				logPathTextPane.setText("" + logFile);
-				dispose();
-
-			}
-		});
-		btnBrowse.setBounds(347, 100, 67, 23);
-		pathOptions.add(btnBrowse);
-
-		logPathTextPane = new JTextPane();
-		logPathTextPane.setEditable(false);
-		logPathTextPane.setBounds(43, 66, 371, 23);
-		logPathTextPane.setText("" + logFile);
-		pathOptions.add(logPathTextPane);
-
-		JLabel lblPathlabel = new JLabel("Log path:");
-		lblPathlabel.setBounds(43, 38, 200, 23);
-		pathOptions.add(lblPathlabel);
 
 		JPanel filters = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) filters.getLayout();
-		filters.setBounds(0, 56, 434, 72);
+		filters.setBounds(99, 11, 200, 38);
 		getContentPane().add(filters);
 
 		JCheckBox chckbxTime = new JCheckBox("Time");
@@ -92,6 +61,37 @@ public class LogOptionWindow extends JDialog {
 			}
 		});
 		filters.add(chckbxRegister);
+		JPanel pathOptions = new JPanel();
+		pathOptions.setBounds(0, 21, 390, 104);
+		getContentPane().add(pathOptions);
+		pathOptions.setLayout(null);
+
+		JButton btnBrowse = new JButton("Browse");
+		btnBrowse.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser fileChooser = new JFileChooser();
+				fileChooser.setCurrentDirectory(new File("."));
+				fileChooser.showOpenDialog(null);
+
+				setLogFile(fileChooser.getSelectedFile());
+				logPathTextPane.setText("" + logFile);
+				dispose();
+
+			}
+		});
+		btnBrowse.setBounds(314, 73, 67, 23);
+		pathOptions.add(btnBrowse);
+
+		logPathTextPane = new JTextPane();
+		logPathTextPane.setEditable(false);
+		logPathTextPane.setBounds(10, 39, 371, 23);
+		logPathTextPane.setText("" + logFile);
+		pathOptions.add(logPathTextPane);
+
+		JLabel lblPathlabel = new JLabel("Log path:");
+		lblPathlabel.setBounds(10, 11, 200, 23);
+		pathOptions.add(lblPathlabel);
 	}
 
 	public File getLogFile() {
