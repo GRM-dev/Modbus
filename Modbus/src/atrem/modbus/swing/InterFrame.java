@@ -12,10 +12,11 @@ import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-import atrem.modbus.ControllerImpl;
+import atrem.modbus.Controller;
 import atrem.modbus.Domino;
 import atrem.modbus.Request;
-import atrem.modbus.RequestListener;
+import atrem.modbus.RequestHandler;
+import atrem.modbus.RequestService;
 import atrem.modbus.frames.ResponseFrame;
 
 public class InterFrame extends JInternalFrame {
@@ -29,6 +30,7 @@ public class InterFrame extends JInternalFrame {
 	private static final String[] BYTEORDER = {"long ABCD", "long CDAB",
 			"long BADC", "long DCBA", "float ABCD", "float CDAB", "float BADC",
 			"float DCBA"};
+	RequestService requestService;
 
 	public InterFrame(String title, Domino domino) {
 		this.domino = domino;
@@ -55,7 +57,7 @@ public class InterFrame extends JInternalFrame {
 
 	private void initialize() {
 		setResizable(true);
-		setMinimumSize(new Dimension(100, 100));
+		setMinimumSize(new Dimension(100, 60));
 		setClosable(true);
 		setIconifiable(true);
 		setTitle(title);
@@ -77,6 +79,7 @@ public class InterFrame extends JInternalFrame {
 		button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				requestService.pauseRequest();
 				pauseButton = !pauseButton;
 				btnPause.setEnabled(pauseButton);
 				button.setEnabled(!pauseButton);
@@ -90,6 +93,7 @@ public class InterFrame extends JInternalFrame {
 		button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				requestService.startRequest();
 				pauseButton = !pauseButton;
 				button.setEnabled(pauseButton);
 				btnStart.setEnabled(!pauseButton);
@@ -99,14 +103,10 @@ public class InterFrame extends JInternalFrame {
 	}
 
 	public void initializeNewRequest(Request request) {
-		ControllerImpl controller = domino.getController();
-		controller.addRequest(request, new RequestListener() {
-			@Override
-			public void receiveFrame(ResponseFrame responseFrame) {
-				addDataToTable(responseFrame);
-			}
-		});
-		controller.startNewRequestTask(request);
+		Controller controller = domino.getController();
+		requestService = new RequestHandler(request, controller, this);
+		requestService.startRequest();
+
 	}
 
 	public TableDemo getTableDemo() {

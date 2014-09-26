@@ -127,12 +127,14 @@ public class ControllerImpl implements Controller {
 	@Override
 	public void pauseRequest(Request request) {
 		// TODO Auto-generated method stub
+		System.out.println("pauza");
 
 	}
 
 	@Override
 	public void startRequest(Request request) {
 		// TODO Auto-generated method stub
+		System.out.println("start");
 
 	}
 

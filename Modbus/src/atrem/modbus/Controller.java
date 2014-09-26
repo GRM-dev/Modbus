@@ -11,4 +11,5 @@ public interface Controller {
 
 	public void addRequest(Request request, RequestListener requestHandler);
 
+	public abstract void startNewRequestTask(Request request);
 }
