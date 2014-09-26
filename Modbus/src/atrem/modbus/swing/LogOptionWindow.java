@@ -1,16 +1,21 @@
 package atrem.modbus.swing;
 
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
 
 public class LogOptionWindow extends JDialog {
-	public LogOptionWindow() {
+	public LogOptionWindow(Window parentWindow) {
+		super(parentWindow);
+		setModal(true);
 		// setType(Type.POPUP);
 		setResizable(false);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -26,6 +31,9 @@ public class LogOptionWindow extends JDialog {
 		btnBrowse.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				JFileChooser fileChooser = new JFileChooser();
+				fileChooser.setCurrentDirectory(new File("."));
+				fileChooser.showSaveDialog(null);
 			}
 		});
 		btnBrowse.setBounds(347, 100, 67, 23);
