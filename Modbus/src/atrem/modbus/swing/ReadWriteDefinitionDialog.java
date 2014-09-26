@@ -40,7 +40,9 @@ public class ReadWriteDefinitionDialog extends JDialog {
 	private static final String[] FUNCTION_NAMES = {"01 Read Coils",
 			"02 Read Discrete Inputs", "03 Read Holding Registers",
 			"04 Read Input Registers", "05 Write Single Coil",
-			"06 Write Single Register"};
+			"06 Write Single Register" };
+	private final JButton logOptionsButton = new JButton("Log Options");
+
 	public ReadWriteDefinitionDialog(ModbusSwing modbusSwing) {
 		this.modbusSwing = modbusSwing;
 
@@ -59,10 +61,30 @@ public class ReadWriteDefinitionDialog extends JDialog {
 	private JPanel createButtonPanel() {
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
-		okButton = new JButton("OK");
-		okButton.setMnemonic('o');
 		cancelButton = new JButton("Cancel");
 		cancelButton.setMnemonic('c');
+		cancelButton.addActionListener(new CancelButtonListener());
+		logOptionsButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				LogOptionWindow logOptionWindow = new LogOptionWindow();
+				logOptionWindow.setEnabled(true);
+				set
+				logOptionWindow.setVisible(true);
+
+			}
+		});
+
+		JCheckBox chckbxNewCheckBox = new JCheckBox("Save to Log");
+		chckbxNewCheckBox.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		buttonPanel.add(chckbxNewCheckBox);
+		buttonPanel.add(logOptionsButton);
+		okButton = new JButton("OK");
+		okButton.setMnemonic('o');
 		okButton.addActionListener(new OkButtonListener());
 		cancelButton.addActionListener(new CancelButtonListener());
 		buttonPanel.add(okButton);

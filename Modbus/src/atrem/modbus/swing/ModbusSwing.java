@@ -9,6 +9,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.ArrayList;
@@ -112,14 +113,25 @@ public class ModbusSwing extends JFrame {
 		menuBar.add(createFileMenu());
 		menuBar.add(createConnectionMenu());
 		menuBar.add(createSetupMenu());
-
-		JMenu helpMenu = new JMenu("Help");
-		menuBar.add(helpMenu);
-
-		JMenuItem aboutMenuItem = new JMenuItem("About ...");
-		helpMenu.add(aboutMenuItem);
+		menuBar.add(createHelpMenu());
+		createHelpMenu();
 		menuBar.add(connectionStatus);
 		return menuBar;
+	}
+
+	private JMenu createHelpMenu() {
+		JMenu helpMenu = new JMenu("Help");
+		helpMenu.setMnemonic('h');
+		JMenuItem aboutMenuItem = new JMenuItem("About ...");
+		aboutMenuItem.setMnemonic('a');
+		aboutMenuItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				AboutDialog.open();
+			}
+		});
+		helpMenu.add(aboutMenuItem);
+		return helpMenu;
 	}
 
 	private JMenu createFileMenu() {
@@ -192,7 +204,7 @@ public class ModbusSwing extends JFrame {
 		optionsMenuItem.addActionListener(new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+
 			}
 		});
 		return menu;
