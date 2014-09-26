@@ -263,7 +263,7 @@ public class ModbusSwing extends JFrame {
 
 	private void closeConnection() {
 		try {
-			domino.getController().getConnection().closeConnection();
+			domino.getController().closeConnection();
 			JOptionPane.showMessageDialog(null, "Po³¹czenie zakoñczone.");
 		} catch (Exception exc) {
 			dispose();

@@ -146,4 +146,10 @@ public class ControllerImpl implements Controller {
 		requestList.remove(request);
 	}
 
+	public void closeConnection() {
+		connection.closeConnection();
+		onDevice(connection.checkConnection());
+
+	}
+
 }
