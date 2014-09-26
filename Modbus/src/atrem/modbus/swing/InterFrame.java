@@ -4,11 +4,14 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.beans.PropertyVetoException;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
@@ -39,6 +42,8 @@ public class InterFrame extends JInternalFrame implements InterFrameService {
 		getContentPane().add(tableDemo);
 		getContentPane().add(createPanel(), BorderLayout.SOUTH);
 		pack();
+		addComponentListener(new InterFrameListener());
+
 	}
 
 	private JPanel createPanel() {
@@ -129,9 +134,38 @@ public class InterFrame extends JInternalFrame implements InterFrameService {
 	public boolean getPauseButtonState() {
 		return pauseButton;
 	}
+
 	@Override
 	public void addResponseFrame(ResponseFrame responseFrame) {
 		addDataToTable(responseFrame);
+
+	}
+
+	private class InterFrameListener implements ComponentListener {
+
+		@Override
+		public void componentHidden(ComponentEvent e) {
+			JOptionPane.showMessageDialog(null, "ok");
+
+		}
+
+		@Override
+		public void componentMoved(ComponentEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void componentResized(ComponentEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void componentShown(ComponentEvent e) {
+			// TODO Auto-generated method stub
+
+		}
 
 	}
 
