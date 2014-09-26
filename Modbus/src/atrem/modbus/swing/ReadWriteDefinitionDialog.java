@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -37,10 +38,12 @@ public class ReadWriteDefinitionDialog extends JDialog {
 	private JTextField scanRateTextField;
 
 	private ModbusSwing modbusSwing;
-	private static final String[] FUNCTIONNAMES = {"01 Read Coils",
+	private static final String[] FUNCTIONNAMES = { "01 Read Coils",
 			"02 Read Discrete Inputs", "03 Read Holding Registers",
 			"04 Read Input Registers", "05 Write Single Coil",
-			"06 Write Single Register"};
+			"06 Write Single Register" };
+	private final JButton logOptionsButton = new JButton("Log Options");
+
 	public ReadWriteDefinitionDialog(ModbusSwing modbusSwing) {
 		this.modbusSwing = modbusSwing;
 
@@ -59,12 +62,27 @@ public class ReadWriteDefinitionDialog extends JDialog {
 	private JPanel createButtonPanel() {
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
-		okButton = new JButton("OK");
-		okButton.setMnemonic('o');
 		cancelButton = new JButton("Cancel");
 		cancelButton.setMnemonic('c');
-		okButton.addActionListener(new OkButtonListener());
 		cancelButton.addActionListener(new CancelButtonListener());
+		logOptionsButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO dodac kod pawel
+			}
+		});
+
+		JCheckBox chckbxNewCheckBox = new JCheckBox("Save to Log");
+		chckbxNewCheckBox.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		buttonPanel.add(chckbxNewCheckBox);
+		buttonPanel.add(logOptionsButton);
+		okButton = new JButton("OK");
+		okButton.setMnemonic('o');
+		okButton.addActionListener(new OkButtonListener());
 		buttonPanel.add(okButton);
 		buttonPanel.add(cancelButton);
 		return buttonPanel;
