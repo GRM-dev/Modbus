@@ -11,10 +11,11 @@ import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-import atrem.modbus.ControllerImpl;
+import atrem.modbus.Controller;
 import atrem.modbus.Domino;
 import atrem.modbus.Request;
-import atrem.modbus.RequestListener;
+import atrem.modbus.RequestHandler;
+import atrem.modbus.RequestService;
 import atrem.modbus.frames.ResponseFrame;
 
 public class InterFrame extends JInternalFrame {
@@ -24,6 +25,7 @@ public class InterFrame extends JInternalFrame {
 	private boolean pauseButton = true;
 	private JButton btnPause = new JButton("Pause");
 	private JButton btnStart = new JButton("Start");
+	RequestService requestService;
 
 	public InterFrame(String title, Domino domino) {
 		this.domino = domino;
@@ -42,8 +44,7 @@ public class InterFrame extends JInternalFrame {
 		btnPause.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO akcja do napisania dla Pause button
-				System.out.println("stan klikniêcia +" + pauseButton);
+				requestService.pauseRequest();
 				pauseButton = !pauseButton;
 				btnPause.setEnabled(pauseButton);
 				btnStart.setEnabled(!pauseButton);
@@ -55,6 +56,7 @@ public class InterFrame extends JInternalFrame {
 		btnStart.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				requestService.startRequest();
 				pauseButton = !pauseButton;
 				btnPause.setEnabled(pauseButton);
 				btnStart.setEnabled(!pauseButton);
@@ -78,14 +80,10 @@ public class InterFrame extends JInternalFrame {
 	}
 
 	public void initializeNewRequest(Request request) {
-		ControllerImpl controller = domino.getController();
-		controller.addRequest(request, new RequestListener() {
-			@Override
-			public void receiveFrame(ResponseFrame responseFrame) {
-				addDataToTable(responseFrame);
-			}
-		});
-		controller.startNewRequestTask(request);
+		Controller controller = domino.getController();
+		requestService = new RequestHandler(request, controller, this);
+		requestService.startRequest();
+
 	}
 
 	public TableDemo getTableDemo() {
