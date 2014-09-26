@@ -27,7 +27,7 @@ public class ReadWriteDefinitionDialog extends JDialog {
 	public static final String DEFAULT_STARTING_ADDRESS = "3027";
 	public static final String DEFAULT_QUANTITY = "2";
 	public static final String DEFAULT_SCAN_RATE = "1000";
-
+	private JCheckBox saveToLogCheckBox;
 	private final Box contentBox = Box.createHorizontalBox();
 	private JButton cancelButton;
 	private JButton okButton;
@@ -36,13 +36,13 @@ public class ReadWriteDefinitionDialog extends JDialog {
 	private JTextField startingAddressTextField;
 	private JTextField quantityTextField;
 	private JTextField scanRateTextField;
-
+	private LogOptionWindow logOptionWindow;
 	private ModbusSwing modbusSwing;
 	private static final String[] FUNCTION_NAMES = { "01 Read Coils",
 			"02 Read Discrete Inputs", "03 Read Holding Registers",
 			"04 Read Input Registers", "05 Write Single Coil",
 			"06 Write Single Register" };
-	private final JButton logOptionsButton = new JButton("Log Options");
+	private JButton logOptionsButton = new JButton("Log Options");
 
 	public ReadWriteDefinitionDialog(ModbusSwing modbusSwing) {
 		this.modbusSwing = modbusSwing;
@@ -65,26 +65,26 @@ public class ReadWriteDefinitionDialog extends JDialog {
 		cancelButton = new JButton("Cancel");
 		cancelButton.setMnemonic('c');
 		cancelButton.addActionListener(new CancelButtonListener());
+		logOptionsButton.setEnabled(false);
 		logOptionsButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				LogOptionWindow logOptionWindow = new LogOptionWindow(
+				logOptionWindow = new LogOptionWindow(
 						ReadWriteDefinitionDialog.this);
-				// setVisible(false); // TODO zapytac lukaszas
 				logOptionWindow.setEnabled(true);
-
 				logOptionWindow.setVisible(true);
 
 			}
 		});
 
-		JCheckBox chckbxNewCheckBox = new JCheckBox("Save to Log");
-		chckbxNewCheckBox.addActionListener(new ActionListener() {
+		saveToLogCheckBox = new JCheckBox("Save to Log");
+		saveToLogCheckBox.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				changeLogOptionStatment();
 			}
 		});
-		buttonPanel.add(chckbxNewCheckBox);
+		buttonPanel.add(saveToLogCheckBox);
 		buttonPanel.add(logOptionsButton);
 		okButton = new JButton("OK");
 		okButton.setMnemonic('o');
@@ -93,6 +93,13 @@ public class ReadWriteDefinitionDialog extends JDialog {
 		buttonPanel.add(okButton);
 		buttonPanel.add(cancelButton);
 		return buttonPanel;
+	}
+
+	private void changeLogOptionStatment() {
+		if (logOptionsButton.isEnabled())
+			logOptionsButton.setEnabled(false);
+		else
+			logOptionsButton.setEnabled(true);
 	}
 
 	private Box createQuestionBox() {
@@ -167,8 +174,12 @@ public class ReadWriteDefinitionDialog extends JDialog {
 
 			InterFrame interFrame = modbusSwing
 					.createInterFrame(startingAddressTextField.getText());
+			if (saveToLogCheckBox.isSelected()) {
+				interFrame.createDataPrinter(logOptionWindow.getLogFile());
+			}
 			modbusSwing.initializeInterFrame(interFrame, request);
 			modbusSwing.getProgressBar().setValue(100);
+
 			dispose();
 		}
 	}

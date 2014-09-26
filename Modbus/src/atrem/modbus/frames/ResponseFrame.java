@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 
-import atrem.modbus.frames.services.FramesPrinter;
+import atrem.modbus.frames.services.DataPrinter;
 
 public class ResponseFrame {
 	private int transactionIdentifier;
@@ -96,7 +96,7 @@ public class ResponseFrame {
 	@Override
 	public String toString() {
 
-		return "*ResponseFrame* " + time + FramesPrinter.NEW_LINE
+		return "*ResponseFrame* " + time + DataPrinter.NEW_LINE
 				+ " [transactionIdentifier=" + transactionIdentifier
 				+ ", protocolIdentifier=" + protocolIdentifier
 				+ ", unitIdentifier=" + unitIdentifier + ", dataLength="

@@ -13,7 +13,7 @@ import atrem.modbus.frames.ResponseFrame;
 public class FrameStorage {
 
 	private List<RequestFrame> sentFrames;
-	private FramesPrinter framesPrinter;
+	private DataPrinter framesPrinter;
 	private List<ResponseFrame> receivedFrames;
 	private List<FramePairs> framePairsList;
 	private ResponseFrame lastResponseFrame;
@@ -23,8 +23,6 @@ public class FrameStorage {
 		sentFrames = new LinkedList<RequestFrame>();
 		receivedFrames = new LinkedList<ResponseFrame>();
 		framePairsList = new LinkedList<FramePairs>();
-
-		framesPrinter = new FramesPrinter();
 		pairedFrameListenerList = new ArrayList<PairedFrameListener>();
 
 	}
@@ -61,7 +59,7 @@ public class FrameStorage {
 		for (RequestFrame sentFramesTmp : sentFrames) {
 			compareWithResponseFrame(sentFramesTmp);
 			if (hasNoResponse(sentFramesTmp)) {
-				framesPrinter.saveNoResponseFrame("" + sentFramesTmp);
+
 				sentFrames.remove(sentFramesTmp);
 			}
 		}
@@ -96,7 +94,7 @@ public class FrameStorage {
 		}
 		lastResponseFrame = responseFrame;
 		lastResponseFrame.setRegistryValue(requestFrame.getStartingAdress());
-		framesPrinter.savePairedFrame("" + framePairs);
+
 		Domino.showRequestAndResponse(framePairs);
 
 	}

@@ -1,6 +1,7 @@
 package atrem.modbus.swing;
 
 public class Data {
+
 	private int registryAddress;
 	private int registryValue;
 
@@ -24,4 +25,11 @@ public class Data {
 	public void setRegistryValue(int registryValue) {
 		this.registryValue = registryValue;
 	}
+
+	@Override
+	public String toString() {
+		return "Data [registryAddress=" + registryAddress + ", registryValue="
+				+ registryValue + "]";
+	}
+
 }

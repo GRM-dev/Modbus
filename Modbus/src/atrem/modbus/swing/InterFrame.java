@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.beans.PropertyVetoException;
+import java.io.File;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -22,6 +23,7 @@ import atrem.modbus.Request;
 import atrem.modbus.RequestHandler;
 import atrem.modbus.RequestService;
 import atrem.modbus.frames.ResponseFrame;
+import atrem.modbus.frames.services.DataPrinter;
 
 public class InterFrame extends JInternalFrame implements InterFrameService {
 	private TableDemo tableDemo;
@@ -34,6 +36,7 @@ public class InterFrame extends JInternalFrame implements InterFrameService {
 			"long BADC", "long DCBA", "float ABCD", "float CDAB", "float BADC",
 			"float DCBA" };
 	RequestService requestService;
+	private DataPrinter framePrinter;
 
 	public InterFrame(String title, Domino domino) {
 		this.domino = domino;
@@ -43,6 +46,11 @@ public class InterFrame extends JInternalFrame implements InterFrameService {
 		getContentPane().add(createPanel(), BorderLayout.SOUTH);
 		pack();
 		addComponentListener(new InterFrameListener());
+
+	}
+
+	public void createDataPrinter(File file) {
+		framePrinter = new DataPrinter(file);
 
 	}
 
@@ -126,6 +134,8 @@ public class InterFrame extends JInternalFrame implements InterFrameService {
 				Data nextData = new Data(responseFrame.getRegistryAddress(),
 						responseFrame.getDataValue());
 				tableDemo.getMyTableModel().addRow(nextData);
+				if (framePrinter != null)
+					framePrinter.writeToLog("" + nextData);
 
 			}
 		});
@@ -152,6 +162,8 @@ public class InterFrame extends JInternalFrame implements InterFrameService {
 		@Override
 		public void componentMoved(ComponentEvent e) {
 			// TODO Auto-generated method stub
+			JOptionPane.showMessageDialog(null, "zostaw!", TITLE_PROPERTY,
+					JOptionPane.ERROR_MESSAGE);// (null, "zostaw!");
 
 		}
 
