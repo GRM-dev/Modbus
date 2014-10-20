@@ -1,0 +1,10 @@
+atrem.jdbc
+atrem.modbus
+atrem.modbus.console
+atrem.modbus.database
+atrem.modbus.frameServices
+atrem.modbus.frames
+atrem.modbus.frames.services
+atrem.modbus.parsers
+atrem.modbus.swing
+atrem.modbus.swing.exceptionhandlers
