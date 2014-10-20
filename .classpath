@@ -5,8 +5,8 @@
 	<classpathentry kind="src" path="src/test/main"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="lib/jmf.jar"/>
-	<classpathentry kind="lib" path="lib/mockito-all-1.9.5.jar"/>
-	<classpathentry kind="lib" path="lib/ojdbc6-93163.jar"/>
+	<classpathentry kind="lib" path="src/main/resources/libs/jmf.jar"/>
+	<classpathentry kind="lib" path="src/main/resources/libs/mockito-all-1.9.5.jar"/>
+	<classpathentry kind="lib" path="src/main/resources/libs/ojdbc6-93163.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
